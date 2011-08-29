@@ -8,17 +8,15 @@
 		<link href="css/reset.css" rel="stylesheet" type="text/css" />
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 		
-		<!-- JavaScript Import -->
-		<script type="text/javascript" src="js/tools.js"></script>
-		<!-- JavaScript libs -->
-		<script type="text/javascript" src="js/libs/easel-0.3.2.min.js"></script>
-		<script type="text/javascript" src="js/libs/jquery-1.6.2.min.js"></script>
-		<!-- JavaScript models -->
-		<script type="text/javascript" src="js/models/Worker.js"></script>
-		<script type="text/javascript" src="js/models/Yadobe.js"></script>
+		<script type="text/javascript" src="js/libs/easel.js"></script>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.js"></script>
+		<script type="text/javascript">JS_PATH  = '/js'; JSCLASS_PATH = '/js/libs/JSClass';</script>
+		<script type="text/javascript" src="js/libs/JSClass/loader-browser.js"></script>
+		<script type="text/javascript" src="js/manifest.js"></script>
 	</head>
 	
-	<body onload="init();">
+	<body>
+		<div style="position: absolute; top:0; left:0; width: 800px; height: 600px; background-color: grey" id="over"></div>
 		<div id="container-wrapper">
 			<h1 class="description">
 				Yadobe project
