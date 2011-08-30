@@ -1,4 +1,4 @@
-JS.ENV.JSCLASS_PATH = (typeof JSCLASS_PATH === 'undefined') ? '.' : JSCLASS_PATH
+JS.ENV.JSCLASS_PATH = (typeof JSCLASS_PATH === 'undefined') ? 'js/' : JSCLASS_PATH
 JS.ENV.JS_PATH = (typeof JS_PATH === 'undefined') ? '.' : JS_PATH
 
 JS.cacheBust = true;
