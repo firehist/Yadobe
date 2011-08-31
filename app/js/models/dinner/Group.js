@@ -4,7 +4,7 @@
  * @author Benjamin Longearet <firehist@gmail.com>
  * @module Yadobe
  **/
-var Group = new JS.Class({
+var GroupClass ={
 	// Attributes
 	/**
 	 * Name of the group
@@ -49,7 +49,8 @@ var Group = new JS.Class({
 			this.mood -= value;
 		}
 	}
-});
+};
+var Group = new JS.Class(GroupClass);
 
 Group.Factory = {};
 Group.Factory.newInstance = function() {

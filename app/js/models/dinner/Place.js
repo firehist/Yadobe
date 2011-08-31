@@ -4,7 +4,7 @@
  * @author Benjamin Longearet <firehist@gmail.com>
  * @module Yadobe
  **/
-var Place = new JS.Class({
+var PlaceClass = {
 	// Attributes
 	name: '',
 	// Constructor
@@ -15,4 +15,5 @@ var Place = new JS.Class({
 	runAction: function() {
 		throw new Error('Method runAction must be implement.');
 	}
-});
+};
+var Place = new JS.Class(PlaceClass);

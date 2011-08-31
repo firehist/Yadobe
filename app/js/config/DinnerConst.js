@@ -3,17 +3,17 @@
  * @author Benjamin Longearet <firehist@gmail.com>
  * @since 30/08/2011
  */
-var CONST = {};
+var DINNERCONST = {};
 /**
  * CONST.TIME Struct
  * @author Benjamin Longearet <firehist@gmail.com>
  * @since 30/08/2011
  */
-CONST.TIME = {
+DINNERCONST.TIME = {
 	createGroup: {
 		timeRef: 1000,
 		getRandTime: function() {
-			return CONST.TIME.createGroup.timeRef;
+			return DINNERCONST.TIME.createGroup.timeRef;
 		}
 	}
 };

@@ -2,26 +2,39 @@
  * KitchenPlace class
  * @since 30/08/2011
  * @author Benjamin Longearet <firehist@gmail.com>
- * @module Yadobe
+ * @module Dinner
  **/
-var KitchenPlace = new JS.Class(Place, {
+var KitchenPlaceClass = {
 	// Attributes
 	/**
 	 * List of menu waiting to be cook
-	 * @var List<Menu> pendingMenuList
+	 * @property pendingMenuList
+	 * @type Array
+	 * @default Array
 	 */
 	pendingMenuList: new Array(),
 	/**
 	 * List of menu ready
-	 * @var List<Menu> readyMenuList
+	 * @property readyMenuList
+	 * @type List<Menu>
+	 * @default Array
 	 */
 	readyMenuList: new Array(),
 	/**
 	 * Max length of menuList
-	 * @var int maxGroupList
+	 * @property maxGroupList
+	 * @type int
+	 * @default 10
 	 */
 	maxMenuList: 10,
 	// Constructor
+	/**
+	 * @constructor
+	 * @class KitchenPlace
+	 * @method initialize
+	 * @param {String} name
+	 * @param {int} maxMenuList
+	 */
 	initialize: function(name, maxMenuList) {
 		this.callSuper(name);
 		if(maxMenuList)	this.maxMenuList = maxMenuList;
@@ -29,6 +42,7 @@ var KitchenPlace = new JS.Class(Place, {
 	// Methods
 	/**
 	 * Get the total menu in kitchen
+	 * @class KitchenPlace
 	 * @author Benjamin Longearet <firehist@gmail.com>
 	 * @since 30/08/2011
 	 * @return int sum of two menu list
@@ -38,6 +52,7 @@ var KitchenPlace = new JS.Class(Place, {
 	},
 	/**
 	 * Run action of reception with moving group to a table
+	 * @class KitchenPlace
 	 * @author Benjamin Longearet <firehist@gmail.com>
 	 * @since 30/08/2011
 	 * @return Group The first group of list
@@ -52,7 +67,7 @@ var KitchenPlace = new JS.Class(Place, {
 	 * Add a menu to the list
 	 * @author Benjamin Longearet <firehist@gmail.com>
 	 * @since 30/08/2011
-	 * @param Menu menu
+	 * @param {int} menu
 	 * @return boolean true if successful, false else
 	 */
 	addMenu: function(menu) {
@@ -66,7 +81,6 @@ var KitchenPlace = new JS.Class(Place, {
 	 * Switch the first menu to ready state
 	 * @author Benjamin Longearet <firehist@gmail.com>
 	 * @since 30/08/2011
-	 * @param int menu index
 	 * @return boolean true if successful, false else
 	 */
 	setReady: function() {
@@ -76,4 +90,5 @@ var KitchenPlace = new JS.Class(Place, {
 		}
 		return false;
 	}
-});
+};
+var KitchenPlace = new JS.Class(Place, KitchenPlaceClass);

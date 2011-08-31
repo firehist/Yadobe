@@ -4,7 +4,7 @@
  * @author Benjamin Longearet <firehist@gmail.com>
  * @module Yadobe
  **/
-var RecipeManager = new JS.Class({
+var RecipeManagerClass = {
 	// Attributes
 	/**
 	 * List of all starter recipes
@@ -99,7 +99,8 @@ var RecipeManager = new JS.Class({
 	createDrinkRecipe: function(name, duration, price) {
 		this.createRecipe(name, duration, 'drink', price);
 	}
-});
+};
+var RecipeManager = new JS.Class(RecipeManagerClass);
 
 RecipeManager.Factory = {};
 RecipeManager.Factory.newInstance = function() {

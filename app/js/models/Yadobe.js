@@ -3,7 +3,7 @@
  * @author Benjamin Longearet <firehist@gmail.com>
  * @since 30/08/2011
  */
-var Yadobe = new JS.Class({
+var YadobeClass = {
 	// Attributes
 	dinnerGame: null,
 	// Constructor
@@ -17,7 +17,8 @@ var Yadobe = new JS.Class({
 		this.dinnerGame = new DinnerGame();
 	}
 	// methods
-});
+};
+var Yadobe = new JS.Class(YadobeClass);
 // Static attributes
 Yadobe.canvas = null;
 Yadobe.stage = null;
