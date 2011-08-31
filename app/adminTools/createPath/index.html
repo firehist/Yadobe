@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Yadobe Project</title>
+		
+		<!-- CSS Import -->
+		<link href="../../css/reset.css" rel="stylesheet" type="text/css" />
+		<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+		
+		<!-- JavaScript Import -->
+		<!-- Import EaselJS Framework -->
+		<script type="text/javascript" src="../../js/easel-0.3.2.min.js"></script>
+		<!-- Import jQuery Framework -->
+		<script type="text/javascript" src="../../js/jquery-1.6.2.min.js"></script>
+		<script type="text/javascript" src="createPath.js"></script>
+	</head>
+	
+	<body onload="init();">
+		<div id="container-wrapper">
+			<div style="width: 300px;float: left;">
+				<h1 class="description">
+					Yadobe project: création de chemin rapidement!
+				</h1>
+			</div>
+			<div style="width: 500px; float: right; color: white;">
+				<table>
+					<tr>
+						<td style="padding:2px" valign="middle">Pas: <input type="text" id="pasValue" value="30" /></td>
+						<td style="padding:2px" valign="middle">Nom: <input type="text" id="namePath" value="" /></td>
+						<td style="padding:2px" valign="middle"><input type="button" id="closePath" value="Fermer chemin" /></td>
+					</tr>
+					<tr>
+						<td style="padding:2px" valign="middle"><input type="button" id="restartCanvas" value="restart" /></td>
+					</tr>
+				</table>
+			</div>
+			<div style="clear:both"></div>
+			<div class="yadobe-canvas-wrapper">
+				<canvas id="yadobe-canvas" width="800px" height="600px"></canvas>
+			</div>
+			<div class="information">
+			</div>
+		</div>
+	</body>
+</html>

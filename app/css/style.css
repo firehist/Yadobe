@@ -1,0 +1,31 @@
+body {
+	background-color: #333;
+}
+#container-wrapper {
+	width: 800px;
+	margin: 0 auto;
+}
+h1.description {
+	margin: 20px auto;
+	color: white;
+}
+canvas.yadobe-canvas {
+	background-color: #FFF;
+	width: 800px;
+	height: 600px;
+	position: absolute;
+}
+.yadobe-canvas-wrapper {
+	border: 1px solid white;
+	width: 800px;
+	height: 600px;
+	position: relative;
+	background-color: #FFF;
+}
+.information {
+	width: 100%;
+	color: white;
+	text-align: left;
+	height: 100px;
+	overflow: auto;
+}
