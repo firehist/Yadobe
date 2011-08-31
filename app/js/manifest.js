@@ -20,6 +20,8 @@ JS.Packages(function() { with(this) {
 	file(JSMODEL_DINNER_PATH + 'Recipe.js').provides('Recipe').requires('JS.Class');
 	file(JSMODEL_DINNER_PATH + 'RecipeManager.js').provides('RecipeManager').requires('Recipe');
 	file(JSMODEL_DINNER_PATH + 'Waiter.js').provides('Waiter').requires('Menu');
+	/* tools libs */
+	file(JSLIBS_PATH + 'tools.js').provides('Tools');
 	/* jQuery libs */
 	file('https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.js')
         .provides('jQuery');
@@ -39,6 +41,7 @@ JS.Packages(function() { with(this) {
         .provides('DinnerGame')
 		.requires(
 			'JS.State',
+			'Tools',
 			'jQuery',
 			'Easel',
 			'DINNERCONST',

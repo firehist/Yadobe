@@ -3,13 +3,19 @@
  * @since 30/08/2011
  * @author Benjamin Longearet <firehist@gmail.com>
  * @module Yadobe
+ * @class ReceptionPlace
  **/
 var ReceptionPlaceClass = {
 	// Attributes
+	/**
+	 * The name of creation group Constante in DINNERCONST.TIME
+	 * @var String _groupCreationTimer
+	 * @private
+	 */
 	_groupCreationTimer: 'createGroup',
 	/**
 	 * List of group waiting to reception desk
-	 * @var List<Group> groupList
+	 * @var Array<Group> groupList
 	 */
 	groupList: new Array(),
 	/**
@@ -18,6 +24,15 @@ var ReceptionPlaceClass = {
 	 */
 	maxGroupList: 2,
 	// Constructor
+	/**
+	 * @constructor
+	 * @class ReceptionPlace
+	 * @method initialize
+	 * @author Benjamin Longearet <firehist@gmail.com>
+	 * @since 31/08/2011
+	 * @param name String Name of this place
+	 * @param maxGroupList int Maximum waiting list
+	 */
 	initialize: function(name, maxGroupList) {
 		console.log('Reception init');
 		this.callSuper(name);
@@ -26,10 +41,13 @@ var ReceptionPlaceClass = {
 	// Methods
 	/**
 	 * Test if groupList is empty
+	 * @class ReceptionPlace
+	 * @method _isGroupEmpty
 	 * @author Benjamin Longearet <firehist@gmail.com>
 	 * @since 30/08/2011
 	 * @private
 	 * @return boolean true groupList is empty, false else
+	 * @private
 	 */
 	_isGroupEmpty: function() {
 		return this.menuList.length == 0;
@@ -45,7 +63,7 @@ var ReceptionPlaceClass = {
 		TimeManager.setTimer(this._groupCreationTimer, this.createGroup, this);
 	},
 	/**
-	 * Stop the game
+	 * Pause the game
 	 * @class ReceptionPlace
 	 * @method pause
 	 * @author Benjamin Longearet <firehist@gmail.com>
@@ -53,26 +71,6 @@ var ReceptionPlaceClass = {
 	 */
 	pause: function() {
 		TimeManager.stopTimer(this._groupCreationTimer, this);
-	},
-	/**
-	 * Compute the table bill by adding all menu price
-	 * @class ReceptionPlace
-	 * @method getPriceTable
-	 * @author Benjamin Longearet <firehist@gmail.com>
-	 * @since 30/08/2011
-	 * @return int The total price for the table
-	 */
-	getPriceTable: function() {
-		var price = 0;
-		if(!this._isGroupEmpty()) {
-			for(var i in this.menuList) {
-				var menu = this.menuList[i];
-				if(menu instanceof Menu) {
-					price += menu.getPriceMenu();
-				}
-			}
-		}
-		return price;
 	},
 	/**
 	 * Run action of reception with moving group to a table

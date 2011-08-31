@@ -7,7 +7,7 @@
 var DinnerGameClass = {
 	// Attributes
 	/**
-	 * @type Recipe
+	 * @type RecipeManager
 	 */
 	recipes: null,
 	/**
