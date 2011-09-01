@@ -10,11 +10,15 @@ JS.Packages(function() { with(this) {
 	/* config */
 	file(JSCONFIG_PATH + 'DinnerConst.js').provides('DINNERCONST');
 	file(JSCONFIG_PATH + 'TimeManager.js').provides('TimeManager').requires('DINNERCONST');
+	file(JSCONFIG_PATH + 'Page.js').provides('Page').requires('JS.Class');
 	/* Dinner models */
 	file(JSMODEL_DINNER_PATH + 'Place.js').provides('Place').requires('JS.Class');
 	file(JSMODEL_DINNER_PATH + 'TablePlace.js').provides('TablePlace').requires('Place');
+	file(JSMODEL_DINNER_PATH + 'TablePlaceGraph.js').provides('TablePlaceGraph').requires('TablePlace');
 	file(JSMODEL_DINNER_PATH + 'ReceptionPlace.js').provides('ReceptionPlace').requires('Place');
+	file(JSMODEL_DINNER_PATH + 'ReceptionPlaceGraph.js').provides('ReceptionPlaceGraph').requires('ReceptionPlace');
 	file(JSMODEL_DINNER_PATH + 'KitchenPlace.js').provides('KitchenPlace').requires('Place');
+	file(JSMODEL_DINNER_PATH + 'KitchenPlaceGraph.js').provides('KitchenPlaceGraph').requires('KitchenPlace');
 	file(JSMODEL_DINNER_PATH + 'Group.js').provides('Group').requires('JS.Class');
 	file(JSMODEL_DINNER_PATH + 'Menu.js').provides('Menu').requires('Recipe');
 	file(JSMODEL_DINNER_PATH + 'Recipe.js').provides('Recipe').requires('JS.Class');
@@ -46,9 +50,10 @@ JS.Packages(function() { with(this) {
 			'Easel',
 			'DINNERCONST',
 			'TimeManager',
-			'TablePlace',
-			'ReceptionPlace',
-			'KitchenPlace',
+			'Page',
+			'TablePlaceGraph',
+			'ReceptionPlaceGraph',
+			'KitchenPlaceGraph',
 			'Group',
 			'RecipeManager',
 			'Waiter'
