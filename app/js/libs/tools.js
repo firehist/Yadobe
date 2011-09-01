@@ -12,5 +12,15 @@ var Tools = {
 		this.RGB = RGB;
 		this.HEX = HEX;
 		this.HSV = HSV;
+	},
+	Sleep: function(milliSeconds) {
+		var startTime = new Date().getTime(); // get the current time
+		while (new Date().getTime() < startTime + milliSeconds); // hog cpu
+	},
+	ObjSize: function(obj) {
+		var len = obj.length ? obj.length : 0;
+		for (var k in obj)
+			len++;
+		return len;
 	}
 };

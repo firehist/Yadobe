@@ -5,18 +5,48 @@
  */
 var YadobeClass = {
 	// Attributes
+	totalRessource: {
+		dinner: 0
+	},
+	totalRessourceLoaded: {
+		dinner: 0
+	},
+	/**
+	 * Use to refresh canvas draw. True = yes, false = no
+	 * Its necessary for decrease latency drawing on the canvas
+	 * @type boolean
+	 */
+	update: false,
+	/**
+	 * Canvas used by the application
+	 * @type object
+	 */
+	canvas: null,
+	/**
+	 * Main stage of the application
+	 * @type Easel.Stage
+	 */
+	stage: null,
+	/**
+	 * Reference of the waitingPage
+	 * @type waitingPage
+	 */
+	waitingPage: null,
+	/**
+	 * Reference of the dinnerGame
+	 * @type DinnerGame
+	 */
 	dinnerGame: null,
-	imgLoaded: 0,
 	// Constructor
 	initialize: function(canvasId) {
 		console.log('Yadobe init');
+		Yadobe.instance = this;
 		// Get canvas
-		Yadobe.canvas = window.document.getElementById(canvasId);
+		this.canvas = window.document.getElementById(canvasId);
 		// Create main stage
-		Yadobe.stage = new Stage(Yadobe.canvas);
-		Yadobe.stage.enableMouseOver(25);
-		// Initialize dinnerGame
-		this.initGame();
+		this.stage = new Stage(this.canvas);
+		// Initialize Yadobe
+		this.initYadobe();
 	},
 	// methods
 	/**
@@ -28,13 +58,49 @@ var YadobeClass = {
 	 * @author Benjamin Longearet <firehist@gmail.com>
 	 * @since 01/09/2011
 	 */
-	initGame: function() {
-		console.log('Yadobe.initGame()');	
-		Yadobe.update = false;
-		Yadobe.stage.enableMouseOver(25);
-		Ticker.addListener(Yadobe);
-		// @TODO draw waiting screen		
+	initYadobe: function() {
+		this.update = false;
+		this.stage.enableMouseOver(25);
+		Ticker.addListener(Yadobe.getInstance());
+		// Load yadobe splashScreen
+		this.initWaitingPage();
+	},
+	/**
+	 * 
+	 */
+	initWaitingPage: function() {
+		JS.require('WaitingPage', function() {
+			var y = Yadobe.getInstance();
+			y.waitingPage = new WaitingPage();
+			y.initDinnerGame();
+		});
+	},
+	/**
+	 * Load ressources and images for DinnerGame
+	 * @class Yadobe
+	 * @method initDinnerGame
+	 * @author Benjamin Longearet <firehist@gmail.com>
+	 * @since 01/09/2011
+	 */
+	initDinnerGame: function() {
+		this.totalRessource.dinner = DINNERCONST.LOADING.length + Tools.ObjSize(DINNERCONST.IMAGE);
+		this.totalRessourceLoaded.dinner = 0;
+		// load image for DinnerGame package
+		this.initDinnerGameRessource();
+		// load image for DinnerGame package
 		this.initDinnerGameImage();
+	},
+	/**
+	 * 
+	 */
+	initDinnerGameRessource: function() {
+		for(var i in DINNERCONST.LOADING) {
+			var callback = function(){
+				var y = Yadobe.getInstance();
+				y.initDinnerGameLoadDone.call(y)
+			};
+			JS.require(DINNERCONST.LOADING[i], callback);
+		}
 	},
 	/**
 	 * Load all image in DINNERCONST.IMAGE object
@@ -44,11 +110,10 @@ var YadobeClass = {
 	 * @since 01/09/2011
 	 */
 	initDinnerGameImage: function() {
-		console.log('initDinnerGameImage');
 		for(var x in DINNERCONST.IMAGE) {
 			var src = DINNERCONST.IMAGE[x].toString();
 			DINNERCONST.IMAGE[x] = new Image();
-			DINNERCONST.IMAGE[x].onload = (function(l) {l.initDinnerGameImageDone()})(this);
+			DINNERCONST.IMAGE[x].onload = (function(l) {l.initDinnerGameLoadDone()})(this);
 			DINNERCONST.IMAGE[x].src = src;
 		}
 	},
@@ -59,9 +124,10 @@ var YadobeClass = {
 	 * @author Benjamin Longearet <firehist@gmail.com>
 	 * @since 01/09/2011
 	 */
-	initDinnerGameImageDone: function() {
-		this.imgLoaded++;
-		if(this.imgLoaded == DINNERCONST.IMAGESIZE) {
+	initDinnerGameLoadDone: function() {
+		this.totalRessourceLoaded.dinner++;
+		this.waitingPage.setProgressBarValue(parseInt(this.totalRessourceLoaded.dinner*100/this.totalRessource.dinner, 10));
+		if(this.totalRessourceLoaded.dinner == this.totalRessource.dinner) {
 			this.loadGame();
 		}
 	},
@@ -73,23 +139,47 @@ var YadobeClass = {
 	 * @since 01/09/2011
 	 */
 	loadGame: function() {
-		this.dinnerGame = new DinnerGame();
-		window.setTimeout("Yadobe.setUpdate()", 1000);
+		// Test if all image and package are loaded before init DinnerGame
+		if(this.totalRessourceLoaded.dinner == this.totalRessource.dinner) {
+			console.log("loadGame()");
+			this.dinnerGame = new DinnerGame();
+			window.setTimeout("Yadobe.getInstance().setUpdate()", 1000);
+		}
+	},
+	/**
+	 * Set update to true (for refresh canvas)
+	 * @class Yadobe
+	 * @method setUpdate
+	 * @author Benjamin Longearet <firehist@gmail.com>
+	 * @since 31/08/2011
+	 */
+	setUpdate: function() {
+		this.update = true;
+	},
+	/**
+	 * Method use to refresh canvas drawing
+	 * @class Yadobe
+	 * @method tick
+	 * @author Benjamin Longearet <firehist@gmail.com>
+	 * @since 31/08/2011
+	 */
+	tick: function() {
+		if(this.update) {
+			console.log('Yadobe tick()');	
+			this.update = false; // only update once
+			this.stage.update();
+		}
 	}
 	
 };
 var Yadobe = new JS.Class(YadobeClass);
-// Static attributes
-Yadobe.update = false;
-Yadobe.canvas = null;
-Yadobe.stage = null;
-Yadobe.setUpdate = function() {
-	Yadobe.update = true;
-};
-Yadobe.tick = function() {
-	if(Yadobe.update) {
-		console.log('Yadobe.tick()');	
-		Yadobe.update = false; // only update once
-		Yadobe.stage.update();
+
+// Static attribute
+Yadobe.instance = null;
+// Static method singleton
+Yadobe.getInstance = function() {
+	if(Yadobe.instance != null) {
+		return Yadobe.instance;
 	}
+	return false;
 };

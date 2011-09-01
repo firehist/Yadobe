@@ -11,10 +11,6 @@ var DinnerGameClass = {
 	INDEX_RECEPTION: 3,
 	INDEX_TABLES: [4,5,6,7],
 	/**
-	 * @type Easel.Container
-	 */
-	pageContainer: null,
-	/**
 	 * @type RecipeManager
 	 */
 	recipes: null,
@@ -46,7 +42,8 @@ var DinnerGameClass = {
 		console.log('Dinner Game init');
 		// init Page Container
 		this.pageContainer = new Container();
-		Yadobe.stage.addChild(this.pageContainer);
+		this.pageContainer.visible = false;
+		Yadobe.getInstance().stage.addChild(this.pageContainer);
 		// init background
 		this.createBackground();
 		// init singleton

@@ -5,6 +5,23 @@
  */
 var DINNERCONST = {};
 /**
+ * DINNERCONST.LOADING Struct
+ * All time keywork hava to be set in JS.Package
+ * @author Benjamin Longearet <firehist@gmail.com>
+ * @since 30/08/2011
+ */
+DINNERCONST.LOADING = [
+	'TimeManager',
+	'Page',
+	'TablePlaceGraph',
+	'ReceptionPlaceGraph',
+	'KitchenPlaceGraph',
+	'Group',
+	'RecipeManager',
+	'Waiter',
+	'DinnerGame'
+];
+/**
  * DINNERCONST.TIME Struct
  * @author Benjamin Longearet <firehist@gmail.com>
  * @since 30/08/2011
@@ -34,24 +51,18 @@ DINNERCONST.COLOR = {
 	yellow: new Tools.Color('255, 255, 0', '#FFFF00', '60, 100, 100')
 };
 /**
- * DINNERCONST.IMAGESIZE Number
- * @author Benjamin Longearet <firehist@gmail.com>
- * @since 01/09/2011
- */
-DINNERCONST.IMAGESIZE = 8;
-/**
  * DINNERCONST.IMAGE Struct
  * @author Benjamin Longearet <firehist@gmail.com>
  * @since 01/09/2011
  */
 DINNERCONST.IMAGE = {
-	kitchen: '/img/dinnerGame/stage_01_kitchen.png',
-	reception: '/img/dinnerGame/stage_01_reception.png',
-	table_red: '/img/dinnerGame/stage_01_table_red.png',
-	table_green: '/img/dinnerGame/stage_01_table_green.png',
-	table_yellow: '/img/dinnerGame/stage_01_table_yellow.png',
-	table_blue: '/img/dinnerGame/stage_01_table_blue.png',
-	human_table: '/img/dinnerGame/stage_01_table_human.png',
+	kitchen: 'img/dinnerGame/stage_01_kitchen.png',
+	reception: 'img/dinnerGame/stage_01_reception.png',
+	table_red: 'img/dinnerGame/stage_01_table_red.png',
+	table_green: 'img/dinnerGame/stage_01_table_green.png',
+	table_yellow: 'img/dinnerGame/stage_01_table_yellow.png',
+	table_blue: 'img/dinnerGame/stage_01_table_blue.png',
+	human_table: 'img/dinnerGame/stage_01_table_human.png',
 	background: 'img/dinnerGame/stage_01.jpg'
 };
 /**

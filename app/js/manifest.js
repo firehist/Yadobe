@@ -8,12 +8,12 @@ JS.cacheBust = true;
 
 JS.Packages(function() { with(this) {
 	/* config */
-	file(JSCONFIG_PATH + 'DinnerConst.js').provides('DINNERCONST');
+	file(JSCONFIG_PATH + 'DinnerConst.js').provides('DINNERCONST').requires('Easel');
 	file(JSCONFIG_PATH + 'TimeManager.js').provides('TimeManager').requires('DINNERCONST');
 	file(JSCONFIG_PATH + 'Page.js').provides('Page').requires('JS.Class');
 	/* Dinner models */
 	file(JSMODEL_DINNER_PATH + 'Place.js').provides('Place').requires('JS.Class');
-	file(JSMODEL_DINNER_PATH + 'TablePlace.js').provides('TablePlace').requires('Place');
+	file(JSMODEL_DINNER_PATH + 'TablePlace.js').provides('TablePlace').requires('Place', 'JS.State');
 	file(JSMODEL_DINNER_PATH + 'TablePlaceGraph.js').provides('TablePlaceGraph').requires('TablePlace');
 	file(JSMODEL_DINNER_PATH + 'ReceptionPlace.js').provides('ReceptionPlace').requires('Place');
 	file(JSMODEL_DINNER_PATH + 'ReceptionPlaceGraph.js').provides('ReceptionPlaceGraph').requires('ReceptionPlace');
@@ -45,10 +45,6 @@ JS.Packages(function() { with(this) {
         .provides('DinnerGame')
 		.requires(
 			'JS.State',
-			'Tools',
-			'jQuery',
-			'Easel',
-			'DINNERCONST',
 			'TimeManager',
 			'Page',
 			'TablePlaceGraph',
@@ -58,10 +54,27 @@ JS.Packages(function() { with(this) {
 			'RecipeManager',
 			'Waiter'
 		);
+	/* Waiting */
+	file(JSMODEL_PATH + 'WaitingPage.js')
+		.provides('WaitingPage')
+		.requires(
+			'JS.Class',
+			'Tools',
+			'jQuery',
+			'Easel',
+			'DINNERCONST',
+			'Page'
+		);
 	/* Yadobe */
 	file(JSMODEL_PATH + 'Yadobe.js')
 		.provides('Yadobe')
-		.requires('DinnerGame');
+		.requires(
+			'JS.Class',
+			'Tools',
+			'jQuery',
+			'Easel',
+			'DINNERCONST'
+		);
 	
 }});
 
