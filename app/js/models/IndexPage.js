@@ -38,13 +38,37 @@ var IndexPageClass = {
 	 * @since 02/09/2011
 	 */
 	create: function() {
-		// Text
-		var text = new Text('Accueil', 'bold 36px Arial', '#000');
-		text.x = 100;
-		text.y = 100;
-		text.textAlign = 'center';
-		// Add elements to container
-		this.pageContainer.addChildAt(text, 0);
+        
+        var playButton = new Button({
+            text : Translation.getTranslation('Play'),
+            x : 400,
+            y : 200,
+            height : 80,
+            width : 300,
+            background : "#C49A70",
+            color : "#FFFFED",
+            click : function() {
+                // Display the DinnerGame page
+                Yadobe.getInstance().setCurrentPage(DinnerGamePage.getInstance());
+            }
+        });
+        this.pageContainer.addChild(playButton);
+        
+        var optionsButton = new Button({
+            text : Translation.getTranslation('Options'),
+            x : 400,
+            y : 300,
+            height : 80,
+            width : 300,
+            background : "#C49A70",
+            color : "#FFFFED",
+            click : function() {
+                // Display the Options page
+                alert('Options');
+            }
+        });
+        this.pageContainer.addChild(optionsButton);
+        
 		Yadobe.getInstance().setUpdate();
 	}
 };
