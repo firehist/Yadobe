@@ -3,27 +3,28 @@
  * @since 30/08/2011
  * @author Benjamin Longearet <firehist@gmail.com>
  * @module Yadobe
+ * @class
  **/
-var Menu = new JS.Class({
+var MenuClass = {
 	// Attributes
 	/**
 	 * Starter
-	 * @param Recipe starter
+	 * @type Recipe
 	 */
 	starter: null,
 	/**
 	 * Dish
-	 * @param Recipe dish
+	 * @type Recipe
 	 */
 	dish: null,
 	/**
 	 * Dessert
-	 * @param Recipe dessert
+	 * @type Recipe
 	 */
 	dessert: null,
 	/**
 	 * Drink
-	 * @param Recipe drink
+	 * @type Recipe
 	 */
 	drink: null,
 	// Constructor
@@ -51,4 +52,5 @@ var Menu = new JS.Class({
 		if(this._validRecipe(this.drink)) duration += this.drink.getDuration();
 		return duration;
 	}	
-});
+};
+var Menu = new JS.Class(MenuClass);

@@ -4,7 +4,7 @@
  * @author Benjamin Longearet <firehist@gmail.com>
  * @module Yadobe
  **/
-var Waiter = new JS.Class({
+var WaiterClass = {
 	// Attributes
 	/**
 	 * Name of waiter
@@ -42,6 +42,7 @@ var Waiter = new JS.Class({
 	// Methods
 	/**
 	 * Add destination to the waiter
+	 * @method addDestination
 	 * @author Benjamin Longearet <firehist@gmail.com>
 	 * @since 30/08/2011
 	 */
@@ -61,4 +62,5 @@ var Waiter = new JS.Class({
 		}
 		return false;
 	}
-});
+};
+var Waiter = new JS.Class(WaiterClass);

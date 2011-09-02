@@ -4,7 +4,7 @@
  * @author Benjamin Longearet <firehist@gmail.com>
  * @module Yadobe
  **/
-var TablePlace = new JS.Class(Place, {
+var TablePlaceClass = {
 	// Includes
 	include: JS.State,
 	// Attributes
@@ -47,7 +47,9 @@ var TablePlace = new JS.Class(Place, {
 		}
 		return price;
 	}
-});
+};
+var TablePlace = new JS.Class(Place, TablePlaceClass);
+
 /**
  * TablePlace states declaration
  * @author Benjamin Longearet <firehist@gmail.com>

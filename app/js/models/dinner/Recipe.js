@@ -4,7 +4,7 @@
  * @author Benjamin Longearet <firehist@gmail.com>
  * @module Yadobe
  **/
-var Recipe = new JS.Class({
+var RecipeClass = {
 	// Attributes
 	/**
 	 * Name of recipe
@@ -43,4 +43,5 @@ var Recipe = new JS.Class({
 	getDuration: function() {
 		return this.duration;
 	}	
-});
+};
+var Recipe = new JS.Class(RecipeClass);
