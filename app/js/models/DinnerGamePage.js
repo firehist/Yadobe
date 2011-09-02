@@ -36,6 +36,7 @@ var DinnerGamePageClass = {
 	 */
 	initialize: function() {
 		console.log('Dinner Game init');
+		DinnerGamePage.instance = this;
 		// init Page Container
 		this.callSuper();
 		// init background
