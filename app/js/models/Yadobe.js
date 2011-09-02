@@ -28,16 +28,16 @@ var YadobeClass = {
 	 */
 	stage: null,
 	/**
-	 * Reference of the waitingPage
-	 * @type waitingPage
+	 * CurrentPage instance
 	 */
-	waitingPage: null,
-	/**
-	 * Reference of the dinnerGame
-	 * @type DinnerGame
-	 */
-	dinnerGame: null,
+	currentPage: null,
 	// Constructor
+	/**
+	 * @constructor
+	 * @authod Benjamin Longearet <firehist@gmail.com>
+	 * @since 29/08/2011
+	 * @param canvasId String ID of the canvas HTML Object
+	 */
 	initialize: function(canvasId) {
 		console.log('Yadobe init');
 		Yadobe.instance = this;
@@ -51,12 +51,11 @@ var YadobeClass = {
 	// methods
 	/**
 	 * Initialize event and tick function for draw on canvas
-	 * Draw a waiting screen
-	 * Load all ressources for the game
 	 * @class Yadobe
 	 * @method initDinnerGameImage
 	 * @author Benjamin Longearet <firehist@gmail.com>
 	 * @since 01/09/2011
+	 * @private
 	 */
 	initYadobe: function() {
 		this.update = false;
@@ -66,70 +65,19 @@ var YadobeClass = {
 		this.initWaitingPage();
 	},
 	/**
-	 * 
+	 * Initialise waiting page
+	 * @class Yadobe
+	 * @method initWaitingPage
+	 * @author Benjamin Longearet <firehist@gmail.com>
+	 * @since 02/09/2011
+	 * @private
 	 */
 	initWaitingPage: function() {
 		JS.require('WaitingPage', function() {
-			var y = Yadobe.getInstance();
-			y.waitingPage = new WaitingPage();
-			y.initDinnerGame();
+			var wp = WaitingPage.getInstance();
+			Yadobe.getInstance().setCurrentPage(wp);
+			wp.launchLoading();
 		});
-	},
-	/**
-	 * Load ressources and images for DinnerGame
-	 * @class Yadobe
-	 * @method initDinnerGame
-	 * @author Benjamin Longearet <firehist@gmail.com>
-	 * @since 01/09/2011
-	 */
-	initDinnerGame: function() {
-		this.totalRessource.dinner = DINNERCONST.LOADING.length + Tools.ObjSize(DINNERCONST.IMAGE);
-		this.totalRessourceLoaded.dinner = 0;
-		// load image for DinnerGame package
-		this.initDinnerGameRessource();
-		// load image for DinnerGame package
-		this.initDinnerGameImage();
-	},
-	/**
-	 * 
-	 */
-	initDinnerGameRessource: function() {
-		for(var i in DINNERCONST.LOADING) {
-			var callback = function(){
-				var y = Yadobe.getInstance();
-				y.initDinnerGameLoadDone.call(y)
-			};
-			JS.require(DINNERCONST.LOADING[i], callback);
-		}
-	},
-	/**
-	 * Load all image in DINNERCONST.IMAGE object
-	 * @class Yadobe
-	 * @method initDinnerGameImage
-	 * @author Benjamin Longearet <firehist@gmail.com>
-	 * @since 01/09/2011
-	 */
-	initDinnerGameImage: function() {
-		for(var x in DINNERCONST.IMAGE) {
-			var src = DINNERCONST.IMAGE[x].toString();
-			DINNERCONST.IMAGE[x] = new Image();
-			DINNERCONST.IMAGE[x].onload = (function(l) {l.initDinnerGameLoadDone()})(this);
-			DINNERCONST.IMAGE[x].src = src;
-		}
-	},
-	/**
-	 * Function call when a picture was finished to be loaded
-	 * @class Yadobe
-	 * @method initDinnerGameImageDone
-	 * @author Benjamin Longearet <firehist@gmail.com>
-	 * @since 01/09/2011
-	 */
-	initDinnerGameLoadDone: function() {
-		this.totalRessourceLoaded.dinner++;
-		this.waitingPage.setProgressBarValue(parseInt(this.totalRessourceLoaded.dinner*100/this.totalRessource.dinner, 10));
-		if(this.totalRessourceLoaded.dinner == this.totalRessource.dinner) {
-			this.loadGame();
-		}
 	},
 	/**
 	 * Load the game when ressources are loaded
@@ -137,14 +85,11 @@ var YadobeClass = {
 	 * @method loadGame
 	 * @author Benjamin Longearet <firehist@gmail.com>
 	 * @since 01/09/2011
+	 * @public
 	 */
 	loadGame: function() {
-		// Test if all image and package are loaded before init DinnerGame
-		if(this.totalRessourceLoaded.dinner == this.totalRessource.dinner) {
-			console.log("loadGame()");
-			this.dinnerGame = new DinnerGame();
-			window.setTimeout("Yadobe.getInstance().setUpdate()", 1000);
-		}
+		this.setCurrentPage(IndexPage.getInstance());
+		this.setUpdate();
 	},
 	/**
 	 * Set update to true (for refresh canvas)
@@ -152,6 +97,7 @@ var YadobeClass = {
 	 * @method setUpdate
 	 * @author Benjamin Longearet <firehist@gmail.com>
 	 * @since 31/08/2011
+	 * @public
 	 */
 	setUpdate: function() {
 		this.update = true;
@@ -162,6 +108,7 @@ var YadobeClass = {
 	 * @method tick
 	 * @author Benjamin Longearet <firehist@gmail.com>
 	 * @since 31/08/2011
+	 * @public
 	 */
 	tick: function() {
 		if(this.update) {
@@ -169,8 +116,24 @@ var YadobeClass = {
 			this.update = false; // only update once
 			this.stage.update();
 		}
-	}
-	
+	},
+	/**
+	 * Set the current display page and hide the old one
+	 * @class Yadobe
+	 * @method setCurrentPage
+	 * @author BenjaminLongearet <firehist@gmail.com>
+	 * @since 02/09/2011
+	 * @param refPage Page New current page
+	 * @public
+	 */
+	setCurrentPage: function(refPage) {
+		if(this.currentPage instanceof Page) {
+			this.currentPage.hide();
+		}
+		refPage.show();
+		this.currentPage = refPage;
+		this.setUpdate();
+	}	
 };
 var Yadobe = new JS.Class(YadobeClass);
 

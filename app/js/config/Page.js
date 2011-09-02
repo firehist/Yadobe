@@ -1,22 +1,30 @@
 /**
- * Page Interface
+ * Page
  * @since 31/08/2011
  * @author Benjamin Longearet <firehist@gmail.com>
  * @module Yadobe
  **/
 var PageClass = {
 	pageContainer: null,
+	initialize: function() {
+		// init Page Container
+		this.pageContainer = new Container();
+		Yadobe.getInstance().stage.addChild(this.pageContainer);
+	},
 	show: function() {
-		throw new Error('show() must be implemented.')
+		this.pageContainer.visible = true;
 	},
 	hide: function() {
-		throw new Error('hide() must be implemented.')
+		this.pageContainer.visible = false;
 	},
 	save: function() {
 		throw new Error('save() must be implemented.')
 	},
 	restore: function() {
 		throw new Error('restore() must be implemented.')
+	},
+	create: function() {
+		throw new Error('create() must be implemented.');
 	}
 };
 var Page = new JS.Class(PageClass);

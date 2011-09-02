@@ -1,15 +1,11 @@
 /**
- * Dinner Game class
+ * DinnerGamePage class
  * @author Benjamin Longearet <firehist@gmail.com>
  * @since 31/08/2011
- * @class DinnerGame
+ * @class DinnerGamePage
  */
-var DinnerGameClass = {
+var DinnerGamePageClass = {
 	// Attributes
-	INDEX_BACKGROUND: 1,
-	INDEX_KITCHEN: 2,
-	INDEX_RECEPTION: 3,
-	INDEX_TABLES: [4,5,6,7],
 	/**
 	 * @type RecipeManager
 	 */
@@ -33,7 +29,7 @@ var DinnerGameClass = {
 	// Constructor
 	/**
 	 * @constructor
-	 * @class DinnerGame
+	 * @class DinnerGamePage
 	 * @method initialize
 	 * @author Benjamin Longearet <firehist@gmail.com>
 	 * @since 30/08/2011
@@ -41,9 +37,7 @@ var DinnerGameClass = {
 	initialize: function() {
 		console.log('Dinner Game init');
 		// init Page Container
-		this.pageContainer = new Container();
-		this.pageContainer.visible = false;
-		Yadobe.getInstance().stage.addChild(this.pageContainer);
+		this.callSuper();
 		// init background
 		this.createBackground();
 		// init singleton
@@ -51,11 +45,11 @@ var DinnerGameClass = {
 		// Kitchen
 		var kitchenModel = new KitchenPlace('Cuisine', 10);
 		this.kitchen = new KitchenPlaceGraph(kitchenModel);
-		this.pageContainer.addChildAt(this.kitchen.getContainer(), this.INDEX_KITCHEN);
+		this.pageContainer.addChildAt(this.kitchen.getContainer(), DINNERCONST.SCENES.kitchen);
 		// Reception
 		var receptionModel = new ReceptionPlace('Réception', 3);
 		this.reception = new ReceptionPlaceGraph(receptionModel);
-		this.pageContainer.addChildAt(this.reception.getContainer(), this.INDEX_RECEPTION);
+		this.pageContainer.addChildAt(this.reception.getContainer(), DINNERCONST.SCENES.reception);
 		// Tables
 		this.tables = new Array();
 		var colors = ['red','blue','green','yellow'];
@@ -63,7 +57,7 @@ var DinnerGameClass = {
 			var tableModel = new TablePlace(i, colors[i]);
 			var tableGraph = new TablePlaceGraph(tableModel);
 			this.tables.push(tableGraph);
-			this.pageContainer.addChildAt(tableGraph.getContainer(), this.INDEX_TABLES[i]);
+			this.pageContainer.addChildAt(tableGraph.getContainer(), DINNERCONST.SCENES.tables[i]);
 		}
 	   Yadobe.update = true;
 		
@@ -72,11 +66,11 @@ var DinnerGameClass = {
 		var background = new Bitmap(DINNERCONST.IMAGE.background);
 		background.x = 0;
 		background.y = 0;
-		this.pageContainer.addChildAt(background, this.INDEX_BACKGROUND);
+		this.pageContainer.addChildAt(background, DINNERCONST.SCENES.background);
 	},
 	/**
 	 * Launch the game
-	 * @clas DinnerGame
+	 * @clas DinnerGamePage
 	 * @method launch
 	 * @author Benjamin Longearet <firehist@gmail.com>
 	 * @since 31/08/2011
@@ -86,7 +80,7 @@ var DinnerGameClass = {
 	},
 	/**
 	 * Pause the game
-	 * @class DinnerGame
+	 * @class DinnerGamePage
 	 * @method pause
 	 * @author Benjamin Longearet <firehist@gmail.com>
 	 * @since 31/08/2011
@@ -95,4 +89,15 @@ var DinnerGameClass = {
 		this.reception.pause();
 	}
 };
-var DinnerGame = new JS.Class(Page, DinnerGameClass);
+var DinnerGamePage = new JS.Class(Page, DinnerGamePageClass);
+
+// Static attribute
+DinnerGamePage.instance = null;
+// Static method singleton
+DinnerGamePage.getInstance = function() {
+	if(DinnerGamePage.instance != null) {
+		return DinnerGamePage.instance;
+	} else {
+		return new DinnerGamePage();
+	}
+};

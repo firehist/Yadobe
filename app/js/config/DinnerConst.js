@@ -9,6 +9,7 @@ var DINNERCONST = {};
  * All time keywork hava to be set in JS.Package
  * @author Benjamin Longearet <firehist@gmail.com>
  * @since 30/08/2011
+ * @type Array
  */
 DINNERCONST.LOADING = [
 	'TimeManager',
@@ -19,12 +20,13 @@ DINNERCONST.LOADING = [
 	'Group',
 	'RecipeManager',
 	'Waiter',
-	'DinnerGame'
+	'DinnerGamePage'
 ];
 /**
  * DINNERCONST.TIME Struct
  * @author Benjamin Longearet <firehist@gmail.com>
  * @since 30/08/2011
+ * @type Object
  */
 DINNERCONST.TIME = {
 	/**
@@ -43,6 +45,7 @@ DINNERCONST.TIME = {
  * DINNERCONST.COLOR Struct
  * @author Benjamin Longearet <firehist@gmail.com>
  * @since 31/08/2011
+ * @type Object
  */
 DINNERCONST.COLOR = {
 	red: new Tools.Color('255, 0, 0', '#FF0000', '0, 100, 100'),
@@ -54,6 +57,7 @@ DINNERCONST.COLOR = {
  * DINNERCONST.IMAGE Struct
  * @author Benjamin Longearet <firehist@gmail.com>
  * @since 01/09/2011
+ * @type Object
  */
 DINNERCONST.IMAGE = {
 	kitchen: 'img/dinnerGame/stage_01_kitchen.png',
@@ -69,6 +73,7 @@ DINNERCONST.IMAGE = {
  * DINNERCONST.POSITION Struct
  * @author Benjamin Longearet <firehist@gmail.com>
  * @since 01/09/2011
+ * @type Object
  */
 DINNERCONST.POSITION = {
 	kitchen: new Point(500, 50),
@@ -79,4 +84,17 @@ DINNERCONST.POSITION = {
 		new Point(570, 410),
 		new Point(340, 410)
 	]
+};
+/**
+ * DINNERCONST.SCENES Struct
+ * @author Benjamin Longearet <firehist@gmail.com>
+ * @since 02/09/2011
+ * @type Object
+ */
+DINNERCONST.SCENES = {
+	background: 1,
+	kitchen: 2,
+	reception: 3,
+	tables: [4,5,6,7],
+	waiter: 8	
 };
