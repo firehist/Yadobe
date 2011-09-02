@@ -19,8 +19,10 @@ var Tools = {
 	},
 	ObjSize: function(obj) {
 		var len = obj.length ? obj.length : 0;
-		for (var k in obj)
-			len++;
+		if(len == 0) {
+			for (var k in obj)
+				len++;
+		}
 		return len;
 	}
 };

@@ -8,6 +8,7 @@ JS.cacheBust = true;
 
 JS.Packages(function() { with(this) {
 	/* config */
+	file(JSCONFIG_PATH + 'IndexConst.js').provides('INDEXCONST').requires('Easel');
 	file(JSCONFIG_PATH + 'DinnerConst.js').provides('DINNERCONST').requires('Easel');
 	file(JSCONFIG_PATH + 'TimeManager.js').provides('TimeManager').requires('DINNERCONST');
 	file(JSCONFIG_PATH + 'Page.js').provides('Page').requires('JS.Class');
@@ -40,10 +41,20 @@ JS.Packages(function() { with(this) {
 	file(JSCLASS_PATH + 'state.js')
         .provides('JS.State')
 		.requires('JS.Class', 'JS.Module');
-	/* DinnerGame */
-	file(JSMODEL_PATH + 'DinnerGame.js')
-        .provides('DinnerGame')
+	/**
+	 * PAGES
+	 */
+	/* Index */
+	file(JSMODEL_PATH + 'IndexPage.js')
+        .provides('IndexPage')
 		.requires(
+			'Yadobe'
+		);
+	/* DinnerGame */
+	file(JSMODEL_PATH + 'DinnerGamePage.js')
+        .provides('DinnerGamePage')
+		.requires(
+			'Yadobe',
 			'JS.State',
 			'TimeManager',
 			'Page',
@@ -58,13 +69,12 @@ JS.Packages(function() { with(this) {
 	file(JSMODEL_PATH + 'WaitingPage.js')
 		.provides('WaitingPage')
 		.requires(
-			'JS.Class',
-			'Tools',
-			'jQuery',
-			'Easel',
-			'DINNERCONST',
+			'Yadobe',
 			'Page'
 		);
+	/**
+	 * MAIN
+	 */
 	/* Yadobe */
 	file(JSMODEL_PATH + 'Yadobe.js')
 		.provides('Yadobe')
@@ -73,6 +83,7 @@ JS.Packages(function() { with(this) {
 			'Tools',
 			'jQuery',
 			'Easel',
+			'INDEXCONST',
 			'DINNERCONST'
 		);
 	
