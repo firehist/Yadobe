@@ -18,6 +18,7 @@ DINNERCONST.LOADING = [
 	'ReceptionPlaceGraph',
 	'KitchenPlaceGraph',
 	'Group',
+    'GroupGraph',
 	'RecipeManager',
 	'Waiter',
 	'DinnerGamePage'
@@ -96,5 +97,5 @@ DINNERCONST.SCENES = {
 	kitchen: 2,
 	reception: 3,
 	tables: [4,5,6,7],
-	waiter: 8	
+	waiter: 8
 };
