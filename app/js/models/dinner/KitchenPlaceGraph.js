@@ -40,27 +40,29 @@ var KitchenPlaceGraphClass = {
 		this.container.addChildAt(kitchen, 0);
 	},
 	addMouseListener: function() {
-		(function(target) {
-			target.onPress = function(e) {
-				if(!target.clicked) {
-					console.log('Kitchen clicked');
+		(function(kitchenPlaceGraph) {
+			var container = kitchenPlaceGraph.container;
+			container.onPress = function(e) {
+				if(!container.clicked) {
+					//DinnerGamePage.getInstance().updateConsoleLog('Kitchen clicked');
+					kitchenPlaceGraph.model.runAction();
 				}
 			}
-			target.onMouseOver = function() {
-				if(!target.clicked) {
-					target.alpha = 0.8;
+			container.onMouseOver = function() {
+				if(!container.clicked) {
+					container.alpha = 0.8;
 					$('body').css('cursor', 'pointer');
 					Yadobe.getInstance().setUpdate();
 				}
 			}
-			target.onMouseOut = function() {
-				if(!target.clicked) {
-					target.alpha = 1;
+			container.onMouseOut = function() {
+				if(!container.clicked) {
+					container.alpha = 1;
 					$('body').css('cursor', 'default');
 					Yadobe.getInstance().setUpdate();
 				}
 			}
-		})(this.container);
+		})(this);
 	}
 	// Methods
 };

@@ -11,13 +11,21 @@ var RecipeManagerClass = {
 	 * @param mixed listRecipes
 	 */
 	listRecipes: { 
-		'starter': {},
-		'dish': {},
-		'dessert': {},
-		'drink': {}
+		starter: {},
+		dish: {},
+		dessert: {},
+		drink: {}
 	},
 	// Constructor
-	initialize: function() {},
+	initialize: function() {
+		RecipeManager.instance = this;
+		for(var type in YADOBECONST.RECIPES) {
+			for(var recipe in YADOBECONST.RECIPES[type]) {
+				var tmp = YADOBECONST.RECIPES[type][recipe];
+				this.createRecipe(tmp.name, tmp.duration, type, tmp.price);
+			}
+		}
+	},
 	// Methods
 	/**
 	 * Get duration of menu
@@ -102,13 +110,11 @@ var RecipeManagerClass = {
 };
 var RecipeManager = new JS.Class(RecipeManagerClass);
 
-RecipeManager.Factory = {};
-RecipeManager.Factory.newInstance = function() {
-	var r = new RecipeManager();
-	r.createRecipe('Steak', 30, 'dish', 15);
-	r.createRecipe('Poisson', 35, 'dish', 12);
-	r.createRecipe('Salade du chef', 10, 'starter', 10);
-	r.createRecipe('Coco-Cala', 5, 'drink', 2);
-	r.createRecipe('Mousse au chocolat', 10, 'dessert', 5);
-	return r;
-};
+RecipeManager.instance = null;
+RecipeManager.getInstance = function() {
+	if(RecipeManager.instance != null) {
+		return RecipeManager.instance;
+	} else {
+		return new RecipeManager();
+	}
+}

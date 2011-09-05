@@ -10,6 +10,7 @@ JS.Packages(function() { with(this) {
 	/* config */
 	file(JSCONFIG_PATH + 'IndexConst.js').provides('INDEXCONST').requires('Easel');
 	file(JSCONFIG_PATH + 'DinnerConst.js').provides('DINNERCONST').requires('Easel');
+	file(JSCONFIG_PATH + 'YadobeConst.js').provides('YADOBECONST');
 	file(JSCONFIG_PATH + 'TimeManager.js').provides('TimeManager').requires('DINNERCONST');
 	file(JSCONFIG_PATH + 'Page.js').provides('Page').requires('JS.Class');
 	/* Dinner models */
@@ -28,7 +29,8 @@ JS.Packages(function() { with(this) {
 	/* tools libs */
 	file(JSLIBS_PATH + 'tools.js').provides('Tools');
 	/* jQuery libs */
-	file('https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.js')
+	//file('https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.js')
+	file(JSLIBS_PATH + 'jquery-1.6.2.min.js')
         .provides('jQuery');
 	/* Easel libs */
 	file(JSLIBS_PATH + 'easel.js')
@@ -84,7 +86,8 @@ JS.Packages(function() { with(this) {
 			'jQuery',
 			'Easel',
 			'INDEXCONST',
-			'DINNERCONST'
+			'DINNERCONST',
+			'YADOBECONST'
 		);
 	
 }});

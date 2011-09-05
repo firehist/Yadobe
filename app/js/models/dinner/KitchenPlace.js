@@ -38,6 +38,8 @@ var KitchenPlaceClass = {
 	initialize: function(name, maxMenuList) {
 		this.callSuper(name);
 		if(maxMenuList)	this.maxMenuList = maxMenuList;
+		/** DEV **/
+		
 	},
 	// Methods
 	/**
@@ -55,13 +57,17 @@ var KitchenPlaceClass = {
 	 * @class KitchenPlace
 	 * @author Benjamin Longearet <firehist@gmail.com>
 	 * @since 30/08/2011
-	 * @return Group The first group of list
 	 */
 	runAction: function() {
-		if(!this._isGroupEmpty) {
-			return this.groupList.shift();
+		if(this.readyMenuList.length > 0) {
+			// @TODO Tester si serveur à côté
+			// @TODO Tester si serveur peu recevoir objet
+			//var group = this.groupList.shift();
+			DinnerGamePage.getInstance().updateConsoleLog('Kitchen clicked - Menu dépilé et ajouter au serveur');
+		} else {
+			DinnerGamePage.getInstance().updateConsoleLog('Kitchen clicked - Pas d\'action');
 		}
-		return null;
+
 	},
 	/**
 	 * Add a menu to the list

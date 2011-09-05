@@ -92,9 +92,11 @@ DINNERCONST.POSITION = {
  * @type Object
  */
 DINNERCONST.SCENES = {
-	background: 1,
-	kitchen: 2,
-	reception: 3,
-	tables: [4,5,6,7],
-	waiter: 8	
+	log: 1,
+	interfaceGame: 2,
+	background: 3,
+	kitchen: 4,
+	reception: 5,
+	tables: [6,7,8,9],
+	waiter: 10
 };

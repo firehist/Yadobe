@@ -6,10 +6,7 @@
  */
 var DinnerGamePageClass = {
 	// Attributes
-	/**
-	 * @type RecipeManager
-	 */
-	recipes: null,
+	text: null,
 	/**
 	 * @type KitchenPlaceGraph
 	 */
@@ -41,8 +38,7 @@ var DinnerGamePageClass = {
 		this.callSuper();
 		// init background
 		this.createBackground();
-		// init singleton
-		this.recipes = RecipeManager.Factory.newInstance();
+		this.createConsoleLog();
 		// Kitchen
 		var kitchenModel = new KitchenPlace('Cuisine', 10);
 		this.kitchen = new KitchenPlaceGraph(kitchenModel);
@@ -62,6 +58,21 @@ var DinnerGamePageClass = {
 		}
 	   Yadobe.update = true;
 		
+	},
+	createConsoleLog: function() {
+		var log = new Shape();
+		log.graphics.beginStroke("#000000").beginFill("#CCCCCC").drawRoundRect(10, 10, 250, 50, 5);
+		this.pageContainer.addChild(log);
+		this.text = new Text('', '12px normal Verdana', '#000000');
+		this.text.x = 30;
+		this.text.y = 30;
+		this.text.maxWidth = 220;
+		this.text.maxHeight = 20;
+		this.pageContainer.addChild(this.text);
+	},
+	updateConsoleLog: function(newText) {
+		this.text.text = newText;
+		Yadobe.getInstance().setUpdate();
 	},
 	createBackground: function() {
 		var background = new Bitmap(DINNERCONST.IMAGE.background);
