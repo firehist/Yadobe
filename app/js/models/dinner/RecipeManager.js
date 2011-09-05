@@ -106,6 +106,10 @@ var RecipeManagerClass = {
 	},
 	createDrinkRecipe: function(name, duration, price) {
 		this.createRecipe(name, duration, 'drink', price);
+	},
+	createRandomMenu: function() {
+		//return new Menu(
+		//	this.getStarter(Tools.randomXToY(0, this.listRecipes.starter);
 	}
 };
 var RecipeManager = new JS.Class(RecipeManagerClass);

@@ -39,7 +39,7 @@ var KitchenPlaceClass = {
 		this.callSuper(name);
 		if(maxMenuList)	this.maxMenuList = maxMenuList;
 		/** DEV **/
-		
+		this.readyMenuList.push()
 	},
 	// Methods
 	/**
