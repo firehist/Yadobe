@@ -44,6 +44,7 @@ var ReceptionPlaceGraphClass = {
 			target.onPress = function(e) {
 				if(!target.clicked) {
 					console.log('Reception clicked');
+					this.model.isSelected = !this.model.isSelected;
 				}
 			}
 			target.onMouseOver = function() {

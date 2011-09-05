@@ -19,7 +19,7 @@ var DinnerGamePageClass = {
 	 */
 	reception: null,
 	/**
-	 * @type Array
+	 * @type Array of TablePlaceGraph
 	 */
 	tables: new Array(),
 	/**
@@ -60,7 +60,7 @@ var DinnerGamePageClass = {
 			this.tables.push(tableGraph);
 			this.pageContainer.addChildAt(tableGraph.getContainer(), DINNERCONST.SCENES.tables[i]);
 		}
-	   Yadobe.update = true;
+		Yadobe.update = true;
 		
 	},
 	createBackground: function() {

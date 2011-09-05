@@ -23,6 +23,10 @@ var ReceptionPlaceClass = {
 	 * @var int maxGroupList
 	 */
 	maxGroupList: 2,
+	/**
+	 * @var bool isSelected
+	 */
+	isSelected: false,
 	// Constructor
 	/**
 	 * @constructor
@@ -123,8 +127,10 @@ var ReceptionPlaceClass = {
 	createGroup: function() {
 		console.log('Create Group');
 		// @TODO add test for create group
-		var g = Group.Factory.newInstance();
-		this.addGroup(g);
+		if (this.maxGroupList > this.groupList.length()) {
+			var g = Group.Factory.newInstance();
+			this.addGroup(g);
+		}
 	}
 };
 var ReceptionPlace = new JS.Class(Place, ReceptionPlaceClass);
