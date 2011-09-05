@@ -25,7 +25,9 @@ var TRANSLATIONCONST = {};
  */
 TRANSLATIONCONST.fr_FR = {
     Play : 'Jouer',
-    Options : 'Options'
+    Options : 'Options',
+    Exit : 'Quitter',
+    Help : 'Aide'
 };
 
 /**
@@ -36,5 +38,7 @@ TRANSLATIONCONST.fr_FR = {
  */
 TRANSLATIONCONST.en_GB = {
     Play : 'Play',
-    Options : 'Options'
+    Options : 'Options',
+    Exit : 'Exit',
+    Help : 'Help'
 };

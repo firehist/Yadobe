@@ -32,7 +32,7 @@ JS.Packages(function() { with(this) {
 	file(JSMODEL_DINNER_PATH + 'Waiter.js').provides('Waiter').requires('Menu');
     
 	/* UI models */
-	file(JSMODEL_UI_PATH + 'Button.js').provides('Button').requires('JS.Class', 'Easel');
+	file(JSMODEL_UI_PATH + 'Button.js').provides('Button').requires('JS.Class', 'Tools', 'Easel');
     
 	/* tools libs */
 	file(JSLIBS_PATH + 'tools.js').provides('Tools');

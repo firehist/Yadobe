@@ -39,14 +39,15 @@ var IndexPageClass = {
 	 */
 	create: function() {
         
+        // Play button
         var playButton = new Button({
             text : Translation.getTranslation('Play'),
-            x : 400,
-            y : 200,
-            height : 80,
-            width : 300,
-            background : "#C49A70",
-            color : "#FFFFED",
+            x : 140,
+            y : 170,
+            height : 120,
+            width : 200,
+            background : "#971A1D",
+            color : "#000000",
             click : function() {
                 // Display the DinnerGame page
                 Yadobe.getInstance().setCurrentPage(DinnerGamePage.getInstance());
@@ -54,20 +55,53 @@ var IndexPageClass = {
         });
         this.pageContainer.addChild(playButton);
         
+        // Options button
         var optionsButton = new Button({
             text : Translation.getTranslation('Options'),
-            x : 400,
+            x : 570,
             y : 300,
-            height : 80,
-            width : 300,
-            background : "#C49A70",
-            color : "#FFFFED",
+            height : 60,
+            width : 200,
+            background : "#971A1D",
+            color : "#000000",
             click : function() {
                 // Display the Options page
                 alert('Options');
             }
         });
         this.pageContainer.addChild(optionsButton);
+        
+        // Exit button
+        var exitButton = new Button({
+            text : Translation.getTranslation('Exit'),
+            x : 450,
+            y : 380,
+            height : 60,
+            width : 200,
+            background : "#971A1D",
+            color : "#000000",
+            click : function() {
+                // Display the Options page
+                alert('Exit');
+            }
+        });
+        this.pageContainer.addChild(exitButton);
+        
+        // Help button
+        var helpButton = new Button({
+            text : Translation.getTranslation('Help'),
+            x : 300,
+            y : 460,
+            height : 60,
+            width : 200,
+            background : "#971A1D",
+            color : "#000000",
+            click : function() {
+                // Display the Options page
+                alert('Exit');
+            }
+        });
+        this.pageContainer.addChild(helpButton);
         
 		Yadobe.getInstance().setUpdate();
 	}
