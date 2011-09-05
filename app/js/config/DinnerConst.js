@@ -67,7 +67,9 @@ DINNERCONST.IMAGE = {
 	table_yellow: 'img/dinnerGame/stage_01_table_yellow.png',
 	table_blue: 'img/dinnerGame/stage_01_table_blue.png',
 	human_table: 'img/dinnerGame/stage_01_table_human.png',
-	background: 'img/dinnerGame/stage_01.jpg'
+	background: 'img/dinnerGame/stage_01.jpg',
+	luigi: 'img/dinnerGame/kitchen/luigi_downup.png',
+	luigiWalk: 'img/dinnerGame/kitchen/luigi_walk.png'
 };
 /**
  * DINNERCONST.POSITION Struct
@@ -76,7 +78,7 @@ DINNERCONST.IMAGE = {
  * @type Object
  */
 DINNERCONST.POSITION = {
-	kitchen: new Point(500, 50),
+	kitchen: new Point(500, 70),
 	reception: new Point(0, 225),
 	tables: [
 		new Point(340, 240),
@@ -99,4 +101,13 @@ DINNERCONST.SCENES = {
 	reception: 5,
 	tables: [6,7,8,9],
 	waiter: 10
+};
+/**
+ * DINNERCONST.COOK Struct
+ * @author Benjamin Longearet <firehist@gmail.com>
+ * @since 05/09/2011
+ * @type Object
+ */
+DINNERCONST.COOK = {
+	maxCooking: 3
 };

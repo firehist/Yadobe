@@ -11,10 +11,10 @@ var RecipeManagerClass = {
 	 * @param mixed listRecipes
 	 */
 	listRecipes: { 
-		starter: {},
-		dish: {},
-		dessert: {},
-		drink: {}
+		starter: [],
+		dish: [],
+		dessert: [],
+		drink: []
 	},
 	// Constructor
 	initialize: function() {
@@ -28,23 +28,14 @@ var RecipeManagerClass = {
 	},
 	// Methods
 	/**
-	 * Get duration of menu
-	 * @author Benjamin Longearet <firehist@gmail.com>
-	 * @since 30/08/2011
-	 * @return int The duration of the menu
-	 */
-	existRecipe: function(name, type) {
-		return (this.listRecipes[type][name] && this.listRecipes[type][name] instanceof Recipe);
-	},
-	/**
 	 * Get recipe object
 	 * @author Benjamin Longearet <firehist@gmail.com>
 	 * @since 30/08/2011
 	 * @return mixed recipe object or false if an error occured
 	 */
 	getRecipe: function(name, type) {
-		if(this.existRecipe(name, type)) {
-			return this.listRecipes[type][name]
+		for(var index in this.listRecipes[type]) {
+			if(this.listRecipes[type][index].name === name) return this.listRecipes[type][index]
 		}
 		return false;
 	},
@@ -90,26 +81,21 @@ var RecipeManagerClass = {
 	 * @since 30/08/2011
 	 */
 	createRecipe: function(name, duration, type, price) {
-		this.listRecipes[type][name] = new Recipe(name, duration, type, price);
+		this.listRecipes[type].push(new Recipe(name, duration, type, price));
 	},
 	/**
-	 * Shortcut for createRecipe
+	 * Generate random menu
+	 * @author Benjamin Longearet <firehist@gmail.com>
+	 * @since 05/09/2011
+	 * @return Menu random menu
 	 */
-	createStarterRecipe: function(name, duration, price) {
-		this.createRecipe(name, duration, 'starter', price);
-	},
-	createDishRecipe: function(name, duration, price) {
-		this.createRecipe(name, duration, 'dish', price);
-	},
-	createDessertRecipe: function(name, duration, price) {
-		this.createRecipe(name, duration, 'dessert', price);
-	},
-	createDrinkRecipe: function(name, duration, price) {
-		this.createRecipe(name, duration, 'drink', price);
-	},
 	createRandomMenu: function() {
-		//return new Menu(
-		//	this.getStarter(Tools.randomXToY(0, this.listRecipes.starter);
+		return new Menu(
+			this.listRecipes.starter[Tools.randomXToY(0, this.listRecipes.starter.length - 1)],
+			this.listRecipes.dish[Tools.randomXToY(0, this.listRecipes.dish.length - 1)],
+			this.listRecipes.dessert[Tools.randomXToY(0, this.listRecipes.dessert.length - 1)],
+			this.listRecipes.drink[Tools.randomXToY(0, this.listRecipes.drink.length - 1)]
+		);
 	}
 };
 var RecipeManager = new JS.Class(RecipeManagerClass);

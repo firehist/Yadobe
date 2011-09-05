@@ -13,28 +13,38 @@ YADOBECONST.RECIPES = {
 	starter: [
 		{
 			name: 'Salade du Chef',
-			duration: 3,
+			duration: 30,
 			price: 9
+		},
+		{
+			name: 'Salade Provençale',
+			duration: 40,
+			price: 8
 		}
 	],
 	dish: [
 		{
 			name: 'Steack-Frite',
-			duration: 5,
+			duration: 70,
 			price: 5
+		},
+		{
+			name: 'Magret de canard',
+			duration: 90,
+			price: 15
 		}
 	],
 	dessert: [
 		{
 			name: 'Mousse au Chocolat',
-			duration: 6,
+			duration: 50,
 			price: 7
 		}
 	],
 	drink: [
 		{
 			name: 'Coca-cola',
-			duration: 1,
+			duration: 20,
 			price: 3
 		}
 	]

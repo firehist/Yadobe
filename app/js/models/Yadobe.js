@@ -88,7 +88,8 @@ var YadobeClass = {
 	 * @public
 	 */
 	loadGame: function() {
-		this.setCurrentPage(IndexPage.getInstance());
+		//this.setCurrentPage(IndexPage.getInstance());
+		this.setCurrentPage(DinnerGamePage.getInstance());
 		this.setUpdate();
 	},
 	/**
@@ -111,11 +112,12 @@ var YadobeClass = {
 	 * @public
 	 */
 	tick: function() {
-		if(this.update) {
+		//if(this.update) {
 			console.log('Yadobe tick()');	
-			this.update = false; // only update once
+			//this.update = false; // only update once
+			DinnerGamePage.getInstance().kitchen.update();
 			this.stage.update();
-		}
+		//}
 	},
 	/**
 	 * Set the current display page and hide the old one

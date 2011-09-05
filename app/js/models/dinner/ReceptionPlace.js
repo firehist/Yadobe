@@ -60,7 +60,7 @@ var ReceptionPlaceClass = {
 	 * @since 31/08/2011	 
 	 */
 	launch: function() {
-		TimeManager.setTimer(this._groupCreationTimer, this.createGroup, this);
+		TimeManager.setDinnerTimer(this._groupCreationTimer, this.createGroup, this);
 	},
 	/**
 	 * Pause the game
@@ -70,7 +70,7 @@ var ReceptionPlaceClass = {
 	 * @since 31/08/2011	 
 	 */
 	pause: function() {
-		TimeManager.stopTimer(this._groupCreationTimer, this);
+		TimeManager.stopDinnerTimer(this._groupCreationTimer, this);
 	},
 	/**
 	 * Run action of reception with moving group to a table
