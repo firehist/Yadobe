@@ -21,6 +21,7 @@ JS.Packages(function() { with(this) {
 	file(JSMODEL_DINNER_PATH + 'KitchenPlace.js').provides('KitchenPlace').requires('Place');
 	file(JSMODEL_DINNER_PATH + 'KitchenPlaceGraph.js').provides('KitchenPlaceGraph').requires('KitchenPlace');
 	file(JSMODEL_DINNER_PATH + 'Group.js').provides('Group').requires('JS.Class');
+	file(JSMODEL_DINNER_PATH + 'GroupGraph.js').provides('GroupGraph').requires('JS.Class');
 	file(JSMODEL_DINNER_PATH + 'Menu.js').provides('Menu').requires('Recipe');
 	file(JSMODEL_DINNER_PATH + 'Recipe.js').provides('Recipe').requires('JS.Class');
 	file(JSMODEL_DINNER_PATH + 'RecipeManager.js').provides('RecipeManager').requires('Recipe');
@@ -62,6 +63,7 @@ JS.Packages(function() { with(this) {
 			'ReceptionPlaceGraph',
 			'KitchenPlaceGraph',
 			'Group',
+			'GroupGraph',
 			'RecipeManager',
 			'Waiter'
 		);

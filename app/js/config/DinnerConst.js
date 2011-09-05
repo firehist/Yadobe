@@ -18,7 +18,7 @@ DINNERCONST.LOADING = [
 	'ReceptionPlaceGraph',
 	'KitchenPlaceGraph',
 	'Group',
-    'GroupGraph',
+	'GroupGraph',
 	'RecipeManager',
 	'Waiter',
 	'DinnerGamePage'
@@ -67,7 +67,14 @@ DINNERCONST.IMAGE = {
 	table_green: 'img/dinnerGame/stage_01_table_green.png',
 	table_yellow: 'img/dinnerGame/stage_01_table_yellow.png',
 	table_blue: 'img/dinnerGame/stage_01_table_blue.png',
-	human_table: 'img/dinnerGame/stage_01_table_human.png',
+	human_table_red: 'img/dinnerGame/stage_01_table_human_red.png',
+	human_table_green: 'img/dinnerGame/stage_01_table_human_green.png',
+	human_table_yellow: 'img/dinnerGame/stage_01_table_human_yellow.png',
+	human_table_blue: 'img/dinnerGame/stage_01_table_human_blue.png',
+	human_red: 'img/dinnerGame/stage_01_human_red.png'
+	human_green: 'img/dinnerGame/stage_01_human_green.png'
+	human_yellow: 'img/dinnerGame/stage_01_human_yellow.png'
+	human_blue: 'img/dinnerGame/stage_01_human_blue.png'
 	background: 'img/dinnerGame/stage_01.jpg'
 };
 /**
@@ -84,7 +91,8 @@ DINNERCONST.POSITION = {
 		new Point(570, 240),
 		new Point(570, 410),
 		new Point(340, 410)
-	]
+	],
+    firstgroup : new Point(50, 300)
 };
 /**
  * DINNERCONST.SCENES Struct
