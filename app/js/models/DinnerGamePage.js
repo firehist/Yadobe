@@ -48,7 +48,7 @@ var DinnerGamePageClass = {
 		this.kitchen = new KitchenPlaceGraph(kitchenModel);
 		this.pageContainer.addChildAt(this.kitchen.getContainer(), DINNERCONST.SCENES.kitchen);
 		// Reception
-		var receptionModel = new ReceptionPlace('Réception', 3);
+		var receptionModel = new ReceptionPlace('Reception', 4);
 		this.reception = new ReceptionPlaceGraph(receptionModel);
 		this.pageContainer.addChildAt(this.reception.getContainer(), DINNERCONST.SCENES.reception);
 		// Tables
@@ -60,8 +60,8 @@ var DinnerGamePageClass = {
 			this.tables.push(tableGraph);
 			this.pageContainer.addChildAt(tableGraph.getContainer(), DINNERCONST.SCENES.tables[i]);
 		}
+				
 		Yadobe.update = true;
-		
 	},
 	createBackground: function() {
 		var background = new Bitmap(DINNERCONST.IMAGE.background);

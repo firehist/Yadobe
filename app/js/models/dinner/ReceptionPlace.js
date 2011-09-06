@@ -22,7 +22,7 @@ var ReceptionPlaceClass = {
 	 * Max length of groupList
 	 * @var int maxGroupList
 	 */
-	maxGroupList: 2,
+	maxGroupList: 5,
 	/**
 	 * @var bool isSelected
 	 */
@@ -100,7 +100,7 @@ var ReceptionPlaceClass = {
 	 * @return boolean true if successful, false else
 	 */
 	addGroup: function(group) {
-		if( (this.groupList.length < this.maxGroupList) && (group instanceof Group) ) {
+		if(group instanceof Group) {
 			this.groupList.push(group);
 			return true;
 		}
@@ -127,7 +127,7 @@ var ReceptionPlaceClass = {
 	createGroup: function() {
 		console.log('Create Group');
 		// @TODO add test for create group
-		if (this.maxGroupList > this.groupList.length()) {
+		if (this.maxGroupList > this.getGroupListLength()) {
 			var g = Group.Factory.newInstance();
 			this.addGroup(g);
 		}

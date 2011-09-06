@@ -7,24 +7,24 @@
 var ReceptionPlaceGraphClass = {
 	// Attributes
 	/**
-	 * Model of KitchenPlaceGraph
-	 * @type KitchenPlace
+	 * Model of ReceptionPlaceGraph
+	 * @type ReceptionPlace
 	 */
 	model: null,
 	/**
-	 * Container for kitchen
+	 * Container for reception
 	 * @type Container
 	 */
 	container: null,
 	// Constructor
 	/**
 	 * @constructor
-	 * @class KitchenPlace
+	 * @class ReceptionPlace
 	 * @method initialize
-	 * @param {KitchenPlace} model
+	 * @param {ReceptionPlace} model
 	 */
 	initialize: function(model) {
-		console.log('KitchenPlaceGraph.initialize(model)');	
+		console.log('ReceptionPlaceGraph.initialize(model)');	
 		this.model = model;
 		this.container = new Container();
 		this.addMouseListener();
