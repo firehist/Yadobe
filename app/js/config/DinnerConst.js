@@ -67,7 +67,8 @@ DINNERCONST.IMAGE = {
 	table_yellow: 'img/dinnerGame/stage_01_table_yellow.png',
 	table_blue: 'img/dinnerGame/stage_01_table_blue.png',
 	human_table: 'img/dinnerGame/stage_01_table_human.png',
-	background: 'img/dinnerGame/stage_01.jpg'
+	background: 'img/dinnerGame/stage_01.jpg',
+    index: 'img/dinnerGame/fond_cartoon_01_empty.png'
 };
 /**
  * DINNERCONST.POSITION Struct
