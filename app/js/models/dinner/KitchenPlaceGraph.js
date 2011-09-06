@@ -20,6 +20,7 @@ var KitchenPlaceGraphClass = {
 	 * Luigi information
 	 */
 	luigi: {},
+	plates: [],
 	// Constructor
 	/**
 	 * @constructor
@@ -58,32 +59,24 @@ var KitchenPlaceGraphClass = {
 	 *
 	 */
 	createLuigi: function() {
-		this.luigi.state = false;
-		var sprite = new SpriteSheet(DINNERCONST.IMAGE.luigiWalk, 128, 128);
-		this.luigi.anim = new BitmapSequence(sprite);
-		this.initLuigiPosition();
-		this.luigi.anim.paused = true;
-		this.container.addChildAt(this.luigi.anim, 1);
+		this.luigi = new LuigiGraph(this, Yadobe.getInstance().canvas.width + 10, DINNERCONST.POSITION.kitchen.y - 50);
+		this.container.addChildAt(this.luigi.container, 1);
 	},
-	initLuigiPosition: function() {
-		this.luigi.anim.x = Yadobe.getInstance().canvas.width + 10;
-		this.luigi.anim.y = DINNERCONST.POSITION.kitchen.y - 50;
-	},
-	setLuigiAnimated: function() {
-		var xMin = Yadobe.getInstance().canvas.width - 250 + (this.model.readyMenuList.length * 50);
-		if(this.luigi.anim.x <= xMin) {
-			this.luigi.anim.paused = true;
-		} else {
-			this.luigi.anim.paused = false;
-			this.luigi.anim.x -= 5;
-		}
+	createPlate: function() {
+		var sprite = new SpriteSheet(DINNERCONST.IMAGE.plates, 30, 30);
+		var plate = new BitmapSequence(sprite);
+		plate.gotoAndStop(Tools.randomXToY(0, 3));
+		plate.x = Yadobe.getInstance().canvas.width - 230 + (this.plates.length * 30);
+		plate.y = DINNERCONST.POSITION.kitchen.y + 20;
+		this.plates.push(plate);
+		this.container.addChild(plate);
 	},
 	/**
 	 * Call each refresh canvas
 	 */
 	update: function() {
 		if(this.model.animateMenuList.length > 0) {
-			this.setLuigiAnimated();
+			this.luigi.update();
 		}
 	},
 	/**

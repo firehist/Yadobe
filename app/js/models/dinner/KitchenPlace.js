@@ -100,7 +100,8 @@ var KitchenPlaceClass = {
 			if(this.cookingMenuList < DINNERCONST.COOK.maxCooking) {
 				var menu = this.pendingMenuList.shift();
 				this.cookingMenuList.push( menu );
-				TimeManager.setCookTimer(menu.getDurationMenuInMs(), this, menu);
+				//TimeManager.setCookTimer(menu.getDurationMenuInMs(), this, menu);
+				TimeManager.setCookTimer(2000, this, menu);
 			}
 		}
 	},

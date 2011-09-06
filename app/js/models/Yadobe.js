@@ -113,7 +113,6 @@ var YadobeClass = {
 	 */
 	tick: function() {
 		//if(this.update) {
-			console.log('Yadobe tick()');	
 			//this.update = false; // only update once
 			DinnerGamePage.getInstance().kitchen.update();
 			this.stage.update();

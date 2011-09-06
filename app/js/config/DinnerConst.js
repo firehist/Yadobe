@@ -68,8 +68,11 @@ DINNERCONST.IMAGE = {
 	table_blue: 'img/dinnerGame/stage_01_table_blue.png',
 	human_table: 'img/dinnerGame/stage_01_table_human.png',
 	background: 'img/dinnerGame/stage_01.jpg',
-	luigi: 'img/dinnerGame/kitchen/luigi_downup.png',
-	luigiWalk: 'img/dinnerGame/kitchen/luigi_walk.png'
+	plates: 'img/dinnerGame/kitchen/plate_num.png',
+	luigi_walking_right_empty: 'img/dinnerGame/kitchen/luigi_walking_right_empty.png',
+	luigi_walking_left_full: 'img/dinnerGame/kitchen/luigi_walking_left_full.png',
+	luigi_stop_front_full2empty: 'img/dinnerGame/kitchen/luigi_stop_front_full2empty.png',
+	luigi_walking_left_empty: 'img/dinnerGame/kitchen/luigi_walking_left_empty.png'
 };
 /**
  * DINNERCONST.POSITION Struct
