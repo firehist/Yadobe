@@ -8,30 +8,34 @@ var KitchenPlaceClass = {
 	// Attributes
 	/**
 	 * List of menu waiting to be cook
-	 * @property pendingMenuList
 	 * @type Array
-	 * @default Array
 	 */
-	pendingMenuList: new Array(),
+	pendingMenuList: [],
+	/**
+	 * List of menu in kitchen
+	 * @type int
+	 */
+	cookingMenuList: [],
+	/**
+	 * List of menu waiting for animation
+	 * @type int
+	 */
+	animateMenuList: [],
 	/**
 	 * List of menu ready
-	 * @property readyMenuList
-	 * @type List<Menu>
-	 * @default Array
+	 * @type Object of menu which are ready
 	 */
-	readyMenuList: new Array(),
+	readyMenuList: {},
 	/**
 	 * Max length of menuList
-	 * @property maxGroupList
 	 * @type int
-	 * @default 10
 	 */
 	maxMenuList: 10,
 	// Constructor
 	/**
 	 * @constructor
-	 * @class KitchenPlace
-	 * @method initialize
+	 * @author Benjamin Longearet <firehist@gmail.com>
+	 * @since 06/09/2011
 	 * @param {String} name
 	 * @param {int} maxMenuList
 	 */
@@ -42,40 +46,60 @@ var KitchenPlaceClass = {
 	// Methods
 	/**
 	 * Get the total menu in kitchen
-	 * @class KitchenPlace
 	 * @author Benjamin Longearet <firehist@gmail.com>
 	 * @since 30/08/2011
-	 * @return int sum of two menu list
+	 * @return int sum of three menu list
 	 */
 	_getTotalLength: function() {
-		return this.pendingMenuList.length + this.readyMenuList.length;
+		return this.pendingMenuList.length + this.cookingMenuList.length + Tools.ObjSize(this.readyMenuList);
 	},
 	/**
 	 * Run action of reception with moving group to a table
-	 * @class KitchenPlace
 	 * @author Benjamin Longearet <firehist@gmail.com>
 	 * @since 30/08/2011
-	 * @return Group The first group of list
 	 */
-	runAction: function() {
-		if(!this._isGroupEmpty) {
-			return this.groupList.shift();
+	runAction: function(menuGraph) {
+		if(Tools.ObjSize(this.readyMenuList) > 0) {
+			// @TODO Envoyer ordre de déplacement au serveur avec un callback
+			var callback = function(){DinnerGamePage.getInstance().kitchen.removePlate(menuGraph)};
+			DinnerGamePage.getInstance().kitchen.removePlate(menuGraph);
+			DinnerGamePage.getInstance().updateConsoleLog('Kitchen clicked - Menu dépilé et ajouter au serveur');
+		} else {
+			DinnerGamePage.getInstance().updateConsoleLog('Kitchen clicked - Pas d\'action');
 		}
-		return null;
+
 	},
 	/**
 	 * Add a menu to the list
 	 * @author Benjamin Longearet <firehist@gmail.com>
 	 * @since 30/08/2011
-	 * @param {int} menu
+	 * @param menu Menu
 	 * @return boolean true if successful, false else
 	 */
 	addMenu: function(menu) {
-		if(this._getTotalLength() < this.maxMenuList && menu instanceof Menu.klass) {
+		if(this._getTotalLength() < this.maxMenuList && menu.klass === Menu) {
 			this.pendingMenuList.push(menu);
+			this.launchCook();
 			return true;
 		}
 		return false;
+	},
+	/**
+	 * Launch the cook of next menu if exist and if cooking list are not full
+	 * @author Benjamin Longearet <firehist@gmail.com>
+	 * @since 05/09/2011
+	 */
+	launchCook: function() {
+		// Test if menu are pending
+		if(this.pendingMenuList.length > 0) {
+			// Test if kitchen are not full
+			if(this.cookingMenuList < DINNERCONST.COOK.maxCooking) {
+				var menu = this.pendingMenuList.shift();
+				this.cookingMenuList.push( menu );
+				//TimeManager.setCookTimer(menu.getDurationMenuInMs(), this, menu);
+				TimeManager.setCookTimer(2000, this, menu);
+			}
+		}
 	},
 	/**
 	 * Switch the first menu to ready state
@@ -84,11 +108,33 @@ var KitchenPlaceClass = {
 	 * @return boolean true if successful, false else
 	 */
 	setReady: function() {
-		if(this.pendingMenuList.length > 0) {
-			this.readMenuList.push( this.pendingMenuList.shift() );
+		if(this.cookingMenuList.length > 0) {
+			this.animateMenuList.push( this.cookingMenuList.shift() );
+			this.launchCook();
 			return true;
 		}
 		return false;
+	},
+	/**
+	 * Switch the first menu in animation to readyList
+	 * @author Benjamin Longearet <firehist@gmail.com>
+	 * @since 30/08/2011
+	 */
+	setReadyDone: function() {
+		if(this.animateMenuList.length > 0) {
+			var menu = this.animateMenuList.shift();
+			this.readyMenuList[menu.toString()] = menu;
+		}
+	},
+	/**
+	 * Remove the selected menu
+	 * @author Benjamin Longearet <firehist@gmail.com>
+	 * @since 06/09/2011
+	 */
+	removeMenu: function(menu) {
+		if(this.readyMenuList[menu.toString()]) {
+			delete this.readyMenuList[menu.toString()];
+		}
 	}
 };
 var KitchenPlace = new JS.Class(Place, KitchenPlaceClass);

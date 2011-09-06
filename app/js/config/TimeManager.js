@@ -8,34 +8,50 @@ var TimeManager = {
 	
 	timerList: {},
 	/**
-	 * Set timer
+	 * setDinnerTimer
+	 * @author Benjamin Longearet <firehist@gmail.com>
+	 * @since 30/08/2011
 	 * @param ConstTimeName DINNERCONST.TIME.xxxx (timeRef, getRandTime())
 	 * @param callback
 	 * @param context
 	 */
-	setTimer: function(ConstTimeName, callback, context) {
+	setDinnerTimer: function(ConstTimeName, callback, context) {
 		var constStruct = DINNERCONST.TIME[ConstTimeName];
-		var key = TimeManager.getTimerKey(ConstTimeName, context);
+		var key = TimeManager.getDinnerTimerKey(ConstTimeName, context);
 		callback.call(context);
-		TimeManager.timerList[key] = window.setTimeout(TimeManager.setTimer, constStruct.getRandTime(), ConstTimeName, callback, context);
+		TimeManager.timerList[key] = window.setTimeout(TimeManager.setDinnerTimer, constStruct.getRandTime(), ConstTimeName, callback, context);
+	},
+	/**
+	 * Set cook timer
+	 * @param time
+	 * @param context
+	 * @param menu
+	 */
+	setCookTimer: function(time, context, menu) {
+		console.debug('TimerCook => '+time);
+		window.setTimeout(function(){context.setReady(menu)}, time);
 	},
 	/**
 	 * Build and return the unique key for timer
-	 * @class ReceptionPlace
-	 * @method getTimerKey
 	 * @author Benjamin Longearet <firehist@gmail.com>
 	 * @since 31/08/2011
 	 * @param ConstTimeName String The constante index in DINNERCONST.TIME
 	 * @param context Object The current object
 	 * @return String The built unique key for timer
+	 * @public
 	 */
-	getTimerKey: function(ConstTimeName, context) {
+	getDinnerTimerKey: function(ConstTimeName, context) {
 		return context.toString() + '_' + ConstTimeName
 	},
 	/**
 	 * Clear timeout
+	 * @author Benjamin Longearet <firehist@gmail.com>
+	 * @since 31/08/2011
+	 * @param ConstTimeName String The constante index in DINNERCONST.TIME
+	 * @param context Object The current object
+	 * @public
 	 */
-	stopTimer: function(ConstTimeName, context) {
-		window.clearTimeout(TimeManager.timerList[TimeManager.getTimerKey(ConstTimeName, context)]);
+	stopDinnerTimer: function(ConstTimeName, context) {
+		window.clearTimeout(TimeManager.timerList[TimeManager.getDinnerTimerKey(ConstTimeName, context)]);
 	}
 };

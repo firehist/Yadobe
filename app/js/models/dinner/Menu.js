@@ -7,6 +7,7 @@
  **/
 var MenuClass = {
 	// Attributes
+	table: 0,
 	/**
 	 * Starter
 	 * @type Recipe
@@ -28,7 +29,8 @@ var MenuClass = {
 	 */
 	drink: null,
 	// Constructor
-	initialize: function(starter, dish, dessert, drink) {
+	initialize: function(starter, dish, dessert, drink, table) {
+		this.table = table;
 		this.starter = starter;
 		this.dish = dish;
 		this.dessert = dessert;
@@ -36,7 +38,7 @@ var MenuClass = {
 	},
 	// Methods
 	_validRecipe: function(object) {
-		reutnr (object != null && object instanceof Recipe);
+		return (object != null && object instanceof Recipe);
 	},
 	/**
 	 * Get duration of menu
@@ -51,6 +53,15 @@ var MenuClass = {
 		if(this._validRecipe(this.dessert)) duration += this.dessert.getDuration();
 		if(this._validRecipe(this.drink)) duration += this.drink.getDuration();
 		return duration;
+	},
+	/**
+	 * Get duration of menu in millisecond
+	 * @author Benjamin Longearet <firehist@gmail.com>
+	 * @since 30/08/2011
+	 * @return int The duration of the menu
+	 */
+	getDurationMenuInMs: function() {
+		return this.getDurationMenu() * 100;
 	}	
 };
 var Menu = new JS.Class(MenuClass);

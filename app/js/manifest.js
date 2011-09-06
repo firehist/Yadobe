@@ -12,6 +12,7 @@ JS.Packages(function() { with(this) {
 	/* config */
 	file(JSCONFIG_PATH + 'IndexConst.js').provides('INDEXCONST').requires('Easel');
 	file(JSCONFIG_PATH + 'DinnerConst.js').provides('DINNERCONST').requires('Easel');
+	file(JSCONFIG_PATH + 'YadobeConst.js').provides('YADOBECONST');
 	file(JSCONFIG_PATH + 'TimeManager.js').provides('TimeManager').requires('DINNERCONST');
 	file(JSCONFIG_PATH + 'TranslationConst.js').provides('TRANSLATIONCONST', 'LANGUAGECONST');
 	file(JSCONFIG_PATH + 'Translation.js').provides('Translation').requires('TRANSLATIONCONST');
@@ -23,6 +24,8 @@ JS.Packages(function() { with(this) {
 	file(JSMODEL_DINNER_PATH + 'TablePlaceGraph.js').provides('TablePlaceGraph').requires('TablePlace');
 	file(JSMODEL_DINNER_PATH + 'ReceptionPlace.js').provides('ReceptionPlace').requires('Place');
 	file(JSMODEL_DINNER_PATH + 'ReceptionPlaceGraph.js').provides('ReceptionPlaceGraph').requires('ReceptionPlace');
+	file(JSMODEL_DINNER_PATH + 'MenuGraph.js').provides('MenuGraph').requires('JS.State');
+	file(JSMODEL_DINNER_PATH + 'LuigiGraph.js').provides('LuigiGraph').requires('JS.State');
 	file(JSMODEL_DINNER_PATH + 'KitchenPlace.js').provides('KitchenPlace').requires('Place');
 	file(JSMODEL_DINNER_PATH + 'KitchenPlaceGraph.js').provides('KitchenPlaceGraph').requires('KitchenPlace');
 	file(JSMODEL_DINNER_PATH + 'Group.js').provides('Group').requires('JS.Class');
@@ -39,7 +42,8 @@ JS.Packages(function() { with(this) {
 	file(JSLIBS_PATH + 'tools.js').provides('Tools');
     
 	/* jQuery libs */
-	file('https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.js')
+	//file('https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.js')
+	file(JSLIBS_PATH + 'jquery-1.6.2.min.js')
         .provides('jQuery');
         
 	/* Easel libs */
@@ -72,6 +76,8 @@ JS.Packages(function() { with(this) {
 			'JS.State',
 			'TimeManager',
 			'Page',
+			'LuigiGraph',
+			'MenuGraph',
 			'TablePlaceGraph',
 			'ReceptionPlaceGraph',
 			'KitchenPlaceGraph',
@@ -99,7 +105,8 @@ JS.Packages(function() { with(this) {
 			'jQuery',
 			'Easel',
 			'INDEXCONST',
-			'DINNERCONST'
+			'DINNERCONST',
+			'YADOBECONST'
 		);
 	
 }});
