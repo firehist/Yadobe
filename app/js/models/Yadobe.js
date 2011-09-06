@@ -114,7 +114,9 @@ var YadobeClass = {
 	tick: function() {
 		//if(this.update) {
 			//this.update = false; // only update once
-			DinnerGamePage.getInstance().kitchen.update();
+			if(typeof DinnerGamePage != "undefined" && this.currentPage instanceof DinnerGamePage) {
+				DinnerGamePage.getInstance().kitchen.update();
+			}
 			this.stage.update();
 		//}
 	},

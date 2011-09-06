@@ -10,22 +10,22 @@ var KitchenPlaceClass = {
 	 * List of menu waiting to be cook
 	 * @type Array
 	 */
-	pendingMenuList: new Array(),
+	pendingMenuList: [],
 	/**
 	 * List of menu in kitchen
 	 * @type int
 	 */
-	cookingMenuList: new Array(),
+	cookingMenuList: [],
 	/**
 	 * List of menu waiting for animation
 	 * @type int
 	 */
-	animateMenuList: new Array(),
+	animateMenuList: [],
 	/**
 	 * List of menu ready
-	 * @type List<Menu>
+	 * @type Object of menu which are ready
 	 */
-	readyMenuList: new Array(),
+	readyMenuList: {},
 	/**
 	 * Max length of menuList
 	 * @type int
@@ -42,8 +42,6 @@ var KitchenPlaceClass = {
 	initialize: function(name, maxMenuList) {
 		this.callSuper(name);
 		if(maxMenuList)	this.maxMenuList = maxMenuList;
-		/** DEV **/
-		this.readyMenuList.push()
 	},
 	// Methods
 	/**
@@ -53,18 +51,18 @@ var KitchenPlaceClass = {
 	 * @return int sum of three menu list
 	 */
 	_getTotalLength: function() {
-		return this.pendingMenuList.length + this.cookingMenuList.length + this.readyMenuList.length;
+		return this.pendingMenuList.length + this.cookingMenuList.length + Tools.ObjSize(this.readyMenuList);
 	},
 	/**
 	 * Run action of reception with moving group to a table
 	 * @author Benjamin Longearet <firehist@gmail.com>
 	 * @since 30/08/2011
 	 */
-	runAction: function() {
-		if(this.readyMenuList.length > 0) {
-			// @TODO Tester si serveur à côté
-			// @TODO Tester si serveur peu recevoir objet
-			//var group = this.groupList.shift();
+	runAction: function(menuGraph) {
+		if(Tools.ObjSize(this.readyMenuList) > 0) {
+			// @TODO Envoyer ordre de déplacement au serveur avec un callback
+			var callback = function(){DinnerGamePage.getInstance().kitchen.removePlate(menuGraph)};
+			DinnerGamePage.getInstance().kitchen.removePlate(menuGraph);
 			DinnerGamePage.getInstance().updateConsoleLog('Kitchen clicked - Menu dépilé et ajouter au serveur');
 		} else {
 			DinnerGamePage.getInstance().updateConsoleLog('Kitchen clicked - Pas d\'action');
@@ -117,8 +115,26 @@ var KitchenPlaceClass = {
 		}
 		return false;
 	},
+	/**
+	 * Switch the first menu in animation to readyList
+	 * @author Benjamin Longearet <firehist@gmail.com>
+	 * @since 30/08/2011
+	 */
 	setReadyDone: function() {
-		this.readyMenuList.push( this.animateMenuList.shift() );
+		if(this.animateMenuList.length > 0) {
+			var menu = this.animateMenuList.shift();
+			this.readyMenuList[menu.toString()] = menu;
+		}
+	},
+	/**
+	 * Remove the selected menu
+	 * @author Benjamin Longearet <firehist@gmail.com>
+	 * @since 06/09/2011
+	 */
+	removeMenu: function(menu) {
+		if(this.readyMenuList[menu.toString()]) {
+			delete this.readyMenuList[menu.toString()];
+		}
 	}
 };
 var KitchenPlace = new JS.Class(Place, KitchenPlaceClass);

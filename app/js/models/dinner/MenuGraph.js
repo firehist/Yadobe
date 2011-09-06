@@ -1,5 +1,5 @@
 /**
- * Menu class
+ * Menu Graph class
  * @author Benjamin Longearet <firehist@gmail.com>
  * @since 06/09/2011
  **/
@@ -36,10 +36,10 @@ var MenuGraphClass = {
 	 * @since 06/09/2011
 	 */
 	createMenuPlace: function() {
-		var frameData = {empty: 0, fish: 1, meat:2, ready1: 3, ready2: 4, ready3: 5, ready4: 6};
-		var sprite = new SpriteSheet( DINNERCONST.IMAGE.plates, 30, 30, frameData);
+		var frameData = {empty: 0, fish: 1, meat:2, ready: [3, 6], ready_hover: [7, 10] };
+		var sprite = new SpriteSheet(DINNERCONST.IMAGE.menus, 30, 30, frameData);
 		this.menu = new BitmapSequence(sprite);
-		this.menu.scaleX = this.menu.scaleY = 1.2;
+		this.menu.scaleX = this.menu.scaleY = 1.3;
 	},
 	/**
 	 * Combinate update function with a setState
@@ -70,23 +70,20 @@ var MenuGraphClass = {
 	addMouseListener: function() {
 		(function(menuGraph) {
 			var object = menuGraph.menu;
-			console.debug(object);
 			object.onPress = function(e) {
 				if(!object.clicked) {
-					DinnerGamePage.getInstance().kitchen.runAction(menuGraph);
+					DinnerGamePage.getInstance().kitchen.model.runAction(menuGraph);
 				}
 			}
 			object.onMouseOver = function() {
-				console.debug('lol');
 				if(!object.clicked) {
-					object.alpha = 0.9;
+					object.gotoAndStop(object.currentFrame + 4);
 					$('body').css('cursor', 'pointer');
 				}
 			}
 			object.onMouseOut = function() {
-				console.debug('lol');
 				if(!object.clicked) {
-					object.alpha = 1;
+					object.gotoAndStop(object.currentFrame - 4);
 					$('body').css('cursor', 'default');
 				}
 			}
@@ -141,7 +138,8 @@ MenuGraph.states({
 	 */
 	Ready: {
 		update: function() {
-			this.menu.gotoAndStop("ready" + this.model.table);
+			this.menu.gotoAndStop("ready");
+			this.menu.gotoAndStop( this.menu.currentFrame + (this.model.table - 1) );
 			this.menu.visible = true;
 		}
 	}
