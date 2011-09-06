@@ -16,23 +16,27 @@ var DinnerGamePageClass = {
 	 */
 	reception: null,
 	/**
+	 * The list of TableGraph
 	 * @type Array
 	 */
 	tables: new Array(),
 	/**
-	 * @type Waiter
+	 * The waiterGraph
+	 * @type WaiterGraph
 	 */
 	waiter: null,
+	/**
+	 * List of menuGraph
+	 * @type MenuGraph
+	 */
+	menuList: [],
 	// Constructor
 	/**
 	 * @constructor
-	 * @class DinnerGamePage
-	 * @method initialize
 	 * @author Benjamin Longearet <firehist@gmail.com>
 	 * @since 30/08/2011
 	 */
 	initialize: function() {
-		console.log('Dinner Game init');
 		DinnerGamePage.instance = this;
 		// init Page Container
 		this.callSuper();
@@ -40,7 +44,7 @@ var DinnerGamePageClass = {
 		this.createBackground();
 		this.createConsoleLog();
 		// Kitchen
-		var kitchenModel = new KitchenPlace('Cuisine', 10);
+		var kitchenModel = new KitchenPlace('Cuisine', DINNERCONST.COOK.maxMenuInKitchen);
 		this.kitchen = new KitchenPlaceGraph(kitchenModel);
 		this.pageContainer.addChildAt(this.kitchen.getContainer(), DINNERCONST.SCENES.kitchen);
 		// Reception
@@ -55,9 +59,7 @@ var DinnerGamePageClass = {
 			var tableGraph = new TablePlaceGraph(tableModel);
 			this.tables.push(tableGraph);
 			this.pageContainer.addChildAt(tableGraph.getContainer(), DINNERCONST.SCENES.tables[i]);
-		}
-	   Yadobe.update = true;
-		
+		}	
 	},
 	createConsoleLog: function() {
 		var log = new Shape();

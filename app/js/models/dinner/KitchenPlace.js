@@ -34,8 +34,8 @@ var KitchenPlaceClass = {
 	// Constructor
 	/**
 	 * @constructor
-	 * @class KitchenPlace
-	 * @method initialize
+	 * @author Benjamin Longearet <firehist@gmail.com>
+	 * @since 06/09/2011
 	 * @param {String} name
 	 * @param {int} maxMenuList
 	 */
@@ -48,7 +48,6 @@ var KitchenPlaceClass = {
 	// Methods
 	/**
 	 * Get the total menu in kitchen
-	 * @class KitchenPlace
 	 * @author Benjamin Longearet <firehist@gmail.com>
 	 * @since 30/08/2011
 	 * @return int sum of three menu list
@@ -58,7 +57,6 @@ var KitchenPlaceClass = {
 	},
 	/**
 	 * Run action of reception with moving group to a table
-	 * @class KitchenPlace
 	 * @author Benjamin Longearet <firehist@gmail.com>
 	 * @since 30/08/2011
 	 */

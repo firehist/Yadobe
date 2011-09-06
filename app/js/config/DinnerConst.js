@@ -69,10 +69,11 @@ DINNERCONST.IMAGE = {
 	human_table: 'img/dinnerGame/stage_01_table_human.png',
 	background: 'img/dinnerGame/stage_01.jpg',
 	plates: 'img/dinnerGame/kitchen/plate_num.png',
-	luigi_walking_right_empty: 'img/dinnerGame/kitchen/luigi_walking_right_empty.png',
-	luigi_walking_left_full: 'img/dinnerGame/kitchen/luigi_walking_left_full.png',
-	luigi_stop_front_full2empty: 'img/dinnerGame/kitchen/luigi_stop_front_full2empty.png',
-	luigi_walking_left_empty: 'img/dinnerGame/kitchen/luigi_walking_left_empty.png'
+	luigi_walking: 'img/dinnerGame/kitchen/luigi_walking.png'
+//	luigi_walking_right_empty: 'img/dinnerGame/kitchen/luigi_walking_right_empty.png',
+//	luigi_walking_left_full: 'img/dinnerGame/kitchen/luigi_walking_left_full.png',
+//	luigi_stop_front_full2empty: 'img/dinnerGame/kitchen/luigi_stop_front_full2empty.png',
+//	luigi_walking_left_empty: 'img/dinnerGame/kitchen/luigi_walking_left_empty.png'
 };
 /**
  * DINNERCONST.POSITION Struct
@@ -112,5 +113,6 @@ DINNERCONST.SCENES = {
  * @type Object
  */
 DINNERCONST.COOK = {
-	maxCooking: 3
+	maxCooking: 3,
+	maxMenuInKitchen: 8
 };

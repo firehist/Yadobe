@@ -17,11 +17,18 @@ var LuigiGraphClass = {
 	 * @type Luigi
 	 */
 	kitchen: null,
+	/**
+	 * Counter use to fix speed of bitmapSeq
+	 */
 	count: 0,
-	bitmapSeq: {},
+	/**
+	 * List of bitmapSeq available
+	 */
+	bitmapSeq: null,
 	// Constructor
 	/**
 	 * @constructor
+	 * @param kitchen KitchenGraph
 	 * @param x int
 	 * @param y int
 	 */
@@ -147,7 +154,7 @@ LuigiGraph.states({
 			} else if(this.count >= 5) {
 				this.count++;
 				if(this.count == 10) {
-					this.kitchen.createPlate();
+					this.kitchen.displayPlate();
 					this.count = 0;
 					this.container.removeAllChildren();
 					this.container.addChild(this.getLuigi('walking_right_empty'));

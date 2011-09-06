@@ -18,22 +18,32 @@ var KitchenPlaceGraphClass = {
 	container: null,
 	/**
 	 * Luigi information
+	 * @type LuigiGraph
 	 */
-	luigi: {},
-	plates: [],
+	luigi: null,
+	/**
+	 * Plates ready on kitchen
+	 * @type Array of MenuGraph
+	 */
+	plates: {},
 	// Constructor
 	/**
 	 * @constructor
-	 * @class KitchenPlace
-	 * @method initialize
-	 * @param {KitchenPlace} model
+	 * @author Benjamin Longearet <firehist@gmail.com>
+	 * @since 06/09/2011
+	 * @param model KitchenPlace
 	 */
 	initialize: function(model) {
 		this.model = model;
 		this.container = new Container();
-		this.addMouseListener();
 		this.createLuigi();
 		this.createKitchen();
+		this.initPlates();
+	},
+	initPlates: function() {
+		for(var i=0; i<this.model.maxMenuList; i++) {
+			this.plates[i] = null;
+		}
 	},
 	/**
 	 * Get kitchen container
@@ -56,57 +66,63 @@ var KitchenPlaceGraphClass = {
 		this.container.addChildAt(kitchen, 2);
 	},
 	/**
-	 *
+	 * Create instance of luigi class
+	 * @author Benjamin Longearet <firehist@gmail.com>
+	 * @since 06/09/2011
 	 */
 	createLuigi: function() {
 		this.luigi = new LuigiGraph(this, Yadobe.getInstance().canvas.width + 10, DINNERCONST.POSITION.kitchen.y - 50);
 		this.container.addChildAt(this.luigi.container, 1);
 	},
-	createPlate: function() {
-		var sprite = new SpriteSheet(DINNERCONST.IMAGE.plates, 30, 30);
-		var plate = new BitmapSequence(sprite);
-		plate.gotoAndStop(Tools.randomXToY(0, 3));
-		plate.x = Yadobe.getInstance().canvas.width - 230 + (this.plates.length * 30);
-		plate.y = DINNERCONST.POSITION.kitchen.y + 20;
-		this.plates.push(plate);
-		this.container.addChild(plate);
+	addPlate: function(menuGraph) {
+		for(var index in this.plates) {
+			if(this.plates[index] == null) {
+				this.plates[index] = menuGraph;
+				return index;
+			}
+		}
+		return false;
+	},
+	/**
+	 * Create menuGraph object and display it
+	 * @author Benjamin Longearet <firehist@gmail.com>
+	 * @since 06/09/2011
+	 */
+	displayPlate: function() {
+		var menu = this.model.animateMenuList[0];
+		var menuGraph = new MenuGraph(menu);
+		// Add to menuGraph manager
+		DinnerGamePage.getInstance().menuList.push(menuGraph);
+		// Compute position
+		var platesLength = this.addPlate(menuGraph);
+		var x = Yadobe.getInstance().canvas.width - 230 + (platesLength * 30);
+		var y = DINNERCONST.POSITION.kitchen.y + 20;
+		menuGraph.setPosition(x, y);
+		menuGraph.changeState("Ready");
+		this.container.addChild(menuGraph.menu);
+		
+	},
+	/**
+	 * Create menuGraph object and display it
+	 * @author Benjamin Longearet <firehist@gmail.com>
+	 * @since 06/09/2011
+	 */
+	removePlate: function(menuRef) {
+		for(var index in this.plates) {
+			if(this.plates.toString() == menuRef.toString()) {
+				this.plates[index] = null;
+			}
+		}
 	},
 	/**
 	 * Call each refresh canvas
+	 * @author Benjamin Longearet <firehist@gmail.com>
+	 * @since 05/09/2011
 	 */
 	update: function() {
 		if(this.model.animateMenuList.length > 0) {
 			this.luigi.update();
 		}
-	},
-	/**
-	 * Event listener
-	 * @TODO create a EventListener Class in dinner module
-	 */
-	addMouseListener: function() {
-		(function(kitchenPlaceGraph) {
-			var container = kitchenPlaceGraph.container;
-			container.onPress = function(e) {
-				if(!container.clicked) {
-					//DinnerGamePage.getInstance().updateConsoleLog('Kitchen clicked');
-					kitchenPlaceGraph.model.runAction();
-				}
-			}
-			container.onMouseOver = function() {
-				if(!container.clicked) {
-					container.alpha = 0.8;
-					$('body').css('cursor', 'pointer');
-					Yadobe.getInstance().setUpdate();
-				}
-			}
-			container.onMouseOut = function() {
-				if(!container.clicked) {
-					container.alpha = 1;
-					$('body').css('cursor', 'default');
-					Yadobe.getInstance().setUpdate();
-				}
-			}
-		})(this);
 	}
 	// Methods
 };

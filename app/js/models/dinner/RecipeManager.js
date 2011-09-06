@@ -2,7 +2,6 @@
  * RecipeManager class
  * @since 30/08/2011
  * @author Benjamin Longearet <firehist@gmail.com>
- * @module Yadobe
  **/
 var RecipeManagerClass = {
 	// Attributes
@@ -17,6 +16,9 @@ var RecipeManagerClass = {
 		drink: []
 	},
 	// Constructor
+	/**
+	 * @constructor
+	 */
 	initialize: function() {
 		RecipeManager.instance = this;
 		for(var type in YADOBECONST.RECIPES) {
@@ -79,6 +81,10 @@ var RecipeManagerClass = {
 	 * Add recipe to manager
 	 * @author Benjamin Longearet <firehist@gmail.com>
 	 * @since 30/08/2011
+	 * @param name String The name of recipe
+	 * @param duration int The duration of recipe
+	 * @param type String (starter, dish, dessert or drink)
+	 * @param price float The price of this recipe
 	 */
 	createRecipe: function(name, duration, type, price) {
 		this.listRecipes[type].push(new Recipe(name, duration, type, price));
@@ -94,12 +100,18 @@ var RecipeManagerClass = {
 			this.listRecipes.starter[Tools.randomXToY(0, this.listRecipes.starter.length - 1)],
 			this.listRecipes.dish[Tools.randomXToY(0, this.listRecipes.dish.length - 1)],
 			this.listRecipes.dessert[Tools.randomXToY(0, this.listRecipes.dessert.length - 1)],
-			this.listRecipes.drink[Tools.randomXToY(0, this.listRecipes.drink.length - 1)]
+			this.listRecipes.drink[Tools.randomXToY(0, this.listRecipes.drink.length - 1)],
+			Tools.randomXToY(1,4)
 		);
 	}
 };
 var RecipeManager = new JS.Class(RecipeManagerClass);
 
+/**
+ * RecipeManager singleton managment
+ * @author BenjaminLongearet
+ * @since 30/08/2011
+ */
 RecipeManager.instance = null;
 RecipeManager.getInstance = function() {
 	if(RecipeManager.instance != null) {

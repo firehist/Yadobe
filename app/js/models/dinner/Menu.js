@@ -7,6 +7,7 @@
  **/
 var MenuClass = {
 	// Attributes
+	table: 0,
 	/**
 	 * Starter
 	 * @type Recipe
@@ -28,7 +29,8 @@ var MenuClass = {
 	 */
 	drink: null,
 	// Constructor
-	initialize: function(starter, dish, dessert, drink) {
+	initialize: function(starter, dish, dessert, drink, table) {
+		this.table = table;
 		this.starter = starter;
 		this.dish = dish;
 		this.dessert = dessert;
