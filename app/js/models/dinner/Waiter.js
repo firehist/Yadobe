@@ -5,54 +5,57 @@
  * @module Yadobe
  **/
 var WaiterClass = {
+	// Includes
+	include: JS.State,
 	// Attributes
 	/**
 	 * Name of waiter
-	 * @param string name
+	 * @typeof string
 	 */
 	name: null,
 	/**
-	 * Actual position of waiter
-	 * @param Place position
-	 */
-	position: null,
-	/**
 	 * Destination of waiter	 
-	 * @param Place destination
+	 * @typeof Destination
 	 */
 	destination: null,
 	/**
 	 * Inventory of waiter
-	 * @param List<Menu> inventory
+	 * @typeof List<Menu>
 	 */
 	inventory: new Array(),
 	/**
 	 * Inventory size
-	 * @param int inventoryMax
+	 * @typeof int
 	 */
 	inventoryMax: 2,
+    
 	// Constructor
 	initialize: function(name, position, inventoryMax) {
 		this.name = name
-		if(position instanceof Place.klass) {
+		if (position instanceof Place) {
 			this.position = position;
 		}
 		this.inventoryMax = inventoryMax;
 	},
 	// Methods
 	/**
-	 * Add destination to the waiter
-	 * @method addDestination
-	 * @author Benjamin Longearet <firehist@gmail.com>
-	 * @since 30/08/2011
+	 * Set destination to the waiter
+	 * @method moveTo
+     * @param {Destination} destination
+	 * @author Yannick Galatol <yannick.galatol@gmail.com>
+	 * @since 07/09/2011
 	 */
-	addDestination: function(position) {
-		if(position instanceof Place.klass) {
-			this.destination.push(position);
+	moveTo: function(destination) {
+		if (destination instanceof Destination) {
+			this.destination = destination;
+            this.setState('Moving');
 		}
+        else {
+            throw new Exception('Unknown destination');
+        }
 	},
 	addToInventory: function(menu) {
-		if(menu instanceof Menu.klass && this.inventory.length < this.inventoryMax) {
+		if(menu instanceof Menu && this.inventory.length < this.inventoryMax) {
 			this.inventory.push(menu);
 		}
 	},
@@ -64,3 +67,24 @@ var WaiterClass = {
 	}
 };
 var Waiter = new JS.Class(WaiterClass);
+
+/**
+ * Waiter states declaration
+ * @author Yannick Galatol <yannick.galatol@gmail.com>
+ * @since 07/09/2011
+ * @module Waiter
+ */
+Waiter.states({
+	/**
+	 * Waiting state
+	 * @author Yannick Galatol <yannick.galatol@gmail.com>
+	 * @since 07/09/2011
+	 */
+	Waiting: {},
+	/**
+	 * Moving state
+	 * @author Yannick Galatol <yannick.galatol@gmail.com>
+	 * @since 07/09/2011
+	 */
+	Moving: {}
+});

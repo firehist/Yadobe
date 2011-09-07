@@ -29,7 +29,7 @@ JS.Packages(function() { with(this) {
 	file(JSMODEL_DINNER_PATH + 'Menu.js').provides('Menu').requires('Recipe');
 	file(JSMODEL_DINNER_PATH + 'Recipe.js').provides('Recipe').requires('JS.Class');
 	file(JSMODEL_DINNER_PATH + 'RecipeManager.js').provides('RecipeManager').requires('Recipe');
-	file(JSMODEL_DINNER_PATH + 'Waiter.js').provides('Waiter').requires('Menu');
+	file(JSMODEL_DINNER_PATH + 'Waiter.js').provides('Waiter').requires('Menu', 'JS.State');
     
 	/* UI models */
 	file(JSMODEL_UI_PATH + 'Button.js').provides('Button').requires('JS.Class', 'Tools', 'Easel');
@@ -39,8 +39,9 @@ JS.Packages(function() { with(this) {
     file(JSVIEW_DINNER_PATH + 'ReceptionPlaceGraph.js').provides('ReceptionPlaceGraph').requires('ReceptionPlace');
 	file(JSVIEW_DINNER_PATH + 'MenuGraph.js').provides('MenuGraph').requires('JS.State');
 	file(JSVIEW_DINNER_PATH + 'LuigiGraph.js').provides('LuigiGraph').requires('JS.State');
+	file(JSVIEW_DINNER_PATH + 'WaiterGraph.js').provides('WaiterGraph').requires('JS.State', 'Waiter');
     file(JSVIEW_DINNER_PATH + 'KitchenPlaceGraph.js').provides('KitchenPlaceGraph').requires('KitchenPlace');
-	file(JSVIEW_DINNER_PATH + 'GroupGraph.js').provides('GroupGraph').requires('JS.Class');
+	file(JSVIEW_DINNER_PATH + 'GroupGraph.js').provides('GroupGraph').requires('JS.State', 'Group');
     
 	/* tools libs */
 	file(JSLIBS_PATH + 'tools.js').provides('Tools');
@@ -87,10 +88,9 @@ JS.Packages(function() { with(this) {
 			'TablePlaceGraph',
 			'ReceptionPlaceGraph',
 			'KitchenPlaceGraph',
-			'Group',
 			'GroupGraph',
 			'RecipeManager',
-			'Waiter'
+			'WaiterGraph'
 		);
 	/* Waiting */
 	file(JSTEMPLATE_PATH + 'WaitingPage.js')

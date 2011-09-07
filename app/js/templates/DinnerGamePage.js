@@ -38,28 +38,39 @@ var DinnerGamePageClass = {
 	 */
 	initialize: function() {
 		DinnerGamePage.instance = this;
-		// init Page Container
+		
+        // Init Page Container
 		this.callSuper();
-		// init background
+		
+        // Init background
 		this.createBackground();
 		this.createConsoleLog();
-		// Kitchen
+		
+        // Kitchen
 		var kitchenModel = new KitchenPlace('Cuisine', DINNERCONST.COOK.maxMenuInKitchen);
 		this.kitchen = new KitchenPlaceGraph(kitchenModel);
 		this.pageContainer.addChildAt(this.kitchen.getContainer(), DINNERCONST.SCENES.kitchen);
-		// Reception
+		
+        // Reception
 		var receptionModel = new ReceptionPlace('Réception', 3);
 		this.reception = new ReceptionPlaceGraph(receptionModel);
 		this.pageContainer.addChildAt(this.reception.getContainer(), DINNERCONST.SCENES.reception);
-		// Tables
+		
+        // Tables
 		this.tables = new Array();
 		var colors = ['red','blue','green','yellow'];
-		for(var i=0; i<4; i++) {
+		for (var i=0; i<4; i++) {
 			var tableModel = new TablePlace(i, colors[i]);
 			var tableGraph = new TablePlaceGraph(tableModel);
 			this.tables.push(tableGraph);
 			this.pageContainer.addChildAt(tableGraph.getContainer(), DINNERCONST.SCENES.tables[i]);
-		}	
+		}
+        
+        // Waiter
+		var waiterModel = new Waiter('Serveur', this.kitchen, 1);
+		this.waiter = new WaiterGraph(waiterModel);
+		this.pageContainer.addChild(this.waiter.getContainer());
+		
 	},
 	createConsoleLog: function() {
 		var log = new Shape();
@@ -107,11 +118,13 @@ var DinnerGamePage = new JS.Class(Page, DinnerGamePageClass);
 
 // Static attribute
 DinnerGamePage.instance = null;
+
 // Static method singleton
 DinnerGamePage.getInstance = function() {
-	if(DinnerGamePage.instance != null) {
+	if (DinnerGamePage.instance != null) {
 		return DinnerGamePage.instance;
-	} else {
+	}
+    else {
 		return new DinnerGamePage();
 	}
 };
