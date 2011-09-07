@@ -19,5 +19,5 @@ INDEXCONST.LOADING = [
  * @since 01/09/2011
  */
 INDEXCONST.IMAGE = {
-	index: 'img/dinnerGame/fond_cartoon_01_empty.png'
+	index: 'img/index/fond_cartoon_01_empty.png'
 };
