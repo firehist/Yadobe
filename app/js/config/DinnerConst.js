@@ -71,12 +71,7 @@ DINNERCONST.IMAGE = {
 	human_table_green: 'img/dinnerGame/stage_01_table_human_green.png',
 	human_table_yellow: 'img/dinnerGame/stage_01_table_human_yellow.png',
 	human_table_blue: 'img/dinnerGame/stage_01_table_human_blue.png',
-	human_red: 'img/dinnerGame/stage_01_human_red.png'
-	human_green: 'img/dinnerGame/stage_01_human_green.png'
-	human_yellow: 'img/dinnerGame/stage_01_human_yellow.png'
-	human_blue: 'img/dinnerGame/stage_01_human_blue.png'
-    index: 'img/dinnerGame/fond_cartoon_01_empty.png'
-	human_table: 'img/dinnerGame/stage_01_table_human.png',
+    index: 'img/dinnerGame/fond_cartoon_01_empty.png',
 	background: 'img/dinnerGame/stage_01.jpg',
 	menus: 'img/dinnerGame/kitchen/menus.png',
 	luigi_walking: 'img/dinnerGame/kitchen/luigi_walking.png'
