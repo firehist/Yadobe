@@ -24,7 +24,7 @@ var TablePlaceGraphClass = {
 	 * @param {TablePlace} model
 	 */
 	initialize: function(model) {
-		console.log('TablePlaceGraph.initialize(model)');	
+		console.log('TablePlaceGraph.initialize(model)');
 		this.model = model;
 		this.container = new Container();
 		this.addMouseListener();

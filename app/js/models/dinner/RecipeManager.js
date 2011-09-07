@@ -2,7 +2,6 @@
  * RecipeManager class
  * @since 30/08/2011
  * @author Benjamin Longearet <firehist@gmail.com>
- * @module Yadobe
  **/
 var RecipeManagerClass = {
 	// Attributes
@@ -11,23 +10,25 @@ var RecipeManagerClass = {
 	 * @param mixed listRecipes
 	 */
 	listRecipes: { 
-		'starter': {},
-		'dish': {},
-		'dessert': {},
-		'drink': {}
+		starter: [],
+		dish: [],
+		dessert: [],
+		drink: []
 	},
 	// Constructor
-	initialize: function() {},
-	// Methods
 	/**
-	 * Get duration of menu
-	 * @author Benjamin Longearet <firehist@gmail.com>
-	 * @since 30/08/2011
-	 * @return int The duration of the menu
+	 * @constructor
 	 */
-	existRecipe: function(name, type) {
-		return (this.listRecipes[type][name] && this.listRecipes[type][name] instanceof Recipe);
+	initialize: function() {
+		RecipeManager.instance = this;
+		for(var type in YADOBECONST.RECIPES) {
+			for(var recipe in YADOBECONST.RECIPES[type]) {
+				var tmp = YADOBECONST.RECIPES[type][recipe];
+				this.createRecipe(tmp.name, tmp.duration, type, tmp.price);
+			}
+		}
 	},
+	// Methods
 	/**
 	 * Get recipe object
 	 * @author Benjamin Longearet <firehist@gmail.com>
@@ -35,8 +36,8 @@ var RecipeManagerClass = {
 	 * @return mixed recipe object or false if an error occured
 	 */
 	getRecipe: function(name, type) {
-		if(this.existRecipe(name, type)) {
-			return this.listRecipes[type][name]
+		for(var index in this.listRecipes[type]) {
+			if(this.listRecipes[type][index].name === name) return this.listRecipes[type][index]
 		}
 		return false;
 	},
@@ -80,35 +81,42 @@ var RecipeManagerClass = {
 	 * Add recipe to manager
 	 * @author Benjamin Longearet <firehist@gmail.com>
 	 * @since 30/08/2011
+	 * @param name String The name of recipe
+	 * @param duration int The duration of recipe
+	 * @param type String (starter, dish, dessert or drink)
+	 * @param price float The price of this recipe
 	 */
 	createRecipe: function(name, duration, type, price) {
-		this.listRecipes[type][name] = new Recipe(name, duration, type, price);
+		this.listRecipes[type].push(new Recipe(name, duration, type, price));
 	},
 	/**
-	 * Shortcut for createRecipe
+	 * Generate random menu
+	 * @author Benjamin Longearet <firehist@gmail.com>
+	 * @since 05/09/2011
+	 * @return Menu random menu
 	 */
-	createStarterRecipe: function(name, duration, price) {
-		this.createRecipe(name, duration, 'starter', price);
-	},
-	createDishRecipe: function(name, duration, price) {
-		this.createRecipe(name, duration, 'dish', price);
-	},
-	createDessertRecipe: function(name, duration, price) {
-		this.createRecipe(name, duration, 'dessert', price);
-	},
-	createDrinkRecipe: function(name, duration, price) {
-		this.createRecipe(name, duration, 'drink', price);
+	createRandomMenu: function() {
+		return new Menu(
+			this.listRecipes.starter[Tools.randomXToY(0, this.listRecipes.starter.length - 1)],
+			this.listRecipes.dish[Tools.randomXToY(0, this.listRecipes.dish.length - 1)],
+			this.listRecipes.dessert[Tools.randomXToY(0, this.listRecipes.dessert.length - 1)],
+			this.listRecipes.drink[Tools.randomXToY(0, this.listRecipes.drink.length - 1)],
+			Tools.randomXToY(1,4)
+		);
 	}
 };
 var RecipeManager = new JS.Class(RecipeManagerClass);
 
-RecipeManager.Factory = {};
-RecipeManager.Factory.newInstance = function() {
-	var r = new RecipeManager();
-	r.createRecipe('Steak', 30, 'dish', 15);
-	r.createRecipe('Poisson', 35, 'dish', 12);
-	r.createRecipe('Salade du chef', 10, 'starter', 10);
-	r.createRecipe('Coco-Cala', 5, 'drink', 2);
-	r.createRecipe('Mousse au chocolat', 10, 'dessert', 5);
-	return r;
-};
+/**
+ * RecipeManager singleton managment
+ * @author BenjaminLongearet
+ * @since 30/08/2011
+ */
+RecipeManager.instance = null;
+RecipeManager.getInstance = function() {
+	if(RecipeManager.instance != null) {
+		return RecipeManager.instance;
+	} else {
+		return new RecipeManager();
+	}
+}
