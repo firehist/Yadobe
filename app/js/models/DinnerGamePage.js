@@ -49,6 +49,7 @@ var DinnerGamePageClass = {
 		this.pageContainer.addChildAt(this.kitchen.getContainer(), DINNERCONST.SCENES.kitchen);
 		// Reception
 		var receptionModel = new ReceptionPlace('Reception', 4);
+		console.debug("type du model de la reception: "+(typeof this.receptionModel));
 		this.reception = new ReceptionPlaceGraph(receptionModel);
 		this.pageContainer.addChildAt(this.reception.getContainer(), DINNERCONST.SCENES.reception);
 		// Tables

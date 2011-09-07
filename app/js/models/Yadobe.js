@@ -112,12 +112,13 @@ var YadobeClass = {
 	 */
 	tick: function() {
 		if(this.update) {
-			/*
-			var receptionModel = DinnerGamePage.getInstance().reception.model;
-			for(var i=0; i<receptionModel.getGroupListLength(); i++) {
-				console.debug("Group "+i+": " + receptionModel.groupList[i]);
+			
+			if (DinnerGamePage) {
+				var receptionModel = DinnerGamePage.getInstance().reception.model;
+				for(var i=0; i<receptionModel.getGroupListLength(); i++) {
+					console.debug("Group "+i+": " + receptionModel.groupList[i]);
+				}
 			}
-			*/
 			console.log('Yadobe tick()');	
 			this.update = false; // only update once
 			this.stage.update();
