@@ -1,66 +1,16 @@
 /**
- * DINNERCONST Struct
+ * STAGE 01 Struct
  * @author Benjamin Longearet <firehist@gmail.com>
- * @since 30/08/2011
+ * @since 07/09/2011
  */
-var DINNERCONST = {};
+var STAGE01 = {};
 /**
- * DINNERCONST.LOADING Struct
- * All time keywork hava to be set in JS.Package
- * @author Benjamin Longearet <firehist@gmail.com>
- * @since 30/08/2011
- * @type Array
- */
-DINNERCONST.LOADING = [
-	'TimeManager',
-	'Page',
-	'TablePlaceGraph',
-	'ReceptionPlaceGraph',
-	'KitchenPlaceGraph',
-	'Group',
-	'GroupGraph',
-	'RecipeManager',
-	'Waiter',
-	'DinnerGamePage'
-];
-/**
- * DINNERCONST.TIME Struct
- * @author Benjamin Longearet <firehist@gmail.com>
- * @since 30/08/2011
- * @type Object
- */
-DINNERCONST.TIME = {
-	/**
-	 * Cons for creation group information
-	 * @author Benjamin Longearet <firehist@gmail.com>
-	 * @since 30/08/2011
-	 */
-	createGroup: {
-		timeRef: 1000,
-		getRandTime: function() {
-			return DINNERCONST.TIME.createGroup.timeRef;
-		}
-	}
-};
-/**
- * DINNERCONST.COLOR Struct
- * @author Benjamin Longearet <firehist@gmail.com>
- * @since 31/08/2011
- * @type Object
- */
-DINNERCONST.COLOR = {
-	red: new Tools.Color('255, 0, 0', '#FF0000', '0, 100, 100'),
-	blue: new Tools.Color('0, 0, 255', '#0000FF', '100, 100, 0'),
-	green: new Tools.Color('0, 255, 0', '#00FF00', '100, 0, 100'),
-	yellow: new Tools.Color('255, 255, 0', '#FFFF00', '60, 100, 100')
-};
-/**
- * DINNERCONST.IMAGE Struct
+ * STAGE01.IMAGE Struct
  * @author Benjamin Longearet <firehist@gmail.com>
  * @since 01/09/2011
  * @type Object
  */
-DINNERCONST.IMAGE = {
+STAGE01.IMAGE = {
 	// Stage information
 	kitchen: 'img/dinnerGame/stage_01_kitchen.png',
 	reception: 'img/dinnerGame/stage_01_reception.png',
