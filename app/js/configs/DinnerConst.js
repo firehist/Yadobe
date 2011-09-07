@@ -73,6 +73,7 @@ DINNERCONST.IMAGE = {
 	human_table_blue: 'img/dinnerGame/stage_01_table_human_blue.png',
 	background: 'img/dinnerGame/stage_01.jpg',
 	menus: 'img/dinnerGame/kitchen/menus.png',
+	bubbles: 'img/dinnerGame/tables/bubbles.png',
 	luigi_walking: 'img/dinnerGame/kitchen/luigi_walking.png'
 };
 /**

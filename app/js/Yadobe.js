@@ -115,7 +115,7 @@ var YadobeClass = {
 		//if(this.update) {
 			//this.update = false; // only update once
 			if(typeof DinnerGamePage != "undefined" && this.currentPage instanceof DinnerGamePage) {
-				DinnerGamePage.getInstance().kitchen.update();
+				DinnerGamePage.getInstance().update();
 			}
 			this.stage.update();
 		//}

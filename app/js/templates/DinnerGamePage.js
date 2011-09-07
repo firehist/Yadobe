@@ -101,6 +101,17 @@ var DinnerGamePageClass = {
 	 */
 	pause: function() {
 		this.reception.pause();
+	},
+	/**
+	 * Refresh method call by tick EaselJS of yadobe
+	 * @author Benjamin Longearet <firehist@gmail.com>
+	 * @since 07/09/2011
+	 */
+	update: function() {
+		this.kitchen.update();
+		for(var i=0; i<4; i++) {
+			this.tables[i].update();
+		}
 	}
 };
 var DinnerGamePage = new JS.Class(Page, DinnerGamePageClass);

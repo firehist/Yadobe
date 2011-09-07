@@ -24,6 +24,11 @@ var TablePlaceClass = {
 	 */
 	menuList: new Array(),
 	// Constructor
+	/**
+	 * @constructor
+	 * @author Benjamin Longearet <firehist@gmail.com>
+	 * @since 30/08/2011
+	 */
 	initialize: function(name, color) {
 		this.callSuper(name);
 		this.color = color;
