@@ -116,11 +116,8 @@ var YadobeClass = {
 		//if(this.update) {
 			//this.update = false; // only update once
 			if(typeof DinnerGamePage != "undefined" && this.currentPage instanceof DinnerGamePage) {
+				DinnerGamePage.getInstance().updateConsoleLog("[Yadobe.tick]");
 				DinnerGamePage.getInstance().kitchen.update();
-				var receptionModel = DinnerGamePage.getInstance().reception.model;
-				for(var i=0; i<receptionModel.getGroupListLength(); i++) {
-					console.debug("Group "+i+": " + receptionModel.groupList[i]);
-				}
 			}
 
 			this.stage.update();
