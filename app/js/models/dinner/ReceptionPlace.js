@@ -100,9 +100,12 @@ var ReceptionPlaceClass = {
 	 * @return boolean true if successful, false else
 	 */
 	addGroup: function(group) {
+        console.debug("[addGroup-] Start");
 		if(group instanceof Group) {
+            DinnerGamePage.getInstance().addGroup(group);
 			this.groupList.push(group);
-			return true;
+            console.debug("[addGroup-] Stop");
+            return true;
 		}
 		return false;
 	},
@@ -125,9 +128,9 @@ var ReceptionPlaceClass = {
 	 * @since 30/08/2011
 	 */
 	createGroup: function() {
-		console.log('Create Group');
 		// @TODO add test for create group
 		if (this.maxGroupList > this.getGroupListLength()) {
+            console.log('Create Group');
 			var g = Group.Factory.newInstance();
 			this.addGroup(g);
 		}

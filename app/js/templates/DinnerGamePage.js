@@ -30,6 +30,11 @@ var DinnerGamePageClass = {
 	 * @type MenuGraph
 	 */
 	menuList: [],
+    /**
+	 * List of groupGraph
+	 * @type GroupGraph
+	 */
+	groupList: [],
 	// Constructor
 	/**
 	 * @constructor
@@ -48,7 +53,7 @@ var DinnerGamePageClass = {
 		this.kitchen = new KitchenPlaceGraph(kitchenModel);
 		this.pageContainer.addChildAt(this.kitchen.getContainer(), DINNERCONST.SCENES.kitchen);
 		// Reception
-		var receptionModel = new ReceptionPlace('Reception', 4);
+		var receptionModel = new ReceptionPlace('Reception', 1);
 		this.reception = new ReceptionPlaceGraph(receptionModel);
 		this.pageContainer.addChildAt(this.reception.getContainer(), DINNERCONST.SCENES.reception);
 		// Tables
@@ -100,7 +105,18 @@ var DinnerGamePageClass = {
 	 */
 	pause: function() {
 		this.reception.pause();
-	}
+	},
+    /**
+     * @author DJE
+     * @since
+     */
+    addGroup: function(groupModel) {
+        console.debug("[addGroup] Start");
+        var groupGraph = new GroupGraph(groupModel);
+        this.groupList.push(groupGraph);
+        this.pageContainer.addChild(groupGraph.getContainer());
+        console.debug("[addGroup] Stop");
+    }
 };
 var DinnerGamePage = new JS.Class(Page, DinnerGamePageClass);
 

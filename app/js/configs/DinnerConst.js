@@ -76,7 +76,6 @@ DINNERCONST.IMAGE = {
 	human_yellow: 'img/dinnerGame/stage_01_human_yellow.png',
 	human_blue: 'img/dinnerGame/stage_01_human_blue.png',
 	background: 'img/dinnerGame/stage_01.jpg',
-    index: 'img/dinnerGame/fond_cartoon_01_empty.png',
 	menus: 'img/dinnerGame/kitchen/menus.png',
 	luigi_walking: 'img/dinnerGame/kitchen/luigi_walking.png'
 //	luigi_walking_right_empty: 'img/dinnerGame/kitchen/luigi_walking_right_empty.png',
@@ -99,7 +98,7 @@ DINNERCONST.POSITION = {
 		new Point(570, 410),
 		new Point(340, 410)
 	],
-    firstgroup : new Point(50, 250)
+    firstgroup : new Point(2, 510)
 };
 /**
  * DINNERCONST.SCENES Struct

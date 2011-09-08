@@ -117,6 +117,7 @@ var YadobeClass = {
 			if(typeof DinnerGamePage != "undefined" && this.currentPage instanceof DinnerGamePage) {
 				DinnerGamePage.getInstance().updateConsoleLog("[Yadobe.tick]");
 				DinnerGamePage.getInstance().kitchen.update();
+                DinnerGamePage.getInstance().reception.update();
 			}
 			this.stage.update();
 		//}

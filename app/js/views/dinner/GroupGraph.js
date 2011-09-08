@@ -5,6 +5,8 @@
  * @module dinner
  */
 var GroupGraphClass = {
+    // Includes
+	include: JS.State,
     // Attributes
 	/**
 	 * Model of GroupGraph
@@ -21,6 +23,20 @@ var GroupGraphClass = {
 	 * @type BitmapSequence
 	 */
 	bitmapSeq: null,
+   /**
+	 * The base y coord of GroupGraph
+	 * @type int
+	 */
+	x: 0,
+	/**
+	 * The base x coord of GroupGraph
+	 * @type int
+	 */
+	y: 0,
+	/**
+	 * The kitchen graph
+	 * @type KitchenPlaceGraph
+	 */
     /**
 	 * @constructor
 	 * @class GroupGraph
@@ -31,6 +47,7 @@ var GroupGraphClass = {
 		console.log('GroupGraph.initialize(model)');
 		this.model = model;
 		this.container = new Container();
+        this.createGroup();
 		this.addMouseListener();
 	},
     /**
@@ -47,7 +64,7 @@ var GroupGraphClass = {
 		var group = new Bitmap(DINNERCONST.IMAGE['human_' + this.model.color]);
 		group.x = DINNERCONST.POSITION.firstgroup.x;
 		group.y = DINNERCONST.POSITION.firstgroup.y;
-		this.container.addChildAt(group, 0);
+		this.container.addChild(group);
 	},
     /**
      * @method addMouseListener
@@ -84,3 +101,87 @@ var GroupGraphClass = {
 
 };
 var GroupGraph = new JS.Class(GroupGraphClass);
+
+/**
+ * GroupGraph states declaration
+ * @author Dominique Jeannin <jeannin.dominique@gmail.com>
+ * @since 08/09/2011
+ */
+GroupGraph.states({
+	/**
+	 * Nothing state
+	 * @author Dominique Jeannin <jeannin.dominique@gmail.com>
+	 * @since 08/09/2011
+	 */
+	Nothing: {
+		update: function() {
+			this.bitmapSeq.gotoAndPlay('walking_left_full');
+			this.setState('WalkingLeftFull');
+		}
+	},
+	/**
+	 * Walking state
+	 * @author Benjamin Longearet <firehist@gmail.com>
+	 * @since 06/01/2011
+	 */
+	Walking: {
+        update: function() {
+			// @TODO not test with length but with position empty
+            var xMin = Yadobe.getInstance().canvas.width - 290 + (Tools.ObjSize(this.kitchen.model.readyMenuList) * 30);
+			if(this.bitmapSeq.x <= xMin) {
+				console.debug('lol');
+				this.bitmapSeq.gotoAndPlay('stop_front_full2empty');
+				this.setState('StopFrontEmpty2Full');
+			} else {
+				this.bitmapSeq.x -= 5;
+			}
+        }
+    },
+	/**
+	 * StopFrontEmpty2Full state
+	 * @author Benjamin Longearet <firehist@gmail.com>
+	 * @since 06/01/2011
+	 */
+    Waiting: {
+        update: function() {
+			if(this.count == 0) {
+				this.bitmapSeq.gotoAndStop('stop_front_full2empty');
+				this.bitmapSeq.loop = false;
+				this.count++;
+			} else if(this.count < 5) {
+				this.count++;
+			} else if(this.count == 5) {
+				this.bitmapSeq.gotoAndPlay('stop_front_full2empty');
+				this.count++;
+			} else if(this.count == 6) {
+				if(this.bitmapSeq.currentFrame == this.bitmapSeq.currentEndFrame) {
+					this.bitmapSeq.gotoAndStop(this.bitmapSeq.currentEndFrame);
+					this.count++;
+				} else if(this.bitmapSeq.currentFrame == (this.bitmapSeq.currentStartFrame + 4) ) {
+					this.kitchen.displayPlate();
+				}
+			} else if(this.count == 7) {
+				this.kitchen.model.setReadyDone();
+				this.count++;
+			} else if(this.count > 7) {
+				this.count++;
+				if(this.count == 10) {
+					this.count = 0;
+					this.bitmapSeq.gotoAndPlay('walking_right_empty');
+					this.setState('WalkingRightEmpty');
+				}
+			}
+        }
+    },
+	/**
+	 * WalkingRightEmpty state
+	 * @author Benjamin Longearet <firehist@gmail.com>
+	 * @since 06/01/2011
+	 */
+    Eating: {
+        update: function() {
+			// TODO: in this state, group is associated with a table and this table
+            // manage state during eating (order, buying, eating...)
+        }
+    }
+});
