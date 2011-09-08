@@ -16,7 +16,7 @@ var DinnerGamePageClass = {
 	 */
 	reception: null,
 	/**
-	 * The list of TableGraph
+	 * The list of TablePlaceGraph
 	 * @type Array of TablePlaceGraph
 	 */
 	tables: new Array(),
@@ -59,7 +59,7 @@ var DinnerGamePageClass = {
 			var tableGraph = new TablePlaceGraph(tableModel);
 			this.tables.push(tableGraph);
 			this.pageContainer.addChildAt(tableGraph.getContainer(), DINNERCONST.SCENES.tables[i]);
-		}	
+		}
 	},
 	createConsoleLog: function() {
 		var log = new Shape();
@@ -74,7 +74,6 @@ var DinnerGamePageClass = {
 	},
 	updateConsoleLog: function(newText) {
 		this.text.text = newText;
-		Yadobe.getInstance().setUpdate();
 	},
 	createBackground: function() {
 		var background = new Bitmap(DINNERCONST.IMAGE.background);
@@ -90,7 +89,7 @@ var DinnerGamePageClass = {
 	 * @since 31/08/2011
 	 */
 	launch: function() {
-		this.reception.launch();
+		this.reception.model.launch();
 	},
 	/**
 	 * Pause the game

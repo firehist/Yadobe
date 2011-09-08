@@ -12,6 +12,10 @@ var ReceptionPlaceGraphClass = {
 	 */
 	model: null,
 	/**
+	 * @type array of GroupGraph
+	 */
+	groupGraphList: new Array(),
+	/**
 	 * Container for reception
 	 * @type Container
 	 */
@@ -38,6 +42,18 @@ var ReceptionPlaceGraphClass = {
 		reception.x = DINNERCONST.POSITION.reception.x;
 		reception.y = DINNERCONST.POSITION.reception.y;
 		this.container.addChildAt(reception, 0);
+	},
+	update: function() {
+		DinnerGamePage.getInstance().updateConsoleLog("[ReceptionPlaceGraph.update] Start");
+		//console.log("[ReceptionPlaceGraph.update] Start");
+		while(0 < this.model.groupList.length) {
+			DinnerGamePage.getInstance().updateConsoleLog("Group "+i+": " + this.model.groupList[0]);
+			this.groupGraphList.push(new GroupGraph(this.model.groupList[0]));
+			this.model.groupList.shift();
+			DinnerGamePage.getInstance().updateConsoleLog("Nb de group restant: " + this.model.groupList.length);
+		}
+		DinnerGamePage.getInstance().updateConsoleLog("[ReceptionPlaceGraph.update] Stop");
+		//console.log("[ReceptionPlaceGraph.update] Stop");
 	},
 	addMouseListener: function() {
 		(function(target) {

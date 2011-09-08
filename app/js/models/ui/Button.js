@@ -53,7 +53,7 @@ var ButtonClass = {
         this.addChildAt(rect, 0);
         
         // Add a label to the button
-        var text = new Text(params.text.toUpperCase(), '36px fantasy', params.color);
+        var text = new Text(params.text.toUpperCase(), '36px Impact, fantasy', params.color);
         text.maxWidth = params.width;
         text.maxHeight = params.height;
 		text.x = params.x;

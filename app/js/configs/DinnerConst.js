@@ -99,7 +99,7 @@ DINNERCONST.POSITION = {
 		new Point(570, 410),
 		new Point(340, 410)
 	],
-    firstgroup : new Point(50, 300)
+    firstgroup : new Point(50, 250)
 };
 /**
  * DINNERCONST.SCENES Struct

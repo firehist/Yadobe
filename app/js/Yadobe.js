@@ -115,6 +115,7 @@ var YadobeClass = {
 		//if(this.update) {
 			//this.update = false; // only update once
 			if(typeof DinnerGamePage != "undefined" && this.currentPage instanceof DinnerGamePage) {
+				DinnerGamePage.getInstance().updateConsoleLog("[Yadobe.tick]");
 				DinnerGamePage.getInstance().kitchen.update();
 			}
 			this.stage.update();

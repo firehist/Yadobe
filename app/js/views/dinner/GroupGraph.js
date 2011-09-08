@@ -16,6 +16,11 @@ var GroupGraphClass = {
 	 * @type Container
 	 */
 	container: null,
+	/**
+	 * BitmapSeq available for Group
+	 * @type BitmapSequence
+	 */
+	bitmapSeq: null,
     /**
 	 * @constructor
 	 * @class GroupGraph
@@ -39,7 +44,7 @@ var GroupGraphClass = {
      * @method createGroup
      */
     createGroup: function() {
-		var group = new Bitmap(DINNERCONST.IMAGE['_' + this.model.color]);
+		var group = new Bitmap(DINNERCONST.IMAGE['human_' + this.model.color]);
 		group.x = DINNERCONST.POSITION.firstgroup.x;
 		group.y = DINNERCONST.POSITION.firstgroup.y;
 		this.container.addChildAt(group, 0);
@@ -69,8 +74,13 @@ var GroupGraphClass = {
 				}
 			}
 		})(this.container);
-	}
+	},
+	/**
+	 * @method update
+	 */
+	update: function() {
+		
+	}	
 
 };
-
 var GroupGraph = new JS.Class(GroupGraphClass);
