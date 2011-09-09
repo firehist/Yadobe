@@ -34,12 +34,13 @@ var ReceptionPlaceClass = {
 	 * @method initialize
 	 * @author Benjamin Longearet <firehist@gmail.com>
 	 * @since 31/08/2011
-	 * @param name String Name of this place
-	 * @param maxGroupList int Maximum waiting list
+	 * @param {String} name Name of this place
+	 * @param {int} maxGroupList Maximum waiting list
+     * @param {Point} coordinates Grid coordinates to access the place by the waiter
 	 */
-	initialize: function(name, maxGroupList) {
+	initialize: function(name, maxGroupList, coordinates) {
 		console.log('Reception init');
-		this.callSuper(name);
+		this.callSuper(name, coordinates);
 		this.maxGroupList = maxGroupList;
 	},
 	// Methods

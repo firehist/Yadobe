@@ -28,7 +28,7 @@ var TimeManager = {
 	 * @param menu
 	 */
 	setCookTimer: function(time, context, menu) {
-		console.debug('TimerCook => '+time);
+		console.debug('Luigi : Il va me falloir ' + time/1000 + ' secondes pour préparer ça.');
 		window.setTimeout(function(){context.setReady(menu)}, time);
 	},
 	/**

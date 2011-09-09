@@ -93,6 +93,7 @@ LuigiGraph.states({
 	Nothing: {
 		update: function() {
 			this.bitmapSeq.gotoAndPlay('walking_left_full');
+            console.debug('Luigi : Chaud devant, chaud !');
 			this.setState('WalkingLeftFull');
 		}
 	},
@@ -106,7 +107,7 @@ LuigiGraph.states({
 			// @TODO not test with length but with position empty
             var xMin = Yadobe.getInstance().canvas.width - 290 + (Tools.ObjSize(this.kitchen.model.readyMenuList) * 30);
 			if(this.bitmapSeq.x <= xMin) {
-				console.debug('lol');
+				console.debug('Luigi : Une assiette de prête !');
 				this.bitmapSeq.gotoAndPlay('stop_front_full2empty');
 				this.setState('StopFrontEmpty2Full');
 			} else {
@@ -157,9 +158,10 @@ LuigiGraph.states({
 	 */
     WalkingRightEmpty: {
         update: function() {
-			if(this.bitmapSeq.x >= this.x) {
+			if (this.bitmapSeq.x >= this.x) {
 				this.setState('Nothing');
-			} else {
+			}
+            else {
 				this.bitmapSeq.x += 5;
 			}
         }

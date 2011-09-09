@@ -46,8 +46,10 @@ var GroupGraphClass = {
 	initialize: function(model) {
 		console.log('GroupGraph.initialize(model)');
 		this.model = model;
-		this.container = new Container();
+        this.x = DINNERCONST.POSITION.firstgroup.x;
+        this.y = DINNERCONST.POSITION.firstgroup.y
         this.createGroup();
+		this.container = new Container();
 		this.addMouseListener();
 	},
     /**
@@ -61,9 +63,19 @@ var GroupGraphClass = {
      * @method createGroup
      */
     createGroup: function() {
-		var group = new Bitmap(DINNERCONST.IMAGE['human_' + this.model.color]);
-		group.x = DINNERCONST.POSITION.firstgroup.x;
-		group.y = DINNERCONST.POSITION.firstgroup.y;
+		var frameData = {
+			walking_east: [0, 7],
+			walking_north: [8, 15],
+			walking_south: [16, 23],
+			walking_west: [24, 31],
+            waiting: 0
+		};
+		var sprite = new SpriteSheet(DINNERCONST.IMAGE.group_walking, 96, 96, frameData);
+		this.bitmapSeq = new BitmapSequence(sprite);
+        this.bitmapSeq.x = this.x;
+		this.bitmapSeq.y = this.y;
+		this.bitmapSeq.scaleX = this.bitmapSeq.scaleY = 1.6;
+		this.bitmapSeq.shadow = new Shadow("#454", 0, 5, 4);
 		this.container.addChild(group);
 	},
     /**
@@ -113,27 +125,25 @@ GroupGraph.states({
 	 * @author Dominique Jeannin <jeannin.dominique@gmail.com>
 	 * @since 08/09/2011
 	 */
-	Nothing: {
+	Waiting: {
 		update: function() {
-			this.bitmapSeq.gotoAndPlay('walking_left_full');
+			this.bitmapSeq.gotoAndPlay('waiting');
 			this.setState('WalkingLeftFull');
 		}
 	},
 	/**
-	 * Walking state
-	 * @author Benjamin Longearet <firehist@gmail.com>
-	 * @since 06/01/2011
+	 * Walking to reception
+	 * @author Dominique Jeannin <jeannin.dominique@gmail.com>
+	 * @since 09/09/2011
 	 */
-	Walking: {
+	Walking2Reception: {
         update: function() {
-			// @TODO not test with length but with position empty
-            var xMin = Yadobe.getInstance().canvas.width - 290 + (Tools.ObjSize(this.kitchen.model.readyMenuList) * 30);
-			if(this.bitmapSeq.x <= xMin) {
+			if(this.bitmapSeq.y <= DINNERCONST.POSITION.reception.y) {
 				console.debug('lol');
-				this.bitmapSeq.gotoAndPlay('stop_front_full2empty');
-				this.setState('StopFrontEmpty2Full');
+				this.bitmapSeq.gotoAndStop('walking_north');
+				this.setState('Waiting');
 			} else {
-				this.bitmapSeq.x -= 5;
+				this.bitmapSeq.y -= 5;
 			}
         }
     },
@@ -142,7 +152,7 @@ GroupGraph.states({
 	 * @author Benjamin Longearet <firehist@gmail.com>
 	 * @since 06/01/2011
 	 */
-    Waiting: {
+    Walking2Table: {
         update: function() {
 			if(this.count == 0) {
 				this.bitmapSeq.gotoAndStop('stop_front_full2empty');
