@@ -37,7 +37,6 @@ var DinnerGamePageClass = {
 	 * @since 30/08/2011
 	 */
 	initialize: function() {
-		DinnerGamePage.instance = this;
 		
         // Init Page Container
 		this.callSuper();
@@ -47,12 +46,12 @@ var DinnerGamePageClass = {
 		this.createConsoleLog();
 		
         // Kitchen
-		var kitchenModel = new KitchenPlace('Cuisine', DINNERCONST.COOK.maxMenuInKitchen);
+		var kitchenModel = new KitchenPlace('Cuisine', DINNERCONST.COOK.maxMenuInKitchen, DINNERCONST.ACCESS.kitchen);
 		this.kitchen = new KitchenPlaceGraph(kitchenModel);
 		this.pageContainer.addChildAt(this.kitchen.getContainer(), DINNERCONST.SCENES.kitchen);
 		
         // Reception
-		var receptionModel = new ReceptionPlace('Réception', 3);
+		var receptionModel = new ReceptionPlace('Réception', 3, DINNERCONST.ACCESS.reception);
 		this.reception = new ReceptionPlaceGraph(receptionModel);
 		this.pageContainer.addChildAt(this.reception.getContainer(), DINNERCONST.SCENES.reception);
 		
@@ -60,16 +59,17 @@ var DinnerGamePageClass = {
 		this.tables = new Array();
 		var colors = ['red','blue','green','yellow'];
 		for (var i=0; i<4; i++) {
-			var tableModel = new TablePlace(i, colors[i]);
+			var tableModel = new TablePlace(i, colors[i], DINNERCONST.ACCESS.tables[i]);
 			var tableGraph = new TablePlaceGraph(tableModel);
 			this.tables.push(tableGraph);
 			this.pageContainer.addChildAt(tableGraph.getContainer(), DINNERCONST.SCENES.tables[i]);
 		}
         
         // Waiter
-		var waiterModel = new Waiter('Serveur', this.kitchen, 1);
+        // Display the waiter on the kitchen at the beginning
+		var waiterModel = new Waiter('Serveur', kitchenModel, 1);
 		this.waiter = new WaiterGraph(waiterModel);
-		this.pageContainer.addChild(this.waiter.getContainer());
+		this.pageContainer.addChildAt(this.waiter.getGraph(), 1);
 		
 	},
 	createConsoleLog: function() {
@@ -121,10 +121,8 @@ DinnerGamePage.instance = null;
 
 // Static method singleton
 DinnerGamePage.getInstance = function() {
-	if (DinnerGamePage.instance != null) {
-		return DinnerGamePage.instance;
+	if ((DinnerGamePage.instance == null) || (!DinnerGamePage.instance instanceof DinnerGamePage)) {
+		DinnerGamePage.instance = new DinnerGamePage();
 	}
-    else {
-		return new DinnerGamePage();
-	}
+    return DinnerGamePage.instance;
 };

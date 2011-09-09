@@ -74,7 +74,8 @@ DINNERCONST.IMAGE = {
     index: 'img/dinnerGame/fond_cartoon_01_empty.png',
 	background: 'img/dinnerGame/stage_01.jpg',
 	menus: 'img/dinnerGame/kitchen/menus.png',
-	luigi_walking: 'img/dinnerGame/kitchen/luigi_walking.png'
+	luigi_walking: 'img/dinnerGame/kitchen/luigi_walking.png',
+	carrier: 'img/dinnerGame/carrier.png'
 //	luigi_walking_right_empty: 'img/dinnerGame/kitchen/luigi_walking_right_empty.png',
 //	luigi_walking_left_full: 'img/dinnerGame/kitchen/luigi_walking_left_full.png',
 //	luigi_stop_front_full2empty: 'img/dinnerGame/kitchen/luigi_stop_front_full2empty.png',
@@ -82,6 +83,7 @@ DINNERCONST.IMAGE = {
 };
 /**
  * DINNERCONST.POSITION Struct
+ * Position in pixels of a PlaceGraph on the container
  * @author Benjamin Longearet <firehist@gmail.com>
  * @since 01/09/2011
  * @type Object
@@ -96,6 +98,23 @@ DINNERCONST.POSITION = {
 		new Point(340, 410)
 	],
     firstgroup : new Point(50, 300)
+};
+/**
+ * DINNERCONST.ACCESS Struct
+ * Coordinates on the grid where the waiter can access a place
+ * @author Yannick Galatol <yannick.galatol@gmail.com>
+ * @since 07/09/2011
+ * @type Object
+ */
+DINNERCONST.ACCESS = {
+	kitchen: new Point(500, 70),
+	reception: new Point(0, 225),
+	tables: [
+		new Point(340, 240),
+		new Point(570, 240),
+		new Point(570, 410),
+		new Point(340, 410)
+	]
 };
 /**
  * DINNERCONST.SCENES Struct

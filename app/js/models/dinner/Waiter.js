@@ -10,22 +10,27 @@ var WaiterClass = {
 	// Attributes
 	/**
 	 * Name of waiter
-	 * @typeof string
+	 * @type string
 	 */
 	name: null,
 	/**
 	 * Destination of waiter	 
-	 * @typeof Destination
+	 * @type Destination
 	 */
 	destination: null,
 	/**
+	 * Current position of waiter
+	 * @type Place
+	 */
+	position: null,
+	/**
 	 * Inventory of waiter
-	 * @typeof List<Menu>
+	 * @type List<Menu>
 	 */
 	inventory: new Array(),
 	/**
 	 * Inventory size
-	 * @typeof int
+	 * @type int
 	 */
 	inventoryMax: 2,
     
@@ -35,6 +40,9 @@ var WaiterClass = {
 		if (position instanceof Place) {
 			this.position = position;
 		}
+        else {
+            throw new Exception('Given position does not inerhit from Place.');
+        }
 		this.inventoryMax = inventoryMax;
 	},
 	// Methods
@@ -55,7 +63,7 @@ var WaiterClass = {
         }
 	},
 	addToInventory: function(menu) {
-		if(menu instanceof Menu && this.inventory.length < this.inventoryMax) {
+		if ((menu instanceof Menu) && (this.inventory.length < this.inventoryMax)) {
 			this.inventory.push(menu);
 		}
 	},

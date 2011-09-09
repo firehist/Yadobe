@@ -21,7 +21,7 @@ JS.Packages(function() { with(this) {
 	file(JSCONFIG_PATH + 'Translation.js').provides('Translation').requires('TRANSLATIONCONST');
     
 	/* Dinner models */
-	file(JSMODEL_DINNER_PATH + 'Place.js').provides('Place').requires('JS.Class');
+	file(JSMODEL_DINNER_PATH + 'Place.js').provides('Place').requires('JS.Class', 'Easel');
 	file(JSMODEL_DINNER_PATH + 'TablePlace.js').provides('TablePlace').requires('Place', 'JS.State');
 	file(JSMODEL_DINNER_PATH + 'ReceptionPlace.js').provides('ReceptionPlace').requires('Place');
 	file(JSMODEL_DINNER_PATH + 'KitchenPlace.js').provides('KitchenPlace').requires('Place');
@@ -29,7 +29,7 @@ JS.Packages(function() { with(this) {
 	file(JSMODEL_DINNER_PATH + 'Menu.js').provides('Menu').requires('Recipe');
 	file(JSMODEL_DINNER_PATH + 'Recipe.js').provides('Recipe').requires('JS.Class');
 	file(JSMODEL_DINNER_PATH + 'RecipeManager.js').provides('RecipeManager').requires('Recipe');
-	file(JSMODEL_DINNER_PATH + 'Waiter.js').provides('Waiter').requires('Menu', 'JS.State');
+	file(JSMODEL_DINNER_PATH + 'Waiter.js').provides('Waiter').requires('JS.State', 'Menu', 'Place');
     
 	/* UI models */
 	file(JSMODEL_UI_PATH + 'Button.js').provides('Button').requires('JS.Class', 'Tools', 'Easel');

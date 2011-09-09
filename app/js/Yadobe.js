@@ -88,8 +88,8 @@ var YadobeClass = {
 	 * @public
 	 */
 	loadGame: function() {
-		this.setCurrentPage(IndexPage.getInstance());
-		//this.setCurrentPage(DinnerGamePage.getInstance());
+//		this.setCurrentPage(IndexPage.getInstance());
+		this.setCurrentPage(DinnerGamePage.getInstance());
 		this.setUpdate();
 	},
 	/**
@@ -116,6 +116,7 @@ var YadobeClass = {
 			//this.update = false; // only update once
 			if(typeof DinnerGamePage != "undefined" && this.currentPage instanceof DinnerGamePage) {
 				DinnerGamePage.getInstance().kitchen.update();
+				DinnerGamePage.getInstance().waiter.update();
 			}
 			this.stage.update();
 		//}
