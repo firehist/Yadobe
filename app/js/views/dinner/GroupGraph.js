@@ -121,9 +121,9 @@ var GroupGraphClass = {
 	/**
 	 * @method update
 	 */
-	update: function() {
+	//update: function() {
 		
-	}	
+	//}	
 
 };
 var GroupGraph = new JS.Class(GroupGraphClass);
@@ -156,7 +156,8 @@ GroupGraph.states({
 	Walking2Reception: {
         update: function() {
 		console.debug("[GroupGraph.WaitingState.update]");
-			if (DINNERCONST.POSITION.reception.y >= this.bitmapSeq.y) {
+			var yMin = DINNERCONST.POSITION.reception.y + 100;
+			if (yMin >= this.bitmapSeq.y) {
 				this.setState('Waiting');
 				this.bitmapSeq.gotoAndPlay('waiting');
 			} else {
