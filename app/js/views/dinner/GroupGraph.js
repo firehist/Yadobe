@@ -46,6 +46,9 @@ var GroupGraphClass = {
 	initialize: function(model) {
 		console.log('GroupGraph.initialize(model)');
 		this.model = model;
+		this.x = DINNERCONST.POSITION.firstgroup.x;
+		this.y = DINNERCONST.POSITION.firstgroup.y;
+		this.setState('Waiting');
 		this.container = new Container();
         this.createGroup();
 		this.addMouseListener();
@@ -61,10 +64,33 @@ var GroupGraphClass = {
      * @method createGroup
      */
     createGroup: function() {
-		var group = new Bitmap(DINNERCONST.IMAGE['human_' + this.model.color]);
-		group.x = DINNERCONST.POSITION.firstgroup.x;
-		group.y = DINNERCONST.POSITION.firstgroup.y;
-		this.container.addChild(group);
+		var imageName = eval("DINNERCONST.IMAGE.human_" + this.model.color);
+		console.debug("imageName : " + imageName);
+		var sprite = new SpriteSheet(
+			imageName,
+			96, 96,
+			{
+				walking_east: [0, 7],
+				walking_north: [8, 15],
+				walking_south: [16, 23],
+				waiting: 7
+			}
+		);
+		/*
+		sprite = SpriteSheetUtils.flip(
+			sprite, 
+			{
+				walking_west:["walking_east", true, false, false]
+			}
+		);
+		*/
+		this.bitmapSeq = new BitmapSequence(sprite);
+		console.debug("[GroupGraph.createGroup]après bitmapSeq");
+		this.bitmapSeq.x = this.x;
+		this.bitmapSeq.y = this.y;
+		//this.bitmapSeq.scaleX = this.bitmapSeq.scaleY = 1.6;
+		//this.bitmapSeq.shadow = new Shadow("#454", 0, 5, 4);
+		this.container.addChild(this.bitmapSeq);
 	},
     /**
      * @method addMouseListener
@@ -109,67 +135,32 @@ var GroupGraph = new JS.Class(GroupGraphClass);
  */
 GroupGraph.states({
 	/**
-	 * Nothing state
+	 * Waiting state
 	 * @author Dominique Jeannin <jeannin.dominique@gmail.com>
 	 * @since 08/09/2011
 	 */
-	Nothing: {
+	Waiting: {
 		update: function() {
-			this.bitmapSeq.gotoAndPlay('walking_left_full');
-			this.setState('WalkingLeftFull');
+			console.debug("[GroupGraph.WaitingState.update]");
+			if (this.bitmapSeq.x == DINNERCONST.POSITION.firstgroup.x) {
+				this.setState('Walking2Reception');
+				this.bitmapSeq.gotoAndPlay('walking_north');
+			}
 		}
 	},
 	/**
-	 * Walking state
+	 * Walking2Reception state
 	 * @author Benjamin Longearet <firehist@gmail.com>
 	 * @since 06/01/2011
 	 */
-	Walking: {
+	Walking2Reception: {
         update: function() {
-			// @TODO not test with length but with position empty
-            var xMin = Yadobe.getInstance().canvas.width - 290 + (Tools.ObjSize(this.kitchen.model.readyMenuList) * 30);
-			if(this.bitmapSeq.x <= xMin) {
-				console.debug('lol');
-				this.bitmapSeq.gotoAndPlay('stop_front_full2empty');
-				this.setState('StopFrontEmpty2Full');
+		console.debug("[GroupGraph.WaitingState.update]");
+			if (DINNERCONST.POSITION.reception.y >= this.bitmapSeq.y) {
+				this.setState('Waiting');
+				this.bitmapSeq.gotoAndPlay('waiting');
 			} else {
-				this.bitmapSeq.x -= 5;
-			}
-        }
-    },
-	/**
-	 * StopFrontEmpty2Full state
-	 * @author Benjamin Longearet <firehist@gmail.com>
-	 * @since 06/01/2011
-	 */
-    Waiting: {
-        update: function() {
-			if(this.count == 0) {
-				this.bitmapSeq.gotoAndStop('stop_front_full2empty');
-				this.bitmapSeq.loop = false;
-				this.count++;
-			} else if(this.count < 5) {
-				this.count++;
-			} else if(this.count == 5) {
-				this.bitmapSeq.gotoAndPlay('stop_front_full2empty');
-				this.count++;
-			} else if(this.count == 6) {
-				if(this.bitmapSeq.currentFrame == this.bitmapSeq.currentEndFrame) {
-					this.bitmapSeq.gotoAndStop(this.bitmapSeq.currentEndFrame);
-					this.count++;
-				} else if(this.bitmapSeq.currentFrame == (this.bitmapSeq.currentStartFrame + 4) ) {
-					this.kitchen.displayPlate();
-				}
-			} else if(this.count == 7) {
-				this.kitchen.model.setReadyDone();
-				this.count++;
-			} else if(this.count > 7) {
-				this.count++;
-				if(this.count == 10) {
-					this.count = 0;
-					this.bitmapSeq.gotoAndPlay('walking_right_empty');
-					this.setState('WalkingRightEmpty');
-				}
+				this.bitmapSeq.y -= 5;
 			}
         }
     },

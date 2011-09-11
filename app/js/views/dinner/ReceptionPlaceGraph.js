@@ -44,7 +44,10 @@ var ReceptionPlaceGraphClass = {
 		this.container.addChildAt(reception, 0);
 	},
 	update: function() {
-        console.debug("not implemented");
+        //console.debug("not implemented");
+		for(var i=0; i<this.groupGraphList.length; i++) {
+			this.groupGraphList[i].update();
+		}
 	},
 	addMouseListener: function() {
 		(function(target) {
