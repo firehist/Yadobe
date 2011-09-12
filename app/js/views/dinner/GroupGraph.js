@@ -76,20 +76,18 @@ var GroupGraphClass = {
 				waiting: 7
 			}
 		);
-		/*
 		sprite = SpriteSheetUtils.flip(
 			sprite, 
 			{
 				walking_west:["walking_east", true, false, false]
 			}
 		);
-		*/
 		this.bitmapSeq = new BitmapSequence(sprite);
 		console.debug("[GroupGraph.createGroup]après bitmapSeq");
 		this.bitmapSeq.x = this.x;
 		this.bitmapSeq.y = this.y;
-		//this.bitmapSeq.scaleX = this.bitmapSeq.scaleY = 1.6;
-		//this.bitmapSeq.shadow = new Shadow("#454", 0, 5, 4);
+		this.bitmapSeq.scaleX = this.bitmapSeq.scaleY = 1.5;
+		this.bitmapSeq.shadow = new Shadow("#454", 0, 5, 4);
 		this.container.addChild(this.bitmapSeq);
 	},
     /**
@@ -117,14 +115,7 @@ var GroupGraphClass = {
 				}
 			}
 		})(this.container);
-	},
-	/**
-	 * @method update
-	 */
-	//update: function() {
-		
-	//}	
-
+	}
 };
 var GroupGraph = new JS.Class(GroupGraphClass);
 
@@ -142,9 +133,11 @@ GroupGraph.states({
 	Waiting: {
 		update: function() {
 			console.debug("[GroupGraph.WaitingState.update]");
-			if (this.bitmapSeq.x == DINNERCONST.POSITION.firstgroup.x) {
+			if (this.bitmapSeq.y == DINNERCONST.POSITION.firstgroup.y) {
 				this.setState('Walking2Reception');
 				this.bitmapSeq.gotoAndPlay('walking_north');
+			} else {
+				this.setState('Walking2Reception');
 			}
 		}
 	},

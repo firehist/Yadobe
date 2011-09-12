@@ -53,7 +53,7 @@ var DinnerGamePageClass = {
 		this.kitchen = new KitchenPlaceGraph(kitchenModel);
 		this.pageContainer.addChildAt(this.kitchen.getContainer(), DINNERCONST.SCENES.kitchen);
 		// Reception
-		var receptionModel = new ReceptionPlace('Reception', 1);
+		var receptionModel = new ReceptionPlace('Reception', 6);
 		this.reception = new ReceptionPlaceGraph(receptionModel);
 		this.pageContainer.addChildAt(this.reception.getContainer(), DINNERCONST.SCENES.reception);
 		// Tables
