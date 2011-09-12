@@ -6,6 +6,7 @@
 var WaiterGraphClass = {
 	// Includes
 	include: JS.State,
+    
 	// Attributes
 	/**
 	 * Model of WaiterGraph
@@ -13,10 +14,16 @@ var WaiterGraphClass = {
 	 */
 	model: null,
 	/**
-	 * Diaplay object available for the waiter
-	 * @type {DisplayObject} _graph
+	 * Display object available for the waiter
+	 * @type {DisplayObject}
 	 */
 	_graph: null,
+	/**
+	 * Current index of point for the waiter path
+	 * @type {Integer}
+	 */
+    crossingPoint : 0,
+    
 	// Constructor
 	/**
 	 * @constructor
@@ -24,6 +31,7 @@ var WaiterGraphClass = {
 	 */
 	initialize: function(model) {
         this.model = model;
+        this.crossingPoint = 0;
 		this.setState('Nothing');
 		this.createWaiter();
 	},
@@ -60,10 +68,71 @@ var WaiterGraphClass = {
         this._graph.scaleY = 1.2;
 		this._graph.shadow = new Shadow("#454", 0, 5, 4);
         
-	}
+	},
+    selectDirection : function() {
+        if ((this.model.inState('Moving')) && (this.model.destination)) {
+            
+            var newState = 'Nothing';
+            
+            var point = WaiterGraph.POINTS[this.model.position.name + '-' + this.model.destination.position.name][this.crossingPoint];
+            
+            var movementX = this._graph.x - point.x;
+            var movementY = this._graph.y - point.y;
+            
+            // Need to move to the left
+            if (movementX > WaiterGraph.stepInPixels) {
+                newState = 'WalkingLeftEmpty';
+                
+                // Randomly, move horizontally (so break) rather than vertically (continue)
+                if (Tools.randomXToY(0,1) == 0) {
+                    this.setState(newState);
+                    return;
+                }
+            }
+            // Need to move to the right
+            else if (movementX + WaiterGraph.stepInPixels < 0) {
+                newState = 'WalkingRightEmpty';
+
+                // Randomly, move horizontally (so break) rather than vertically (continue)
+                if (Tools.randomXToY(0,1) == 0) {
+                    this.setState(newState);
+                    return;
+                }
+            }
+
+            if (movementY > WaiterGraph.stepInPixels) {
+                newState = 'WalkingTopEmpty';
+            }
+            else if (movementY + WaiterGraph.stepInPixels < 0) {
+                newState = 'WalkingBottomEmpty';
+            }
+            
+            if (newState == 'Nothing') {
+                if (this.crossingPoint == WaiterGraph.POINTS[this.model.position.name + '-' + this.model.destination.position.name].length - 1) {
+                    this.crossingPoint = 0;
+                    this.model.setState('Waiting');
+                    this.model.arrivedToDestination();
+                }
+                else {
+                    this.crossingPoint++;
+                }
+            }
+            this.setState(newState);
+        }
+    }
 };
 var WaiterGraph = new JS.Class(WaiterGraphClass);
 
+/**
+ * Number of pixels for a step of the waiter
+ * @static
+ * @type {Integer}
+ */
+WaiterGraph.stepInPixels = 5;
+
+WaiterGraph.POINTS = [];
+WaiterGraph.POINTS['Cuisine-Réception'] = [new Point(100,100), new Point(300,100), new Point(300, 300)];
+    
 /**
  * WaiterGraph states declaration
  * @author Yannick Galatol <yannick.galatol@gmail.com>
@@ -77,8 +146,7 @@ WaiterGraph.states({
 	 */
 	Nothing: {
 		update: function() {
-			//this._graph.gotoAndPlay('walking_left');
-			this.setState('WalkingLeftEmpty');
+			this.selectDirection();
 		}
 	},
 	/**
@@ -89,7 +157,16 @@ WaiterGraph.states({
 	WalkingTopEmpty: {
         update: function() {
 			var yMin = 10;
-            if (this._graph.y <= yMin) {
+            
+            var point;
+            try {
+                point = WaiterGraph.POINTS[this.model.position.name + '-' + this.model.destination.position.name][this.crossingPoint];
+            }
+            catch(e) {
+                point = new Point(this._graph.x, this._graph.y);
+            }
+            
+            if ((this._graph.y <= yMin) || (this._graph.y <= point.y)) {
 				this._graph.gotoAndStop('stopped_top');
 				this.setState('StopTopEmpty');
 			}
@@ -97,7 +174,7 @@ WaiterGraph.states({
                 if (this._graph.currentSequence != 'walking_top') {
                     this._graph.gotoAndPlay('walking_top');
                 }
-				this._graph.y -= 5;
+				this._graph.y -= WaiterGraph.stepInPixels;
 			}
         }
     },
@@ -109,7 +186,16 @@ WaiterGraph.states({
 	WalkingRightEmpty: {
         update: function() {
 			var xMax = 650;
-            if (this._graph.x >= xMax) {
+            
+            var point;
+            try {
+                point = WaiterGraph.POINTS[this.model.position.name + '-' + this.model.destination.position.name][this.crossingPoint];
+            }
+            catch(e) {
+                point = new Point(this._graph.x, this._graph.y);
+            }
+            
+            if ((this._graph.x >= xMax) || (this._graph.x >= point.x)) {
 				this._graph.gotoAndStop('stopped_right');
 				this.setState('StopRightEmpty');
 			}
@@ -117,7 +203,7 @@ WaiterGraph.states({
                 if (this._graph.currentSequence != 'walking_right') {
                     this._graph.gotoAndPlay('walking_right');
                 }
-				this._graph.x += 5;
+				this._graph.x += WaiterGraph.stepInPixels;
 			}
         }
     },
@@ -129,7 +215,16 @@ WaiterGraph.states({
 	WalkingLeftEmpty: {
         update: function() {
 			var xMin = 10;
-            if (this._graph.x <= xMin) {
+            
+            var point;
+            try {
+                point = WaiterGraph.POINTS[this.model.position.name + '-' + this.model.destination.position.name][this.crossingPoint];
+            }
+            catch(e) {
+                point = new Point(this._graph.x, this._graph.y);
+            }
+            
+            if ((this._graph.x <= xMin) || (this._graph.x <= point.x)) {
 				this._graph.gotoAndStop('stopped_left');
 				this.setState('StopLeftEmpty');
 			}
@@ -137,7 +232,7 @@ WaiterGraph.states({
                 if (this._graph.currentSequence != 'walking_left') {
                     this._graph.gotoAndPlay('walking_left');
                 }
-				this._graph.x -= 5;
+				this._graph.x -= WaiterGraph.stepInPixels;
 			}
         }
     },
@@ -149,7 +244,16 @@ WaiterGraph.states({
 	WalkingBottomEmpty: {
         update: function() {
 			var yMax = 460;
-            if (this._graph.y >= yMax) {
+            
+            var point;
+            try {
+                point = WaiterGraph.POINTS[this.model.position.name + '-' + this.model.destination.position.name][this.crossingPoint];
+            }
+            catch(e) {
+                point = new Point(this._graph.x, this._graph.y);
+            }
+            
+            if ((this._graph.y >= yMax) || (this._graph.y >= point.y)) {
 				this._graph.gotoAndStop('stopped_bottom');
 				this.setState('StopBottomEmpty');
 			}
@@ -157,7 +261,7 @@ WaiterGraph.states({
                 if (this._graph.currentSequence != 'walking_bottom') {
                     this._graph.gotoAndPlay('walking_bottom');
                 }
-				this._graph.y += 5;
+				this._graph.y += WaiterGraph.stepInPixels;
 			}
         }
     },
@@ -169,6 +273,7 @@ WaiterGraph.states({
 	StopTopEmpty: {
         update: function() {
             this._graph.gotoAndPlay('stopped_top');
+            this.setState('Nothing');
         }
     },
 	/**
@@ -179,7 +284,7 @@ WaiterGraph.states({
 	StopRightEmpty: {
         update: function() {
             this._graph.gotoAndPlay('stopped_right');
-            this.setState('WalkingTopEmpty');
+            this.setState('Nothing');
         }
     },
 	/**
@@ -190,7 +295,7 @@ WaiterGraph.states({
 	StopLeftEmpty: {
         update: function() {
             this._graph.gotoAndPlay('stopped_left');
-            this.setState('WalkingBottomEmpty');
+            this.setState('Nothing');
         }
     },
 	/**
@@ -201,7 +306,7 @@ WaiterGraph.states({
 	StopBottomEmpty: {
         update: function() {
             this._graph.gotoAndPlay('stopped_bottom');
-            this.setState('WalkingRightEmpty');
+            this.setState('Nothing');
         }
     },
 	/**

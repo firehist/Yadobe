@@ -29,7 +29,8 @@ JS.Packages(function() { with(this) {
 	file(JSMODEL_DINNER_PATH + 'Menu.js').provides('Menu').requires('Recipe');
 	file(JSMODEL_DINNER_PATH + 'Recipe.js').provides('Recipe').requires('JS.Class');
 	file(JSMODEL_DINNER_PATH + 'RecipeManager.js').provides('RecipeManager').requires('Recipe');
-	file(JSMODEL_DINNER_PATH + 'Waiter.js').provides('Waiter').requires('JS.State', 'Menu', 'Place');
+	file(JSMODEL_DINNER_PATH + 'Destination.js').provides('Destination').requires('JS.Class');
+	file(JSMODEL_DINNER_PATH + 'Waiter.js').provides('Waiter').requires('JS.State', 'Menu', 'Place', 'Destination');
     
 	/* UI models */
 	file(JSMODEL_UI_PATH + 'Button.js').provides('Button').requires('JS.Class', 'Tools', 'Easel');
@@ -90,7 +91,8 @@ JS.Packages(function() { with(this) {
 			'KitchenPlaceGraph',
 			'GroupGraph',
 			'RecipeManager',
-			'WaiterGraph'
+			'WaiterGraph',
+            'Destination'
 		);
 	/* Waiting */
 	file(JSTEMPLATE_PATH + 'WaitingPage.js')

@@ -34,9 +34,12 @@ var WaiterClass = {
 	 */
 	inventoryMax: 2,
     
-	// Constructor
+    /**
+     * @constructor
+     */
 	initialize: function(name, position, inventoryMax) {
 		this.name = name
+        
 		if (position instanceof Place) {
 			this.position = position;
 		}
@@ -55,11 +58,16 @@ var WaiterClass = {
 	 */
 	moveTo: function(destination) {
 		if (destination instanceof Destination) {
-			this.destination = destination;
-            this.setState('Moving');
+            if ((!destination.position) || (!destination.position instanceof Place)) {
+                throw 'Please give a Place as position of the Waiter destination.';
+            }
+            else {
+                this.destination = destination;
+                this.setState('Moving');
+            }
 		}
         else {
-            throw new Exception('Unknown destination');
+            throw 'Unknown destination';
         }
 	},
 	addToInventory: function(menu) {
@@ -72,7 +80,17 @@ var WaiterClass = {
 			return this.inventory.shift();
 		}
 		return false;
-	}
+	},
+    arrivedToDestination : function() {
+        // Execute the method on arrival to the destination
+        this.destination.actionOnArrival();
+        
+        // Set the current position of the waiter with the destination position
+        this.position = this.destination.position;
+        
+        // Clear the last destination
+        this.destination = null;
+    }
 };
 var Waiter = new JS.Class(WaiterClass);
 

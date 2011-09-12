@@ -70,6 +70,10 @@ var DinnerGamePageClass = {
 		var waiterModel = new Waiter('Serveur', kitchenModel, 1);
 		this.waiter = new WaiterGraph(waiterModel);
 		this.pageContainer.addChildAt(this.waiter.getGraph(), 1);
+        
+        waiterModel.moveTo(new Destination(receptionModel, function() {
+            DinnerGamePage.getInstance().updateConsoleLog('ARRIVED !');
+        }));
 		
 	},
 	createConsoleLog: function() {
