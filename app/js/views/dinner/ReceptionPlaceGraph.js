@@ -44,7 +44,12 @@ var ReceptionPlaceGraphClass = {
 		this.container.addChildAt(reception, 0);
 	},
 	update: function() {
-        console.debug("not implemented");
+        var groupGraphList = DinnerGamePage.getInstance().groupList;
+		//console.debug("nombre de group a mettre a jour: " + groupGraphList.length);
+		for(var i=0; i<groupGraphList.length; i++) {
+			//console.debug("update du group num "+i);
+			groupGraphList[i].update();
+		}
 	},
 	addMouseListener: function() {
 		(function(target) {

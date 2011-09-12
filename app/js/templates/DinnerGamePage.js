@@ -54,14 +54,8 @@ var DinnerGamePageClass = {
 		var kitchenModel = new KitchenPlace('Cuisine', DINNERCONST.COOK.maxMenuInKitchen, DINNERCONST.ACCESS.kitchen);
 		this.kitchen = new KitchenPlaceGraph(kitchenModel);
 		this.pageContainer.addChildAt(this.kitchen.getContainer(), DINNERCONST.SCENES.kitchen);
-<<<<<<< HEAD
 		// Reception
 		var receptionModel = new ReceptionPlace('Reception', 1);
-=======
-		
-        // Reception
-		var receptionModel = new ReceptionPlace('Réception', 3, DINNERCONST.ACCESS.reception);
->>>>>>> 19cabfdda8adbd065cdb9a24e7f2458222886401
 		this.reception = new ReceptionPlaceGraph(receptionModel);
 		this.pageContainer.addChildAt(this.reception.getContainer(), DINNERCONST.SCENES.reception);
 		
@@ -74,16 +68,6 @@ var DinnerGamePageClass = {
 			this.tables.push(tableGraph);
 			this.pageContainer.addChildAt(tableGraph.getContainer(), DINNERCONST.SCENES.tables[i]);
 		}
-<<<<<<< HEAD
-=======
-        
-        // Waiter
-        // Display the waiter on the kitchen at the beginning
-		var waiterModel = new Waiter('Serveur', kitchenModel, 1);
-		this.waiter = new WaiterGraph(waiterModel);
-		this.pageContainer.addChildAt(this.waiter.getGraph(), 1);
-		
->>>>>>> 19cabfdda8adbd065cdb9a24e7f2458222886401
 	},
 	createConsoleLog: function() {
 		var log = new Shape();

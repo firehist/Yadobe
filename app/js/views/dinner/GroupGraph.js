@@ -46,8 +46,10 @@ var GroupGraphClass = {
 	initialize: function(model) {
 		console.log('GroupGraph.initialize(model)');
 		this.model = model;
-        this.x = DINNERCONST.POSITION.firstgroup.x;
-        this.y = DINNERCONST.POSITION.firstgroup.y
+		this.x = DINNERCONST.POSITION.firstgroup.x;
+		this.y = DINNERCONST.POSITION.firstgroup.y;
+		this.setState('Waiting');
+		this.container = new Container();
         this.createGroup();
 		this.container = new Container();
 		this.addMouseListener();
@@ -63,20 +65,33 @@ var GroupGraphClass = {
      * @method createGroup
      */
     createGroup: function() {
-		var frameData = {
-			walking_east: [0, 7],
-			walking_north: [8, 15],
-			walking_south: [16, 23],
-			walking_west: [24, 31],
-            waiting: 0
-		};
-		var sprite = new SpriteSheet(DINNERCONST.IMAGE.group_walking, 96, 96, frameData);
+		var imageName = eval("DINNERCONST.IMAGE.human_" + this.model.color);
+		console.debug("imageName : " + imageName);
+		var sprite = new SpriteSheet(
+			imageName,
+			96, 96,
+			{
+				walking_east: [0, 7],
+				walking_north: [8, 15],
+				walking_south: [16, 23],
+				waiting: 7
+			}
+		);
+		/*
+		sprite = SpriteSheetUtils.flip(
+			sprite, 
+			{
+				walking_west:["walking_east", true, false, false]
+			}
+		);
+		*/
 		this.bitmapSeq = new BitmapSequence(sprite);
-        this.bitmapSeq.x = this.x;
+		console.debug("[GroupGraph.createGroup]après bitmapSeq");
+		this.bitmapSeq.x = this.x;
 		this.bitmapSeq.y = this.y;
 		this.bitmapSeq.scaleX = this.bitmapSeq.scaleY = 1.6;
-		this.bitmapSeq.shadow = new Shadow("#454", 0, 5, 4);
-		this.container.addChild(group);
+		//this.bitmapSeq.shadow = new Shadow("#454", 0, 5, 4);
+		this.container.addChild(this.bitmapSeq);
 	},
     /**
      * @method addMouseListener
@@ -103,13 +118,13 @@ var GroupGraphClass = {
 				}
 			}
 		})(this.container);
-	},
+	}
 	/**
 	 * @method update
 	 */
-	update: function() {
+	//update: function() {
 		
-	}	
+	//}	
 
 };
 var GroupGraph = new JS.Class(GroupGraphClass);
@@ -121,65 +136,33 @@ var GroupGraph = new JS.Class(GroupGraphClass);
  */
 GroupGraph.states({
 	/**
-	 * Nothing state
+	 * Waiting state
 	 * @author Dominique Jeannin <jeannin.dominique@gmail.com>
 	 * @since 08/09/2011
 	 */
 	Waiting: {
 		update: function() {
-			this.bitmapSeq.gotoAndPlay('waiting');
-			this.setState('WalkingLeftFull');
+			console.debug("[GroupGraph.WaitingState.update]");
+			if (this.bitmapSeq.x == DINNERCONST.POSITION.firstgroup.x) {
+				this.setState('Walking2Reception');
+				this.bitmapSeq.gotoAndPlay('walking_north');
+			}
 		}
 	},
 	/**
-	 * Walking to reception
-	 * @author Dominique Jeannin <jeannin.dominique@gmail.com>
-	 * @since 09/09/2011
-	 */
-	Walking2Reception: {
-        update: function() {
-			if(this.bitmapSeq.y <= DINNERCONST.POSITION.reception.y) {
-				console.debug('lol');
-				this.bitmapSeq.gotoAndStop('walking_north');
-				this.setState('Waiting');
-			} else {
-				this.bitmapSeq.y -= 5;
-			}
-        }
-    },
-	/**
-	 * StopFrontEmpty2Full state
+	 * Walking2Reception state
 	 * @author Benjamin Longearet <firehist@gmail.com>
 	 * @since 06/01/2011
 	 */
-    Walking2Table: {
+	Walking2Reception: {
         update: function() {
-			if(this.count == 0) {
-				this.bitmapSeq.gotoAndStop('stop_front_full2empty');
-				this.bitmapSeq.loop = false;
-				this.count++;
-			} else if(this.count < 5) {
-				this.count++;
-			} else if(this.count == 5) {
-				this.bitmapSeq.gotoAndPlay('stop_front_full2empty');
-				this.count++;
-			} else if(this.count == 6) {
-				if(this.bitmapSeq.currentFrame == this.bitmapSeq.currentEndFrame) {
-					this.bitmapSeq.gotoAndStop(this.bitmapSeq.currentEndFrame);
-					this.count++;
-				} else if(this.bitmapSeq.currentFrame == (this.bitmapSeq.currentStartFrame + 4) ) {
-					this.kitchen.displayPlate();
-				}
-			} else if(this.count == 7) {
-				this.kitchen.model.setReadyDone();
-				this.count++;
-			} else if(this.count > 7) {
-				this.count++;
-				if(this.count == 10) {
-					this.count = 0;
-					this.bitmapSeq.gotoAndPlay('walking_right_empty');
-					this.setState('WalkingRightEmpty');
-				}
+		console.debug("[GroupGraph.WaitingState.update]");
+			var yMin = DINNERCONST.POSITION.reception.y + 100;
+			if (yMin >= this.bitmapSeq.y) {
+				this.setState('Waiting');
+				this.bitmapSeq.gotoAndPlay('waiting');
+			} else {
+				this.bitmapSeq.y -= 5;
 			}
         }
     },
