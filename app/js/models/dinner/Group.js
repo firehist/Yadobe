@@ -112,5 +112,14 @@ Group.Factory = {};
  * @return Group new group instance
  */
 Group.Factory.newInstance = function() {
-	return new Group('Group', 'red', 3);
+    var indexColor = Tools.randomXToY(0, 3);
+    console.debug('indexColor: ' + indexColor);
+    var colorName = '';
+    var i = -1;
+    for (color in DINNERCONST.COLOR) {
+        i++;
+        if (i == indexColor) colorName = color;
+    }
+    console.debug("colorName: "+ colorName);
+	return new Group('Group', colorName, 3);
 };
