@@ -5,11 +5,26 @@
  * @module Yadobe
  **/
 var PlaceClass = {
-	// Attributes
+	
+    // Attributes
+    /**
+     * @type {String}
+     */
 	name: '',
-	// Constructor
-	initialize: function(name) {
+    /**
+     * Position where the waiter can stop
+     * @type {Point}
+     */
+    accessCoordinates : null,
+    
+    /**
+     * @constructor
+     * @param {String} name
+     * @param {Point} coordinates Grid coordinates to access the place by the waiter
+     */
+	initialize: function(name, coordinates) {
 		this.name = name;
+		this.accessCoordinates = coordinates;
 	},
 	// Methods
 	runAction: function() {

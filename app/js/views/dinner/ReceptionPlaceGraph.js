@@ -45,10 +45,12 @@ var ReceptionPlaceGraphClass = {
 	},
 	update: function() {
         var groupGraphList = DinnerGamePage.getInstance().groupList;
-		console.debug("nombre de group à mettre à jour: " + groupGraphList.length);
+		//console.debug("nombre de group a mettre a jour: " + groupGraphList.length);
 		for(var i=0; i<groupGraphList.length; i++) {
-			console.debug("update du group num "+i);
-			groupGraphList[i].update();
+			//console.debug("update du group num "+i);
+			if (!groupGraphList[i].model.isGone) {
+				groupGraphList[i].update();
+			}
 		}
 	},
 	addMouseListener: function() {

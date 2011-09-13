@@ -35,6 +35,11 @@ var DinnerGamePageClass = {
 	 * @type GroupGraph
 	 */
 	groupList: [],
+	/**
+	 * Record a selected group to set it in selected table
+	 * @type GroupGraph
+	 */
+	groupGraphSelected: null,
 	// Constructor
 	/**
 	 * @constructor
@@ -42,25 +47,28 @@ var DinnerGamePageClass = {
 	 * @since 30/08/2011
 	 */
 	initialize: function() {
-		DinnerGamePage.instance = this;
-		// init Page Container
+		
+        // Init Page Container
 		this.callSuper();
-		// init background
+		
+        // Init background
 		this.createBackground();
 		this.createConsoleLog();
-		// Kitchen
-		var kitchenModel = new KitchenPlace('Cuisine', DINNERCONST.COOK.maxMenuInKitchen);
+		
+        // Kitchen
+		var kitchenModel = new KitchenPlace('Cuisine', DINNERCONST.COOK.maxMenuInKitchen, DINNERCONST.ACCESS.kitchen);
 		this.kitchen = new KitchenPlaceGraph(kitchenModel);
 		this.pageContainer.addChildAt(this.kitchen.getContainer(), DINNERCONST.SCENES.kitchen);
 		// Reception
 		var receptionModel = new ReceptionPlace('Reception', 6);
 		this.reception = new ReceptionPlaceGraph(receptionModel);
 		this.pageContainer.addChildAt(this.reception.getContainer(), DINNERCONST.SCENES.reception);
-		// Tables
+		
+        // Tables
 		this.tables = new Array();
 		var colors = ['red','blue','green','yellow'];
-		for(var i=0; i<4; i++) {
-			var tableModel = new TablePlace(i, colors[i]);
+		for (var i=0; i<4; i++) {
+			var tableModel = new TablePlace(i, colors[i], DINNERCONST.ACCESS.tables[i]);
 			var tableGraph = new TablePlaceGraph(tableModel);
 			this.tables.push(tableGraph);
 			this.pageContainer.addChildAt(tableGraph.getContainer(), DINNERCONST.SCENES.tables[i]);
@@ -108,7 +116,7 @@ var DinnerGamePageClass = {
 	},
     /**
      * @author DJE
-     * @since
+     * @since 08/09/2011
      */
     addGroup: function(groupModel) {
         console.debug("[addGroup] Start");
@@ -116,17 +124,29 @@ var DinnerGamePageClass = {
         this.groupList.push(groupGraph);
         this.pageContainer.addChild(groupGraph.getContainer());
         console.debug("[addGroup] Stop");
-    }
+    },
+	/**
+	 * @author Dominique Jeannin <jeannin.dominique@gmail.com>
+	 * @since 12/09/2011
+	 */
+	linkGroupWithTable: function(obj) {
+		if (obj instanceof GroupGraphClass) {
+			this.groupGraphSelected = obj;
+		} else if  (obj instanceof TablePlaceGraphClass) {
+			this.groupGrpahSelected.goToTable = obj;
+			this.groupGraphSelected.setState('Walking2Table');
+		}
+	}
 };
 var DinnerGamePage = new JS.Class(Page, DinnerGamePageClass);
 
 // Static attribute
 DinnerGamePage.instance = null;
+
 // Static method singleton
 DinnerGamePage.getInstance = function() {
-	if(DinnerGamePage.instance != null) {
-		return DinnerGamePage.instance;
-	} else {
-		return new DinnerGamePage();
+	if ((DinnerGamePage.instance == null) || (!DinnerGamePage.instance instanceof DinnerGamePage)) {
+		DinnerGamePage.instance = new DinnerGamePage();
 	}
+    return DinnerGamePage.instance;
 };

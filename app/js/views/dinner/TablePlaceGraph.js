@@ -45,6 +45,7 @@ var TablePlaceGraphClass = {
 			target.onPress = function(e) {
 				if(!target.clicked) {
 					console.log('Table clicked');
+					DinnerGamePage.getInstance().linkGroupWithTable(this);
 				}
 			}
 			target.onMouseOver = function() {

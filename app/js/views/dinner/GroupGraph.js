@@ -34,6 +34,11 @@ var GroupGraphClass = {
 	 */
 	y: 0,
 	/**
+	 * it is the selected objet TablePlace where group have to sit down
+	 * @type TablePlaceGraph
+	 */
+	goToTable: null,
+	/**
 	 * The kitchen graph
 	 * @type KitchenPlaceGraph
 	 */
@@ -65,7 +70,7 @@ var GroupGraphClass = {
      */
     createGroup: function() {
 		var imageName = eval("DINNERCONST.IMAGE.human_" + this.model.color);
-		console.debug("imageName : " + imageName);
+		//console.debug("imageName : " + imageName);
 		var sprite = new SpriteSheet(
 			imageName,
 			96, 96,
@@ -73,7 +78,7 @@ var GroupGraphClass = {
 				walking_east: [0, 7],
 				walking_north: [8, 15],
 				walking_south: [16, 23],
-				waiting: 7
+				waiting: 14
 			}
 		);
 		sprite = SpriteSheetUtils.flip(
@@ -82,8 +87,9 @@ var GroupGraphClass = {
 				walking_west:["walking_east", true, false, false]
 			}
 		);
+
 		this.bitmapSeq = new BitmapSequence(sprite);
-		console.debug("[GroupGraph.createGroup]après bitmapSeq");
+		//console.debug("[GroupGraph.createGroup]après bitmapSeq");
 		this.bitmapSeq.x = this.x;
 		this.bitmapSeq.y = this.y;
 		this.bitmapSeq.scaleX = this.bitmapSeq.scaleY = 1.5;
@@ -98,6 +104,7 @@ var GroupGraphClass = {
 			target.onPress = function(e) {
 				if(!target.clicked) {
 					console.log('Group clicked');
+					DinnerGamePage.getInstance().linkGroupWithTable(this);
 				}
 			}
 			target.onMouseOver = function() {
@@ -132,7 +139,7 @@ GroupGraph.states({
 	 */
 	Waiting: {
 		update: function() {
-			console.debug("[GroupGraph.WaitingState.update]");
+			//console.debug("[GroupGraph.Waiting.update]");
 			if (this.bitmapSeq.y == DINNERCONST.POSITION.firstgroup.y) {
 				this.setState('Walking2Reception');
 				this.bitmapSeq.gotoAndPlay('walking_north');
@@ -148,8 +155,8 @@ GroupGraph.states({
 	 */
 	Walking2Reception: {
         update: function() {
-		console.debug("[GroupGraph.WaitingState.update]");
-			var yMin = DINNERCONST.POSITION.reception.y + 100;
+            //console.debug("[GroupGraph.Walking2Reception.update]");
+			var yMin = DINNERCONST.POSITION.reception.y + 10;
 			if (yMin >= this.bitmapSeq.y) {
 				this.setState('Waiting');
 				this.bitmapSeq.gotoAndPlay('waiting');
@@ -159,12 +166,27 @@ GroupGraph.states({
         }
     },
 	/**
-	 * WalkingRightEmpty state
-	 * @author Benjamin Longearet <firehist@gmail.com>
-	 * @since 06/01/2011
+	 * Walking2Table state
+	 * @author Dominique Jeannin <jeannin.dominique@gmail.com>
+	 * @since 12/09/2011
+	 */
+	Walking2Table: {
+        update: function() {
+			var xDest = this.goToTable.bitmapSeq;
+			if () {
+			
+			}
+        }
+    },
+	/**
+	 * Eating state
+	 * @author Dominique Jeannin <jeannin.dominique@gmail.com>
+	 * @since 12/09/2011
 	 */
     Eating: {
         update: function() {
+            //console.debug("[GroupGraph.Walking2Reception.update]");
+            // 
 			// TODO: in this state, group is associated with a table and this table
             // manage state during eating (order, buying, eating...)
         }

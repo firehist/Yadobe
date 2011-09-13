@@ -89,7 +89,7 @@ var YadobeClass = {
 	 */
 	loadGame: function() {
 		this.setCurrentPage(IndexPage.getInstance());
-		//this.setCurrentPage(DinnerGamePage.getInstance());
+//		this.setCurrentPage(DinnerGamePage.getInstance());
 		this.setUpdate();
 	},
 	/**
