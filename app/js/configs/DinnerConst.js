@@ -95,13 +95,26 @@ DINNERCONST.POSITION = {
 	kitchen: new Point(500, 70),
 	reception: new Point(0, 225),
 	tables: [
-		new Point(340, 240),
-		new Point(570, 240),
-		new Point(570, 410),
-		new Point(340, 410)
-	],
-    firstgroup : new Point(2, 510)
+        {
+            name: "red",
+            coord: new Point(340, 240)
+        },
+		{
+            name: "yellow",
+            coord: new Point(570, 240)
+        },
+		{
+            name: "green",
+            coord: new Point(570, 410)
+        },
+		{
+            name: "blue",
+            coord: new Point(340, 410)
+        }
+    ],
+    firstgroup: new Point(2, 510)
 };
+console.debug("DINNERCONST.POSITION Ok");
 /**
  * DINNERCONST.ACCESS Struct
  * Coordinates on the grid where the waiter can access a place
@@ -119,6 +132,7 @@ DINNERCONST.ACCESS = {
 		new Point(340, 410)
 	]
 };
+console.debug("DINNERCONST.ACCESS Ok");
 /**
  * DINNERCONST.SCENES Struct
  * @author Benjamin Longearet <firehist@gmail.com>
@@ -134,6 +148,7 @@ DINNERCONST.SCENES = {
 	tables: [6,7,8,9],
 	waiter: 10
 };
+console.debug("DINNERCONST.SCENES Ok");
 /**
  * DINNERCONST.COOK Struct
  * @author Benjamin Longearet <firehist@gmail.com>

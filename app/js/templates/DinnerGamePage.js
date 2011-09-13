@@ -5,6 +5,7 @@
  * @class DinnerGamePage
  */
 var DinnerGamePageClass = {
+    className: 'DinnerGamePageClass',
 	// Attributes
 	text: null,
 	/**
@@ -68,7 +69,8 @@ var DinnerGamePageClass = {
 		this.tables = new Array();
 		var colors = ['red','blue','green','yellow'];
 		for (var i=0; i<4; i++) {
-			var tableModel = new TablePlace(i, colors[i], DINNERCONST.ACCESS.tables[i]);
+            console.debug("DINNERCONST.POSITION.tables[i].coord: " + DINNERCONST.POSITION.tables[i].coord);
+			var tableModel = new TablePlace(i, colors[i], DINNERCONST.POSITION.tables[i].coord);
 			var tableGraph = new TablePlaceGraph(tableModel);
 			this.tables.push(tableGraph);
 			this.pageContainer.addChildAt(tableGraph.getContainer(), DINNERCONST.SCENES.tables[i]);
@@ -119,22 +121,29 @@ var DinnerGamePageClass = {
      * @since 08/09/2011
      */
     addGroup: function(groupModel) {
-        console.debug("[addGroup] Start");
         var groupGraph = new GroupGraph(groupModel);
         this.groupList.push(groupGraph);
         this.pageContainer.addChild(groupGraph.getContainer());
-        console.debug("[addGroup] Stop");
     },
 	/**
 	 * @author Dominique Jeannin <jeannin.dominique@gmail.com>
 	 * @since 12/09/2011
 	 */
 	linkGroupWithTable: function(obj) {
-		if (obj instanceof GroupGraphClass) {
+        console.debug("linkGroupWithTable: obj is instanceof :" + obj.className);
+		if (obj.className == "GroupGraphClass") {
+            console.debug("linkGroupWithTable: a groupgrpah is selected");
 			this.groupGraphSelected = obj;
-		} else if  (obj instanceof TablePlaceGraphClass) {
-			this.groupGrpahSelected.goToTable = obj;
-			this.groupGraphSelected.setState('Walking2Table');
+		} else if (obj.className == "TablePlaceGraphClass") {
+            console.debug("linkGroupWithTable: a table is selected");
+            //search index corresponding to table's color
+            for (var i=0; i<DINNERCONST.POSITION.tables.length; i++) {
+                if (DINNERCONST.POSITION.tables[i].name == obj.model.color) {
+                    this.groupGraphSelected.goToTablePoint = DINNERCONST.POSITION.tables[i].coord;
+                    this.groupGraphSelected.setState('Walking2Table');
+                    break;
+                }
+            }
 		}
 	}
 };

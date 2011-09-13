@@ -7,6 +7,7 @@
 var GroupGraphClass = {
     // Includes
 	include: JS.State,
+    className: 'GroupGraphClass',
     // Attributes
 	/**
 	 * Model of GroupGraph
@@ -23,7 +24,12 @@ var GroupGraphClass = {
 	 * @type BitmapSequence
 	 */
 	bitmapSeq: null,
-   /**
+    /**
+     * indicates the current direction
+     * @type string
+     */
+    direction: '',
+    /**
 	 * The base y coord of GroupGraph
 	 * @type int
 	 */
@@ -34,10 +40,10 @@ var GroupGraphClass = {
 	 */
 	y: 0,
 	/**
-	 * it is the selected objet TablePlace where group have to sit down
-	 * @type TablePlaceGraph
+	 * This is the position of selected TablePlace where group have to sit down
+	 * @type Point
 	 */
-	goToTable: null,
+	goToTablePoint: null,
 	/**
 	 * The kitchen graph
 	 * @type KitchenPlaceGraph
@@ -100,11 +106,11 @@ var GroupGraphClass = {
      * @method addMouseListener
      */
     addMouseListener: function() {
-		(function(target) {
-			target.onPress = function(e) {
+		(function(target, obj) {
+			target.onPress = function() {
 				if(!target.clicked) {
 					console.log('Group clicked');
-					DinnerGamePage.getInstance().linkGroupWithTable(this);
+					DinnerGamePage.getInstance().linkGroupWithTable(obj);
 				}
 			}
 			target.onMouseOver = function() {
@@ -121,7 +127,7 @@ var GroupGraphClass = {
 					Yadobe.getInstance().setUpdate();
 				}
 			}
-		})(this.container);
+		})(this.container, this);
 	}
 };
 var GroupGraph = new JS.Class(GroupGraphClass);
@@ -143,6 +149,7 @@ GroupGraph.states({
 			if (this.bitmapSeq.y == DINNERCONST.POSITION.firstgroup.y) {
 				this.setState('Walking2Reception');
 				this.bitmapSeq.gotoAndPlay('walking_north');
+                this.direction = 'north';
 			} else {
 				this.setState('Walking2Reception');
 			}
@@ -160,6 +167,7 @@ GroupGraph.states({
 			if (yMin >= this.bitmapSeq.y) {
 				this.setState('Waiting');
 				this.bitmapSeq.gotoAndPlay('waiting');
+                this.direction = '';
 			} else {
 				this.bitmapSeq.y -= 5;
 			}
@@ -172,10 +180,53 @@ GroupGraph.states({
 	 */
 	Walking2Table: {
         update: function() {
-			var xDest = this.goToTable.bitmapSeq;
-			if () {
-			
-			}
+            consle.debug("Walking2Table");
+            var dx = 5;
+            var dy = 5;
+            
+            var xSquare = Math.pow(this.goToTablePoint.y - (this.bitmapSeq.y), 2);
+            var ySquare = Math.pow(this.goToTablePoint.y - (this.bitmapSeq.y), 2);
+
+            var xSquareByEast = Math.pow(this.gotToTablePoint.x - this.bitmapSeq.x+dy, 2);
+            var xSquareByWest = Math.pow(this.gotToTablePoint.x - (this.bitmapSeq.x-dy), 2);
+            var ySquareByNorth = Math.pow(this.gotToTablePoint.y - this.bitmapSeq.y-dy, 2);
+            var ySquareBySouth = Math.pow(this.gotToTablePoint.y - (this.bitmapSeq.y+dy), 2);
+            
+            var distByNorth = Math.sqrt(xSquare+ySquareByNorth);
+            var distBySouth = Math.sqrt(xSquare+ySquareBySouth);
+            var distByEast = Math.sqrt(xSquareByEast+ySquare);
+            var distByWest = Math.sqrt(xSquareByWest+ySquare);
+
+            if (distByNorth <= 2*dy || distBySouth <= 2*dy || distByEast <= 2*dx || distByWest <= 2*dx) {
+                this.setState('Eating');
+				this.bitmapSeq.gotoAndPlay('waiting');
+            } else {
+                if (Math.min(distByNorth, Math.min(distBySouth, Math.min(distByEast, distByWest)))) {
+                    this.bitmapSeq.y -= dy;
+                    if (this.direction != 'north') {
+                        this.direction = 'north';
+                        this.bitmapSeq.gotoAndPlay('walking_'+this.direction);
+                    }
+                } else if (Math.min(distBySouth, Math.min(distByNorth, Math.min(distByEast, distByWest)))) {
+                    this.bitmapSeq.y += dy;
+                    if (this.direction != 'south') {
+                        this.direction = 'south';
+                        this.bitmapSeq.gotoAndPlay('walking_'+this.direction);
+                    }
+                } else if (Math.min(distByEast, Math.min(distByNorth, Math.min(distBySouth, distByWest)))) {
+                    this.bitmapSeq.x += dx;
+                    if (this.direction != 'east') {
+                        this.direction = 'east';
+                        this.bitmapSeq.gotoAndPlay('walking_'+this.direction);
+                    }
+                } else {
+                    this.bitmapSeq.x -= dx;
+                    if (this.direction != 'west') {
+                        this.direction = 'west';
+                        this.bitmapSeq.gotoAndPlay('walking_'+this.direction);
+                    }
+                }
+            }
         }
     },
 	/**
