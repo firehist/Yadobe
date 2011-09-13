@@ -36,12 +36,12 @@ JS.Packages(function() { with(this) {
 	file(JSMODEL_UI_PATH + 'Button.js').provides('Button').requires('JS.Class', 'Tools', 'Easel');
     
 	/* Dinner views */
-	file(JSVIEW_DINNER_PATH + 'TablePlaceGraph.js').provides('TablePlaceGraph').requires('TablePlace');
-    file(JSVIEW_DINNER_PATH + 'ReceptionPlaceGraph.js').provides('ReceptionPlaceGraph').requires('ReceptionPlace');
+	file(JSVIEW_DINNER_PATH + 'TablePlaceGraph.js').provides('TablePlaceGraph').requires('TablePlace', 'Destination');
+    file(JSVIEW_DINNER_PATH + 'ReceptionPlaceGraph.js').provides('ReceptionPlaceGraph').requires('ReceptionPlace', 'Destination');
 	file(JSVIEW_DINNER_PATH + 'MenuGraph.js').provides('MenuGraph').requires('JS.State');
 	file(JSVIEW_DINNER_PATH + 'LuigiGraph.js').provides('LuigiGraph').requires('JS.State');
 	file(JSVIEW_DINNER_PATH + 'WaiterGraph.js').provides('WaiterGraph').requires('JS.State', 'Waiter');
-    file(JSVIEW_DINNER_PATH + 'KitchenPlaceGraph.js').provides('KitchenPlaceGraph').requires('KitchenPlace');
+    file(JSVIEW_DINNER_PATH + 'KitchenPlaceGraph.js').provides('KitchenPlaceGraph').requires('KitchenPlace', 'Destination');
 	file(JSVIEW_DINNER_PATH + 'GroupGraph.js').provides('GroupGraph').requires('JS.State', 'Group');
     
 	/* tools libs */

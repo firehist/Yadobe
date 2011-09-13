@@ -94,8 +94,8 @@ DINNERCONST.POSITION = {
 	tables: [
 		new Point(340, 240),
 		new Point(570, 240),
-		new Point(570, 410),
-		new Point(340, 410)
+		new Point(340, 410),
+		new Point(570, 410)
 	],
     firstgroup : new Point(50, 300)
 };
@@ -107,13 +107,13 @@ DINNERCONST.POSITION = {
  * @type Object
  */
 DINNERCONST.ACCESS = {
-	kitchen: new Point(500, 70),
-	reception: new Point(0, 225),
+	kitchen: new Point(550,100),
+	reception: new Point(140,210),
 	tables: [
-		new Point(340, 240),
-		new Point(570, 240),
-		new Point(570, 410),
-		new Point(340, 410)
+		new Point(290,220),
+		new Point(520,220),
+		new Point(290,400),
+		new Point(520,400)
 	]
 };
 /**

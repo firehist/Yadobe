@@ -35,6 +35,7 @@ var KitchenPlaceGraphClass = {
 	initialize: function(model) {
 		this.model = model;
 		this.container = new Container();
+		this.addMouseListener();
 		this.createLuigi();
 		this.createKitchen();
 		this.initPlates();
@@ -69,6 +70,32 @@ var KitchenPlaceGraphClass = {
 		kitchen.x = DINNERCONST.POSITION.kitchen.x;
 		kitchen.y = DINNERCONST.POSITION.kitchen.y;
 		this.container.addChildAt(kitchen, 2);
+	},
+	addMouseListener: function() {
+		(function(target) {
+			target.container.onPress = function(e) {
+				if(!target.container.clicked) {
+                    var destination = new Destination(target.model, function() {
+                        DinnerGamePage.getInstance().updateConsoleLog('Arrived to ' + target.model.name);
+                    });
+					DinnerGamePage.getInstance().waiter.model.moveTo(destination);
+				}
+			}
+			target.container.onMouseOver = function() {
+				if(!target.container.clicked) {
+					target.container.alpha = 0.8;
+					$('body').css('cursor', 'pointer');
+					Yadobe.getInstance().setUpdate();
+				}
+			}
+			target.container.onMouseOut = function() {
+				if(!target.container.clicked) {
+					target.container.alpha = 1;
+					$('body').css('cursor', 'default');
+					Yadobe.getInstance().setUpdate();
+				}
+			}
+		})(this);
 	},
 	/**
 	 * Create instance of luigi class

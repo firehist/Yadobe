@@ -35,33 +35,36 @@ var TablePlaceGraphClass = {
 	},
 	createTable: function() {
 		var table = new Bitmap(DINNERCONST.IMAGE['table_' + this.model.color]);
-		var index = parseInt(this.model.name, 10);
+		var index = parseInt(this.model.name.substr(5,this.model.name.length - 5), 10);
 		table.x = DINNERCONST.POSITION.tables[index].x;
 		table.y = DINNERCONST.POSITION.tables[index].y;
 		this.container.addChildAt(table, 0);
 	},
 	addMouseListener: function() {
 		(function(target) {
-			target.onPress = function(e) {
-				if(!target.clicked) {
-					console.log('Table clicked');
+			target.container.onPress = function(e) {
+				if (!target.container.clicked) {
+                    var destination = new Destination(target.model, function() {
+                        DinnerGamePage.getInstance().updateConsoleLog('Arrived to ' + target.model.name);
+                    });
+					DinnerGamePage.getInstance().waiter.model.moveTo(destination);
 				}
 			}
-			target.onMouseOver = function() {
-				if(!target.clicked) {
-					target.alpha = 0.8;
+			target.container.onMouseOver = function() {
+				if (!target.clicked) {
+					target.container.alpha = 0.8;
 					$('body').css('cursor', 'pointer');
 					Yadobe.getInstance().setUpdate();
 				}
 			}
-			target.onMouseOut = function() {
-				if(!target.clicked) {
-					target.alpha = 1;
+			target.container.onMouseOut = function() {
+				if (!target.container.clicked) {
+					target.container.alpha = 1;
 					$('body').css('cursor', 'default');
 					Yadobe.getInstance().setUpdate();
 				}
 			}
-		})(this.container);
+		})(this);
 	}
 	// Methods
 };

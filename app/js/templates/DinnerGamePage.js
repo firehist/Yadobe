@@ -58,8 +58,8 @@ var DinnerGamePageClass = {
         // Tables
 		this.tables = new Array();
 		var colors = ['red','blue','green','yellow'];
-		for (var i=0; i<4; i++) {
-			var tableModel = new TablePlace(i, colors[i], DINNERCONST.ACCESS.tables[i]);
+		for (var i=0; i < 4; i++) {
+			var tableModel = new TablePlace('Table' + i, colors[i], DINNERCONST.ACCESS.tables[i]);
 			var tableGraph = new TablePlaceGraph(tableModel);
 			this.tables.push(tableGraph);
 			this.pageContainer.addChildAt(tableGraph.getContainer(), DINNERCONST.SCENES.tables[i]);
@@ -69,11 +69,12 @@ var DinnerGamePageClass = {
         // Display the waiter on the kitchen at the beginning
 		var waiterModel = new Waiter('Serveur', kitchenModel, 1);
 		this.waiter = new WaiterGraph(waiterModel);
-		this.pageContainer.addChildAt(this.waiter.getGraph(), 1);
+		this.pageContainer.addChild(this.waiter.getGraph());
         
-        waiterModel.moveTo(new Destination(receptionModel, function() {
-            DinnerGamePage.getInstance().updateConsoleLog('ARRIVED !');
-        }));
+//        waiterModel.moveTo(new Destination(receptionModel, function() {
+//        waiterModel.moveTo(new Destination(this.tables[3].model, function() {
+//            DinnerGamePage.getInstance().updateConsoleLog('ARRIVED !');
+//        }));
 		
 	},
 	createConsoleLog: function() {
