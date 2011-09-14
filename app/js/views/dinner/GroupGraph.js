@@ -180,23 +180,33 @@ GroupGraph.states({
 	 */
 	Walking2Table: {
         update: function() {
-            consle.debug("Walking2Table");
+            console.debug("Walking2Table");
             var dx = 5;
             var dy = 5;
             
-            var xSquare = Math.pow(this.goToTablePoint.y - (this.bitmapSeq.y), 2);
-            var ySquare = Math.pow(this.goToTablePoint.y - (this.bitmapSeq.y), 2);
-
-            var xSquareByEast = Math.pow(this.gotToTablePoint.x - this.bitmapSeq.x+dy, 2);
-            var xSquareByWest = Math.pow(this.gotToTablePoint.x - (this.bitmapSeq.x-dy), 2);
-            var ySquareByNorth = Math.pow(this.gotToTablePoint.y - this.bitmapSeq.y-dy, 2);
-            var ySquareBySouth = Math.pow(this.gotToTablePoint.y - (this.bitmapSeq.y+dy), 2);
+            var xSquare = Math.pow(this.goToTablePoint.x - this.bitmapSeq.x, 2);
+            var ySquare = Math.pow(this.goToTablePoint.y - this.bitmapSeq.y, 2);
+			
+			//console.debug("xSquare: " + xSquare + " ySquare: " + ySquare);
             
+			var xSquareByEast = Math.pow(this.goToTablePoint.x - (this.bitmapSeq.x+dx), 2);
+            //console.debug("xSquareByEast: " + xSquareByEast);
+			var xSquareByWest = Math.pow(this.goToTablePoint.x - (this.bitmapSeq.x-dx), 2);
+            //console.debug("xSquareByWest: " + xSquareByWest);
+			var ySquareByNorth = Math.pow(this.goToTablePoint.y - (this.bitmapSeq.y-dy), 2);
+            //console.debug("ySquareByNorth: " + ySquareByNorth);
+			var ySquareBySouth = Math.pow(this.goToTablePoint.y - (this.bitmapSeq.y+dy), 2);
+			//console.debug("ySquareBySouth: " + ySquareBySouth);
+			
             var distByNorth = Math.sqrt(xSquare+ySquareByNorth);
+			//console.debug("distByNorth: " + distByNorth);
             var distBySouth = Math.sqrt(xSquare+ySquareBySouth);
+			//console.debug("distBySouth: " + distBySouth);
             var distByEast = Math.sqrt(xSquareByEast+ySquare);
+			//console.debug("distByEast: " + distByEast);
             var distByWest = Math.sqrt(xSquareByWest+ySquare);
-
+			//console.debug("distByWest: " + distByWest);
+			
             if (distByNorth <= 2*dy || distBySouth <= 2*dy || distByEast <= 2*dx || distByWest <= 2*dx) {
                 this.setState('Eating');
 				this.bitmapSeq.gotoAndPlay('waiting');
@@ -207,24 +217,28 @@ GroupGraph.states({
                         this.direction = 'north';
                         this.bitmapSeq.gotoAndPlay('walking_'+this.direction);
                     }
+					console.debug("north: x:" +this.bitmapSeq.x + " y:" + this.bitmapSeq.y);
                 } else if (Math.min(distBySouth, Math.min(distByNorth, Math.min(distByEast, distByWest)))) {
                     this.bitmapSeq.y += dy;
                     if (this.direction != 'south') {
                         this.direction = 'south';
                         this.bitmapSeq.gotoAndPlay('walking_'+this.direction);
                     }
+					console.debug("south: x:" +this.bitmapSeq.x + " y:" + this.bitmapSeq.y);
                 } else if (Math.min(distByEast, Math.min(distByNorth, Math.min(distBySouth, distByWest)))) {
                     this.bitmapSeq.x += dx;
                     if (this.direction != 'east') {
                         this.direction = 'east';
                         this.bitmapSeq.gotoAndPlay('walking_'+this.direction);
                     }
+					console.debug("east: x:" +this.bitmapSeq.x + " y:" + this.bitmapSeq.y);
                 } else {
                     this.bitmapSeq.x -= dx;
                     if (this.direction != 'west') {
                         this.direction = 'west';
                         this.bitmapSeq.gotoAndPlay('walking_'+this.direction);
                     }
+					console.debug("west: x:" +this.bitmapSeq.x + " y:" + this.bitmapSeq.y);
                 }
             }
         }

@@ -140,7 +140,8 @@ var DinnerGamePageClass = {
             for (var i=0; i<DINNERCONST.POSITION.tables.length; i++) {
                 if (DINNERCONST.POSITION.tables[i].name == obj.model.color) {
                     this.groupGraphSelected.goToTablePoint = DINNERCONST.POSITION.tables[i].coord;
-                    this.groupGraphSelected.setState('Walking2Table');
+                    console.debug("linkGroupWithTable: setState at Walking2Table");
+					this.groupGraphSelected.setState('Walking2Table');
                     break;
                 }
             }
