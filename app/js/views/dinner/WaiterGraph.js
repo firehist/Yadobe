@@ -70,7 +70,7 @@ var WaiterGraphClass = {
         
 	},
     selectDirection : function() {
-        if ((this.model.inState('Moving')) && (this.model.destination)) {
+        if ((this.model.inState('Moving')) && (this.model.destination[0])) {
             
             var newState = 'Nothing';
             
@@ -132,13 +132,13 @@ var WaiterGraphClass = {
         var point;
         
         // Try to get a path of points with the key "currentPosition-destination"
-        var hashKey = this.model.position.name + '-' + this.model.destination.position.name;
+        var hashKey = this.model.position.name + '-' + this.model.destination[0].position.name;
         if (WaiterGraph.POINTS[hashKey]) {
             point = WaiterGraph.POINTS[hashKey][this.crossingPoint];
         }
         else {
-            // Try to get a path of points with the key "destination-currentPosition"
-            hashKey = this.model.destination.position.name + '-' + this.model.position.name;
+            // Try to get the reverse path of points (with the key "destination-currentPosition")
+            hashKey = this.model.destination[0].position.name + '-' + this.model.position.name;
             if (WaiterGraph.POINTS[hashKey]) {
                 point = WaiterGraph.POINTS[hashKey][WaiterGraph.POINTS[hashKey].length - this.crossingPoint - 1];
             }
@@ -152,13 +152,13 @@ var WaiterGraphClass = {
     isLastPoint : function() {
         
         // Try to get a path of points with the key "currentPosition-destination"
-        var hashKey = this.model.position.name + '-' + this.model.destination.position.name;
+        var hashKey = this.model.position.name + '-' + this.model.destination[0].position.name;
         if (WaiterGraph.POINTS[hashKey]) {
             return (WaiterGraph.POINTS[hashKey].length == this.crossingPoint + 1);
         }
         else {
             // Try to get a path of points with the key "destination-currentPosition"
-            hashKey = this.model.destination.position.name + '-' + this.model.position.name;
+            hashKey = this.model.destination[0].position.name + '-' + this.model.position.name;
             if (WaiterGraph.POINTS[hashKey]) {
                 return (WaiterGraph.POINTS[hashKey].length == this.crossingPoint + 1);
             }
@@ -180,12 +180,22 @@ var WaiterGraph = new JS.Class(WaiterGraphClass);
 WaiterGraph.stepInPixels = 5;
 
 WaiterGraph.POINTS = [];
-WaiterGraph.POINTS['Cuisine-Réception'] = [new Point(550,100), new Point(240,160), new Point(140,210)];
-//WaiterGraph.POINTS['Cuisine-Réception'] = [new Point(590,185), new Point(310,220), new Point(200,220), new Point(200,300)];
+WaiterGraph.POINTS['Cuisine-Réception'] = [new Point(550,100), new Point(240,160), new Point(240,210), new Point(140,210)];
 WaiterGraph.POINTS['Cuisine-Table0'] = [new Point(550,100), new Point(290,160), new Point(290,220)];
 WaiterGraph.POINTS['Cuisine-Table1'] = [new Point(550,100), new Point(550,160), new Point(520,220)];
-WaiterGraph.POINTS['Cuisine-Table2'] = [new Point(550,100), new Point(240,160), new Point(240,400), new Point(290,400)];
-WaiterGraph.POINTS['Cuisine-Table3'] = [new Point(550,100), new Point(470,100), new Point(470,400), new Point(520,400)];
+WaiterGraph.POINTS['Cuisine-Table2'] = [new Point(550,100), new Point(240,160), new Point(240,390), new Point(290,390)];
+WaiterGraph.POINTS['Cuisine-Table3'] = [new Point(550,100), new Point(470,100), new Point(470,390), new Point(520,390)];
+WaiterGraph.POINTS['Réception-Table0'] = [new Point(140,210), new Point(290,210), new Point(290,220)];
+WaiterGraph.POINTS['Réception-Table1'] = [new Point(140,210), new Point(240,210), new Point(240,160), new Point(520,160), new Point(520,220)];
+WaiterGraph.POINTS['Réception-Table2'] = [new Point(140,210), new Point(270,390), new Point(290,390)];
+WaiterGraph.POINTS['Réception-Table3'] = [new Point(140,210), new Point(240,330), new Point(520,330), new Point(520,390)];
+WaiterGraph.POINTS['Table0-Table1'] = [new Point(290,220), new Point(290,160), new Point(520,160), new Point(520,220)];
+WaiterGraph.POINTS['Table0-Table2'] = [new Point(290,220), new Point(270,220), new Point(270,390), new Point(290,390)];
+WaiterGraph.POINTS['Table0-Table3'] = [new Point(290,220), new Point(270,220), new Point(270,330), new Point(290,330), new Point(520,330), new Point(520,390)];
+WaiterGraph.POINTS['Table1-Table3'] = [new Point(520,220), new Point(500,220), new Point(500,390), new Point(520,390)];
+WaiterGraph.POINTS['Table1-Table2'] = [new Point(520,220), new Point(500,220), new Point(500,330), new Point(290,330), new Point(290,390)];
+WaiterGraph.POINTS['Table2-Table3'] = [new Point(290,390), new Point(290,330), new Point(520,330), new Point(520,390)];
+
 /**
  * WaiterGraph states declaration
  * @author Yannick Galatol <yannick.galatol@gmail.com>

@@ -19,6 +19,11 @@ var WaiterClass = {
 	 */
 	destination: null,
 	/**
+	 * Destinations size
+	 * @type int
+	 */
+	destinationMax: 2,
+	/**
 	 * Current position of waiter
 	 * @type Place
 	 */
@@ -39,7 +44,7 @@ var WaiterClass = {
      */
 	initialize: function(name, position, inventoryMax) {
 		this.name = name
-        
+        this.destination = [];
 		if (position instanceof Place) {
 			this.position = position;
 		}
@@ -57,12 +62,21 @@ var WaiterClass = {
 	 * @since 07/09/2011
 	 */
 	moveTo: function(destination) {
+        
+        // Check the destination passed in parameter is a Destination and got a Place as position
 		if (destination instanceof Destination) {
             if ((!destination.position) || (!destination.position instanceof Place)) {
                 throw 'Please give a Place as position of the Waiter destination.';
             }
             else {
-                this.destination = destination;
+                
+                // If all destination slots are full, replace the destination of the last slot
+                if (this.destination.length == this.destinationMax) {
+                    this.destination[this.destinationMax - 1]= destination;
+                }
+                else {
+                    this.destination.push(destination);
+                }
                 this.setState('Moving');
             }
 		}
@@ -83,13 +97,18 @@ var WaiterClass = {
 	},
     arrivedToDestination : function() {
         // Execute the method on arrival to the destination
-        this.destination.actionOnArrival();
+        this.destination[0].actionOnArrival();
         
         // Set the current position of the waiter with the destination position
-        this.position = this.destination.position;
+        this.position = this.destination[0].position;
         
         // Clear the last destination
-        this.destination = null;
+        this.destination.shift();
+        
+        // Execute the next action
+        if (this.destination.length > 0) {
+            this.setState('Moving');
+        }
     }
 };
 var Waiter = new JS.Class(WaiterClass);

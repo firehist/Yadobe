@@ -112,8 +112,8 @@ DINNERCONST.ACCESS = {
 	tables: [
 		new Point(290,220),
 		new Point(520,220),
-		new Point(290,400),
-		new Point(520,400)
+		new Point(290,390),
+		new Point(520,390)
 	]
 };
 /**
