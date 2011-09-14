@@ -14,7 +14,7 @@ var ReceptionPlaceGraphClass = {
 	/**
 	 * @type array of GroupGraph
 	 */
-	groupGraphList: new Array(),
+	//groupGraphList: new Array(),
 	/**
 	 * Container for reception
 	 * @type Container
@@ -42,16 +42,6 @@ var ReceptionPlaceGraphClass = {
 		reception.x = DINNERCONST.POSITION.reception.x;
 		reception.y = DINNERCONST.POSITION.reception.y;
 		this.container.addChildAt(reception, 0);
-	},
-	update: function() {
-        var groupGraphList = DinnerGamePage.getInstance().groupList;
-		//console.debug("nombre de group a mettre a jour: " + groupGraphList.length);
-		for(var i=0; i<groupGraphList.length; i++) {
-			//console.debug("update du group num "+i);
-			if (!groupGraphList[i].model.isGone) {
-				groupGraphList[i].update();
-			}
-		}
 	},
 	addMouseListener: function() {
 		(function(target) {

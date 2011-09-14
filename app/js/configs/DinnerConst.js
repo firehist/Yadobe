@@ -100,7 +100,7 @@ DINNERCONST.POSITION = {
             coord: new Point(340, 240)
         },
 		{
-            name: "yellow",
+            name: "blue",
             coord: new Point(570, 240)
         },
 		{
@@ -108,7 +108,7 @@ DINNERCONST.POSITION = {
             coord: new Point(570, 410)
         },
 		{
-            name: "blue",
+            name: "yellow",
             coord: new Point(340, 410)
         }
     ],

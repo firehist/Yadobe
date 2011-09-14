@@ -17,7 +17,7 @@ var ReceptionPlaceClass = {
 	 * List of group waiting to reception desk
 	 * @var Array<Group> groupList
 	 */
-	groupList: new Array(),
+	//groupList: new Array(),
 	/**
 	 * Max length of groupList
 	 * @var int maxGroupList
@@ -101,7 +101,6 @@ var ReceptionPlaceClass = {
 	 * @return boolean true if successful, false else
 	 */
 	addGroup: function(group) {
-        console.debug("[addGroup-] Start");
 		if(group instanceof Group) {
             DinnerGamePage.getInstance().addGroup(group);
 			this.groupList.push(group);

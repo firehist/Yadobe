@@ -117,7 +117,13 @@ var YadobeClass = {
 			if(typeof DinnerGamePage != "undefined" && this.currentPage instanceof DinnerGamePage) {
 				DinnerGamePage.getInstance().updateConsoleLog("[Yadobe.tick]");
 				DinnerGamePage.getInstance().kitchen.update();
-                DinnerGamePage.getInstance().reception.update();
+                //DinnerGamePage.getInstance().reception.update();
+                var groupGraphList = DinnerGamePage.getInstance().groupList;
+                for(var i=0; i<groupGraphList.length; i++) {
+                    if (!groupGraphList[i].model.isGone) {
+                        groupGraphList[i].update();
+                    }
+                }
 			}
 			this.stage.update();
 		//}

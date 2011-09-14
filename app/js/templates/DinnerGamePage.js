@@ -146,7 +146,20 @@ var DinnerGamePageClass = {
                 }
             }
 		}
-	}
+	},
+    /**
+     * @author Dominique Jeannin <jeannin.dominique@gmail.com>
+     * @since 13/09/2011
+     */
+    getNumberofActiveGroup: function() {
+        var counter = 0
+        for (var i=0; i<this.groupList.length; i++) {
+            if (!this.groupList[i].model.isGone) {
+                counter++;
+            }
+        }
+        return counter;
+    }
 };
 var DinnerGamePage = new JS.Class(Page, DinnerGamePageClass);
 
