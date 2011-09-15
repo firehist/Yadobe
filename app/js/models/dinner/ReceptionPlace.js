@@ -23,6 +23,11 @@ var ReceptionPlaceClass = {
 	 * @var int maxGroupList
 	 */
 	maxGroupList: 5,
+    /**
+     * store the position int the queue
+     * @type array of boolean
+     */
+    busyList: new Array(),
 	/**
 	 * @var bool isSelected
 	 */

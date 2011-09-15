@@ -29,16 +29,6 @@ var GroupGraphClass = {
      * @type string
      */
     direction: '',
-    /**
-	 * The base y coord of GroupGraph
-	 * @type int
-	 */
-	x: 0,
-	/**
-	 * The base x coord of GroupGraph
-	 * @type int
-	 */
-	y: 0,
 	/**
 	 * This is the position of selected TablePlace where group have to sit down
 	 * @type Point
@@ -163,7 +153,7 @@ GroupGraph.states({
 	Walking2Reception: {
         update: function() {
             //console.debug("[GroupGraph.Walking2Reception.update]");
-			var yMin = DINNERCONST.POSITION.reception.y + 10 + DinnerGamePage.getInstance().getNumberofActiveGroup()*20;
+			var yMin = DINNERCONST.POSITION.reception.y + 10 + DinnerGamePage.getInstance().getNumberOfActiveGroup()*20;
 			if (yMin >= this.bitmapSeq.y) {
 				this.setState('Waiting');
 				this.bitmapSeq.gotoAndPlay('waiting');
