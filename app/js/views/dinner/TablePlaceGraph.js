@@ -12,10 +12,10 @@ var TablePlaceGraphClass = {
 	 */
 	model: null,
 	/**
-	 * Container for Table
-	 * @type Container
+	 * Display object available for the waiter
+	 * @type {DisplayObject}
 	 */
-	container: null,
+	_graph: null,
 	// Constructor
 	/**
 	 * @constructor
@@ -26,40 +26,46 @@ var TablePlaceGraphClass = {
 	initialize: function(model) {
 		console.log('TablePlaceGraph.initialize(model)');
 		this.model = model;
-		this.container = new Container();
+		this._graph = new Container();
 		this.addMouseListener();
 		this.createTable();
 	},
-	getContainer: function() {
-		return this.container;
+	/**
+	 * Get TablePlace graph
+     * @author Yannick Galatol <yannick.galatol@gmail.com>
+     * @since 07/09/2011
+	 * @return {DisplayObject} The TablePlace graph
+	 */
+	getGraph: function() {
+		return this._graph;
 	},
 	createTable: function() {
 		var table = new Bitmap(DINNERCONST.IMAGE['table_' + this.model.color]);
 		var index = parseInt(this.model.name.substr(5,this.model.name.length - 5), 10);
 		table.x = DINNERCONST.POSITION.tables[index].x;
 		table.y = DINNERCONST.POSITION.tables[index].y;
-		this.container.addChildAt(table, 0);
+		this._graph.addChildAt(table, 0);
 	},
 	addMouseListener: function() {
 		(function(target) {
-			target.container.onPress = function(e) {
-				if (!target.container.clicked) {
+			target._graph.onPress = function(e) {
+				if (!target._graph.clicked) {
                     var destination = new Destination(target.model, function() {
                         DinnerGamePage.getInstance().updateConsoleLog('Arrived to ' + target.model.name);
                     });
 					DinnerGamePage.getInstance().waiter.model.moveTo(destination);
 				}
 			}
-			target.container.onMouseOver = function() {
+			target._graph.onMouseOver = function() {
 				if (!target.clicked) {
-					target.container.alpha = 0.8;
+					target._graph.alpha = 0.8;
 					$('body').css('cursor', 'pointer');
 					Yadobe.getInstance().setUpdate();
 				}
 			}
-			target.container.onMouseOut = function() {
-				if (!target.container.clicked) {
-					target.container.alpha = 1;
+			target._graph.onMouseOut = function() {
+				if (!target._graph.clicked) {
+					target._graph.alpha = 1;
 					$('body').css('cursor', 'default');
 					Yadobe.getInstance().setUpdate();
 				}

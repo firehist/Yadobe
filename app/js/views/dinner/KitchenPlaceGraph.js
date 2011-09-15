@@ -11,10 +11,10 @@ var KitchenPlaceGraphClass = {
 	 */
 	model: null,
 	/**
-	 * Container for kitchen
-	 * @type Container
+	 * Display object available for the kitchen
+	 * @type {DisplayObject}
 	 */
-	container: null,
+	_graph: null,
 	/**
 	 * Luigi information
 	 * @type LuigiGraph
@@ -34,8 +34,8 @@ var KitchenPlaceGraphClass = {
 	 */
 	initialize: function(model) {
 		this.model = model;
-		this.container = new Container();
-		this.addMouseListener();
+		this._graph = new Container();
+		//this.addMouseListener();
 		this.createLuigi();
 		this.createKitchen();
 		this.initPlates();
@@ -52,13 +52,13 @@ var KitchenPlaceGraphClass = {
 		}
 	},
 	/**
-	 * Get kitchen container
-	 * @author Benjamin Longearet <firehist@gmail.com>
-	 * @since 29/08/2011
-	 * @return Container The kitchen container
+	 * Get litchen graph
+     * @author Yannick Galatol <yannick.galatol@gmail.com>
+     * @since 07/09/2011
+	 * @return {DisplayObject} The litchen graph
 	 */
-	getContainer: function() {
-		return this.container;
+	getGraph: function() {
+		return this._graph;
 	},
 	/**
 	 * Create kitchen gaphic with image
@@ -69,28 +69,28 @@ var KitchenPlaceGraphClass = {
 		var kitchen = new Bitmap(DINNERCONST.IMAGE.kitchen);
 		kitchen.x = DINNERCONST.POSITION.kitchen.x;
 		kitchen.y = DINNERCONST.POSITION.kitchen.y;
-		this.container.addChildAt(kitchen, 2);
+		this._graph.addChildAt(kitchen, 2);
 	},
 	addMouseListener: function() {
 		(function(target) {
-			target.container.onPress = function(e) {
-				if(!target.container.clicked) {
+			target._graph.onPress = function(e) {
+				if(!target._graph.clicked) {
                     var destination = new Destination(target.model, function() {
                         DinnerGamePage.getInstance().updateConsoleLog('Arrived to ' + target.model.name);
                     });
 					DinnerGamePage.getInstance().waiter.model.moveTo(destination);
 				}
 			}
-			target.container.onMouseOver = function() {
-				if(!target.container.clicked) {
-					target.container.alpha = 0.8;
+			target._graph.onMouseOver = function() {
+				if(!target._graph.clicked) {
+					target._graph.alpha = 0.8;
 					$('body').css('cursor', 'pointer');
 					Yadobe.getInstance().setUpdate();
 				}
 			}
-			target.container.onMouseOut = function() {
-				if(!target.container.clicked) {
-					target.container.alpha = 1;
+			target._graph.onMouseOut = function() {
+				if(!target._graph.clicked) {
+					target._graph.alpha = 1;
 					$('body').css('cursor', 'default');
 					Yadobe.getInstance().setUpdate();
 				}
@@ -104,7 +104,7 @@ var KitchenPlaceGraphClass = {
 	 */
 	createLuigi: function() {
 		this.luigi = new LuigiGraph(this, Yadobe.getInstance().canvas.width + 10, DINNERCONST.POSITION.kitchen.y - 70);
-		this.container.addChildAt(this.luigi.bitmapSeq, 1);
+		this._graph.addChildAt(this.luigi.getGraph(), 1);
 	},
 	/**
 	 * Compute position to put new plate
@@ -129,15 +129,17 @@ var KitchenPlaceGraphClass = {
 	displayPlate: function() {
 		var menu = this.model.animateMenuList[0];
 		var menuGraph = new MenuGraph(menu);
+		
 		// Add to menuGraph manager
 		DinnerGamePage.getInstance().menuList.push(menuGraph);
+		
 		// Compute position
 		var platesLength = this.addPlate(menuGraph);
 		var x = Yadobe.getInstance().canvas.width - 230 + (platesLength * 30);
 		var y = DINNERCONST.POSITION.kitchen.y + 20;
 		menuGraph.setPosition(x, y);
 		menuGraph.changeState("Ready");
-		this.container.addChild(menuGraph.menu);
+		this._graph.addChild(menuGraph._graph);
 	},
 	/**
 	 * Create menuGraph object and display it

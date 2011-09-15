@@ -99,6 +99,7 @@ DINNERCONST.POSITION = {
 	],
     firstgroup : new Point(50, 300)
 };
+
 /**
  * DINNERCONST.ACCESS Struct
  * Coordinates on the grid where the waiter can access a place
@@ -116,6 +117,31 @@ DINNERCONST.ACCESS = {
 		new Point(520,390)
 	]
 };
+
+/**
+ * DINNERCONST.PATH Struct
+ * Paths of points that the waiter follow to move between two Places
+ * @author Yannick Galatol <yannick.galatol@gmail.com>
+ * @since 13/09/2011
+ * @type Array
+ */
+DINNERCONST.PATH = [];
+DINNERCONST.PATH['Cuisine-Réception'] = [new Point(550,100), new Point(240,160), new Point(240,210), new Point(140,210)];
+DINNERCONST.PATH['Cuisine-Table0'] = [new Point(550,100), new Point(290,160), new Point(290,220)];
+DINNERCONST.PATH['Cuisine-Table1'] = [new Point(550,100), new Point(550,160), new Point(520,220)];
+DINNERCONST.PATH['Cuisine-Table2'] = [new Point(550,100), new Point(240,160), new Point(240,390), new Point(290,390)];
+DINNERCONST.PATH['Cuisine-Table3'] = [new Point(550,100), new Point(470,100), new Point(470,390), new Point(520,390)];
+DINNERCONST.PATH['Réception-Table0'] = [new Point(140,210), new Point(290,210), new Point(290,220)];
+DINNERCONST.PATH['Réception-Table1'] = [new Point(140,210), new Point(240,210), new Point(240,160), new Point(520,160), new Point(520,220)];
+DINNERCONST.PATH['Réception-Table2'] = [new Point(140,210), new Point(270,390), new Point(290,390)];
+DINNERCONST.PATH['Réception-Table3'] = [new Point(140,210), new Point(240,330), new Point(520,330), new Point(520,390)];
+DINNERCONST.PATH['Table0-Table1'] = [new Point(290,220), new Point(290,160), new Point(520,160), new Point(520,220)];
+DINNERCONST.PATH['Table0-Table2'] = [new Point(290,220), new Point(270,220), new Point(270,390), new Point(290,390)];
+DINNERCONST.PATH['Table0-Table3'] = [new Point(290,220), new Point(270,220), new Point(270,330), new Point(290,330), new Point(520,330), new Point(520,390)];
+DINNERCONST.PATH['Table1-Table3'] = [new Point(520,220), new Point(500,220), new Point(500,390), new Point(520,390)];
+DINNERCONST.PATH['Table1-Table2'] = [new Point(520,220), new Point(500,220), new Point(500,330), new Point(290,330), new Point(290,390)];
+DINNERCONST.PATH['Table2-Table3'] = [new Point(290,390), new Point(290,330), new Point(520,330), new Point(520,390)];
+
 /**
  * DINNERCONST.SCENES Struct
  * @author Benjamin Longearet <firehist@gmail.com>

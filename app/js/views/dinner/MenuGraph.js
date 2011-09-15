@@ -13,10 +13,10 @@ var MenuGraphClass = {
 	 */
 	model: null,
 	/**
-	 * The menu bitmap Sequence
-	 * @type BitmapSequence
+	 * Display object available for the menu
+	 * @type {DisplayObject}
 	 */
-	menu: null,
+	_graph: null,
 	// Constructor
 	/**
 	 * @constructor
@@ -38,8 +38,8 @@ var MenuGraphClass = {
 	createMenuPlace: function() {
 		var frameData = {empty: 0, fish: 1, meat:2, ready: [3, 6], ready_hover: [7, 10] };
 		var sprite = new SpriteSheet(DINNERCONST.IMAGE.menus, 30, 30, frameData);
-		this.menu = new BitmapSequence(sprite);
-		this.menu.scaleX = this.menu.scaleY = 1.3;
+		this._graph = new BitmapSequence(sprite);
+		this._graph.scaleX = this._graph.scaleY = 1.3;
 	},
 	/**
 	 * Combinate update function with a setState
@@ -52,6 +52,15 @@ var MenuGraphClass = {
 		this.update();
 	},
 	/**
+	 * Get menu graph
+     * @author Yannick Galatol <yannick.galatol@gmail.com>
+     * @since 07/09/2011
+	 * @return {DisplayObject} The menu graph
+	 */
+	getGraph: function() {
+		return this._graph;
+	},
+	/**
 	 * Set new position for menuGraph
 	 * @author Benjamin Longearet <firehist@gmail.com>
 	 * @since 06/09/2011
@@ -59,8 +68,8 @@ var MenuGraphClass = {
 	 * @param y The y coordinate
 	 */
 	setPosition: function(x, y) {
-		this.menu.x = x;
-		this.menu.y = y;
+		this._graph.x = x;
+		this._graph.y = y;
 	},
 	/**
 	 * Mouse event listener
@@ -69,21 +78,20 @@ var MenuGraphClass = {
 	 */
 	addMouseListener: function() {
 		(function(menuGraph) {
-			var object = menuGraph.menu;
-			object.onPress = function(e) {
-				if(!object.clicked) {
+			menuGraph._graph.onPress = function(e) {
+				if(!menuGraph._graph.clicked) {
 					DinnerGamePage.getInstance().kitchen.model.runAction(menuGraph);
 				}
 			}
-			object.onMouseOver = function() {
-				if(!object.clicked) {
-					object.gotoAndStop(object.currentFrame + 4);
+			menuGraph._graph.onMouseOver = function() {
+				if(!menuGraph._graph.clicked) {
+					menuGraph._graph.gotoAndStop(menuGraph._graph.currentFrame + 4);
 					$('body').css('cursor', 'pointer');
 				}
 			}
-			object.onMouseOut = function() {
-				if(!object.clicked) {
-					object.gotoAndStop(object.currentFrame - 4);
+			menuGraph._graph.onMouseOut = function() {
+				if(!menuGraph._graph.clicked) {
+					menuGraph._graph.gotoAndStop(menuGraph._graph.currentFrame - 4);
 					$('body').css('cursor', 'default');
 				}
 			}
@@ -103,7 +111,7 @@ MenuGraph.states({
 	 */
 	Nothing: {
 		update: function() {
-			this.menu.visible = false;
+			this._graph.visible = false;
 		}
 	},
 	/**
@@ -111,8 +119,8 @@ MenuGraph.states({
 	 */
 	FullFish: {
 		update: function() {
-			this.menu.gotoAndStop("meat");
-			this.menu.visible = true;
+			this._graph.gotoAndStop("meat");
+			this._graph.visible = true;
 		}
 	},
 	/**
@@ -120,8 +128,8 @@ MenuGraph.states({
 	 */
 	FullMeat: {
 		update: function() {
-			this.menu.gotoAndStop("fish");
-			this.menu.visible = true;
+			this._graph.gotoAndStop("fish");
+			this._graph.visible = true;
 		}
 	},
 	/**
@@ -129,8 +137,8 @@ MenuGraph.states({
 	 */
 	Empty: {
         update: function() {
-			this.menu.gotoAndStop("empty");
-			this.menu.visible = true;
+			this._graph.gotoAndStop("empty");
+			this._graph.visible = true;
         }
     },
 	/**
@@ -138,9 +146,9 @@ MenuGraph.states({
 	 */
 	Ready: {
 		update: function() {
-			this.menu.gotoAndStop("ready");
-			this.menu.gotoAndStop( this.menu.currentFrame + (this.model.table - 1) );
-			this.menu.visible = true;
+			this._graph.gotoAndStop("ready");
+			this._graph.gotoAndStop( this._graph.currentFrame + (this.model.table - 1) );
+			this._graph.visible = true;
 		}
 	}
 });

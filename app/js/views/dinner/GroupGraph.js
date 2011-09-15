@@ -11,11 +11,11 @@ var GroupGraphClass = {
 	 * @type Group
 	 */
     model: null,
-    /**
-	 * Container for Group
-	 * @type Container
+	/**
+	 * Display object available for the group
+	 * @type {DisplayObject}
 	 */
-	container: null,
+	_graph: null,
     /**
 	 * @constructor
 	 * @class GroupGraph
@@ -25,15 +25,17 @@ var GroupGraphClass = {
 	initialize: function(model) {
 		console.log('GroupGraph.initialize(model)');
 		this.model = model;
-		this.container = new Container();
+		this._graph = new Container();
 		this.addMouseListener();
 	},
-    /**
-     * @method getContainer
-     * @return container
-     */
-    getContainer: function() {
-		return this.container;
+	/**
+	 * Get group graph
+     * @author Yannick Galatol <yannick.galatol@gmail.com>
+     * @since 07/09/2011
+	 * @return {DisplayObject} The group graph
+	 */
+	getGraph: function() {
+		return this._graph;
 	},
     /**
      * @method createGroup
@@ -42,7 +44,7 @@ var GroupGraphClass = {
 		var group = new Bitmap(DINNERCONST.IMAGE['_' + this.model.color]);
 		group.x = DINNERCONST.POSITION.firstgroup.x;
 		group.y = DINNERCONST.POSITION.firstgroup.y;
-		this.container.addChildAt(group, 0);
+		this._graph.addChildAt(group, 0);
 	},
     /**
      * @method addMouseListener
@@ -68,7 +70,7 @@ var GroupGraphClass = {
 					Yadobe.getInstance().setUpdate();
 				}
 			}
-		})(this.container);
+		})(this._graph);
 	}
 
 };
