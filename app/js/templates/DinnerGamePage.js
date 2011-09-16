@@ -104,7 +104,9 @@ var DinnerGamePageClass = {
 	 * @since 31/08/2011
 	 */
 	launch: function() {
-		this.reception.model.launch();
+		console.debug("DinnerGamePage.launch()");
+        //this.reception.model.launch();
+        TimeManager.setDinnerTimer('createGroup', this.createGroup, this);
 	},
 	/**
 	 * Pause the game
@@ -116,6 +118,32 @@ var DinnerGamePageClass = {
 	pause: function() {
 		this.reception.pause();
 	},
+	/**
+	 * Get the current group list length
+	 * @class ReceptionPlace
+	 * @method getGroupListLength
+	 * @author Benjamin Longearet <firehist@gmail.com>
+	 * @since 30/08/2011
+	 * @return int the current group list length
+	 */
+	getGroupListLength: function(){
+		return this.groupList.length;
+	},
+	/**
+	 * Create a random group
+	 * @class ReceptionPlace
+	 * @method createGroup
+	 * @author Benjamin Longearet <firehist@gmail.com>
+	 * @since 30/08/2011
+	 */
+	createGroup: function() {
+        console.debug("DinnerGamePage.createGroup()");
+		if (this.reception.getMaxGroupList() > this.getGroupListLength()) {
+            console.debug('Create Group');
+			var g = Group.Factory.newInstance();
+			this.addGroup(g);
+		}
+	},
     /**
      * @author DJE
      * @since 08/09/2011
@@ -123,7 +151,8 @@ var DinnerGamePageClass = {
     addGroup: function(groupModel) {
         var groupGraph = new GroupGraph(groupModel);
         this.groupList.push(groupGraph);
-        this.pageContainer.addChild(groupGraph.getContainer());
+        //this.pageContainer.addChild(groupGraph.getContainer());
+        this.pageContainer.addChildAt(groupGraph.getContainer(), DINNERCONST.SCENES.group);
     },
 	/**
 	 * @author Dominique Jeannin <jeannin.dominique@gmail.com>
@@ -140,8 +169,8 @@ var DinnerGamePageClass = {
             for (var i=0; i<DINNERCONST.POSITION.tables.length; i++) {
                 if (DINNERCONST.POSITION.tables[i].name == obj.model.color) {
                     this.groupGraphSelected.goToTablePoint = DINNERCONST.POSITION.tables[i].coord;
-                    console.debug("linkGroupWithTable: setState at Walking2Table");
-					this.groupGraphSelected.setState('Walking2Table');
+                    console.debug("linkGroupWithTable: setState at ReadMenu");
+					this.groupGraphSelected.setState('ReadMenu');
                     break;
                 }
             }
@@ -151,8 +180,9 @@ var DinnerGamePageClass = {
      * @author Dominique Jeannin <jeannin.dominique@gmail.com>
      * @since 13/09/2011
      */
-    getNumberOfActiveGroup: function() {
-        var counter = 0
+    getIndexOfFirstEmpty: function() {
+        //TODO: this must be done by ReceptionPlace model
+        var counter = 0;
         for (var i=0; i<this.groupList.length; i++) {
             if (!this.groupList[i].model.isGone) {
                 counter++;

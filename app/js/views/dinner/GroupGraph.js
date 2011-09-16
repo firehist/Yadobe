@@ -20,10 +20,10 @@ var GroupGraphClass = {
 	 */
 	container: null,
 	/**
-	 * BitmapSeq available for Group
-	 * @type BitmapSequence
+	 * Bitmap or BitmapSquence available for Group
+	 * @type BitmapSequence or Bitmap
 	 */
-	bitmapSeq: null,
+	_graph: null,
     /**
      * indicates the current direction
      * @type string
@@ -65,33 +65,47 @@ var GroupGraphClass = {
      * @method createGroup
      */
     createGroup: function() {
-		var imageName = eval("DINNERCONST.IMAGE.human_" + this.model.color);
-		//console.debug("imageName : " + imageName);
-		var sprite = new SpriteSheet(
-			imageName,
-			96, 96,
-			{
-				walking_east: [0, 7],
-				walking_north: [8, 15],
-				walking_south: [16, 23],
-				waiting: 14
-			}
-		);
-		sprite = SpriteSheetUtils.flip(
-			sprite, 
-			{
-				walking_west:["walking_east", true, false, false]
-			}
-		);
-
-		this.bitmapSeq = new BitmapSequence(sprite);
-		//console.debug("[GroupGraph.createGroup]après bitmapSeq");
-		this.bitmapSeq.x = this.x;
-		this.bitmapSeq.y = this.y;
-		this.bitmapSeq.scaleX = this.bitmapSeq.scaleY = 1.5;
-		this.bitmapSeq.shadow = new Shadow("#454", 0, 5, 4);
-		this.container.addChild(this.bitmapSeq);
+		this.setGraph("standup");
+		this._graph.x = this.x;
+		this._graph.y = this.y;
+		this._graph.scaleX = this._graph.scaleY = 1.5;
+		this._graph.shadow = new Shadow("#454", 0, 5, 4);
+		this.container.addChild(this._graph);
 	},
+    /**
+     *
+     */
+    setGraph: function(state) {
+        if (state == "standup") {
+            var imageName = eval("DINNERCONST.IMAGE.human_" + this.model.color);
+            console.debug("imageName : " + imageName);
+            var sprite = new SpriteSheet(
+                imageName,
+                96, 96,
+                {
+                    walking_east: [0, 7],
+                    walking_north: [8, 15],
+                    walking_south: [16, 23],
+                    waiting: 14
+                    //at_table: 15
+                }
+            );
+            sprite = SpriteSheetUtils.flip(
+                sprite,
+                {
+                    walking_west:["walking_east", true, false, false]
+                }
+            );
+
+            this._graph = new BitmapSequence(sprite);
+        } else if (state == "sitdown") {
+            imageName = eval("DINNERCONST.IMAGE.human_table_" + this.model.color);
+            console.debug("imageName: " + imageName);
+            this._graph = new Bitmap(imageName);
+        } else {
+            console.debug("[GroupGraph.setGraph] ERROR: " + state + " is not a valid state.");
+        }
+    },
     /**
      * @method addMouseListener
      */
@@ -136,9 +150,9 @@ GroupGraph.states({
 	Waiting: {
 		update: function() {
 			//console.debug("[GroupGraph.Waiting.update]");
-			if (this.bitmapSeq.y == DINNERCONST.POSITION.firstgroup.y) {
+			if (this._graph.y == DINNERCONST.POSITION.firstgroup.y) {
 				this.setState('Walking2Reception');
-				this.bitmapSeq.gotoAndPlay('walking_north');
+				this._graph.gotoAndPlay('walking_north');
                 this.direction = 'north';
 			} else {
 				this.setState('Walking2Reception');
@@ -152,14 +166,15 @@ GroupGraph.states({
 	 */
 	Walking2Reception: {
         update: function() {
+            var dy = 8;
             //console.debug("[GroupGraph.Walking2Reception.update]");
-			var yMin = DINNERCONST.POSITION.reception.y + 10 + DinnerGamePage.getInstance().getNumberOfActiveGroup()*20;
-			if (yMin >= this.bitmapSeq.y) {
+			var yMin = DINNERCONST.POSITION.reception.y + 10 + DinnerGamePage.getInstance().getIndexOfFirstEmpty()*20;
+			if (yMin >= this._graph.y) {
 				this.setState('Waiting');
-				this.bitmapSeq.gotoAndPlay('waiting');
+				this._graph.gotoAndPlay('waiting');
                 this.direction = '';
 			} else {
-				this.bitmapSeq.y -= 5;
+				this._graph.y -= dy;
 			}
         }
     },
@@ -171,18 +186,18 @@ GroupGraph.states({
 	Walking2Table: {
         update: function() {
             //console.debug("Walking2Table");
-            var dx = 5;
-            var dy = 5;
-            var xGridCoeff = 10;
+            var dx = 10;
+            var dy = 8;
+            var xGridCoeff = 20;
             //var yGridCoeff = 10;
             
-            var xSquare = Math.pow(this.goToTablePoint.x - this.bitmapSeq.x, 2);
-            var ySquare = Math.pow(this.goToTablePoint.y - this.bitmapSeq.y, 2);
+            var xSquare = Math.pow(this.goToTablePoint.x - this._graph.x, 2);
+            var ySquare = Math.pow(this.goToTablePoint.y - this._graph.y, 2);
 
-			var xSquareByEast = Math.pow(this.goToTablePoint.x - (this.bitmapSeq.x+dx), 2);
-			var xSquareByWest = Math.pow(this.goToTablePoint.x - (this.bitmapSeq.x-dx), 2);
-			var ySquareByNorth = Math.pow(this.goToTablePoint.y - (this.bitmapSeq.y-dy), 2);
-			var ySquareBySouth = Math.pow(this.goToTablePoint.y - (this.bitmapSeq.y+dy), 2);
+			var xSquareByEast = Math.pow(this.goToTablePoint.x - (this._graph.x+dx), 2);
+			var xSquareByWest = Math.pow(this.goToTablePoint.x - (this._graph.x-dx), 2);
+			var ySquareByNorth = Math.pow(this.goToTablePoint.y - (this._graph.y-dy), 2);
+			var ySquareBySouth = Math.pow(this.goToTablePoint.y - (this._graph.y+dy), 2);
 
             var distByNorth = Math.sqrt(xSquare+ySquareByNorth);
             var distBySouth = Math.sqrt(xSquare+ySquareBySouth);
@@ -192,42 +207,67 @@ GroupGraph.states({
             if (distByNorth <= 2*dy || distBySouth <= 2*dy || distByEast <= 2*dx || distByWest <= 2*dx) {
                 console.debug("Eating state");
                 this.setState('Eating');
-				this.bitmapSeq.gotoAndPlay('waiting');
+				this._graph.gotoAndPlay('waiting');
             } else {
                 
                 if (distByNorth == Math.min(distByNorth, Math.min(distBySouth, Math.min(distByEast, distByWest)))) {
-                    this.bitmapSeq.y -= dy;
+                    this._graph.y -= dy;
                     if (this.direction != 'north') {
                         this.segment = 0;
                         this.direction = 'north';
-                        this.bitmapSeq.gotoAndPlay('walking_'+this.direction);
+                        this._graph.gotoAndPlay('walking_'+this.direction);
                     }
                 } else if (distBySouth == Math.min(distBySouth, Math.min(distByNorth, Math.min(distByEast, distByWest)))) {
-                    this.bitmapSeq.y += dy;
+                    this._graph.y += dy;
                     this.segment += dy;
                     if (this.direction != 'south') {
                         this.segment = 0;
                         this.direction = 'south';
-                        this.bitmapSeq.gotoAndPlay('walking_'+this.direction);
+                        this._graph.gotoAndPlay('walking_'+this.direction);
                     }
                 } else if (distByEast == Math.min(distByEast, Math.min(distByNorth, Math.min(distBySouth, distByWest)))) {
-                    this.bitmapSeq.x += dx;
+                    this._graph.x += dx;
                     this.segment += dx;
                     if (this.direction != 'east' && this.segment > xGridCoeff*dx) {
                         this.segment = 0;
                         this.direction = 'east';
-                        this.bitmapSeq.gotoAndPlay('walking_'+this.direction);
+                        this._graph.gotoAndPlay('walking_'+this.direction);
                     }
                 } else {
-                    this.bitmapSeq.x -= dx;
+                    this._graph.x -= dx;
                     this.segment += dx;
                     if (this.direction != 'west' && this.segment > xGridCoeff*dx) {
                         this.segment = 0;
                         this.direction = 'west';
-                        this.bitmapSeq.gotoAndPlay('walking_'+this.direction);
+                        this._graph.gotoAndPlay('walking_'+this.direction);
                     }
                 }
             }
+        }
+    },
+    /**
+	 * ReadMenu state
+	 * @author Dominique Jeannin <jeannin.dominique@gmail.com>
+	 * @since 12/09/2011
+	 */
+    ReadMenu: {
+        update: function() {
+            console.debug("[GroupGraph.ReadMenu.update]");
+            //this._graph.gotoAndPlay('eating');
+            this.setGraph('sitdown');
+            
+        }
+    },
+    /**
+	 * WaitingOrder state
+	 * @author Dominique Jeannin <jeannin.dominique@gmail.com>
+	 * @since 12/09/2011
+	 */
+    WaitingOrder: {
+        update: function() {
+            //console.debug("[GroupGraph.Eating.update]");
+            this.setGraph('sitdown');
+            
         }
     },
 	/**
@@ -238,7 +278,10 @@ GroupGraph.states({
     Eating: {
         update: function() {
             //console.debug("[GroupGraph.Eating.update]");
-            //this.bitmapSeq.gotoAndPlay('eating');
+            //if (this._graph  instanceof BitmapSequence) {
+            // this.bitmpaSeq = new Bitmap();
+            //}
+            //this._graph.gotoAndPlay('eating');
         }
     }
 });

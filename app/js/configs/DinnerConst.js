@@ -146,7 +146,8 @@ DINNERCONST.SCENES = {
 	kitchen: 4,
 	reception: 5,
 	tables: [6,7,8,9],
-	waiter: 10
+	waiter: 10,
+    group: 11
 };
 console.debug("DINNERCONST.SCENES Ok");
 /**

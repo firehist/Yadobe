@@ -96,49 +96,6 @@ var ReceptionPlaceClass = {
 			return this.groupList.shift();
 		}
 		return null;
-	},
-	/**
-	 * Add a group to the list if reception
-	 * @class ReceptionPlace
-	 * @method addGroup
-	 * @author Benjamin Longearet <firehist@gmail.com>
-	 * @since 30/08/2011
-	 * @return boolean true if successful, false else
-	 */
-	addGroup: function(group) {
-		if(group instanceof Group) {
-            DinnerGamePage.getInstance().addGroup(group);
-			this.groupList.push(group);
-            console.debug("[addGroup-] Stop");
-            return true;
-		}
-		return false;
-	},
-	/**
-	 * Get the current group list length
-	 * @class ReceptionPlace
-	 * @method getGroupListLength
-	 * @author Benjamin Longearet <firehist@gmail.com>
-	 * @since 30/08/2011
-	 * @return int the current group list length
-	 */
-	getGroupListLength: function(){
-		return this.groupList.length;
-	},
-	/**
-	 * Create a random group
-	 * @class ReceptionPlace
-	 * @method createGroup
-	 * @author Benjamin Longearet <firehist@gmail.com>
-	 * @since 30/08/2011
-	 */
-	createGroup: function() {
-		// @TODO add test for create group
-		if (this.maxGroupList > this.getGroupListLength()) {
-            console.debug('Create Group');
-			var g = Group.Factory.newInstance();
-			this.addGroup(g);
-		}
 	}
 };
 var ReceptionPlace = new JS.Class(Place, ReceptionPlaceClass);

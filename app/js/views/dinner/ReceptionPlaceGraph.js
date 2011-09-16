@@ -43,6 +43,9 @@ var ReceptionPlaceGraphClass = {
 		reception.y = DINNERCONST.POSITION.reception.y;
 		this.container.addChildAt(reception, 0);
 	},
+    getMaxGroupList: function() {
+        return this.model.maxGroupList;
+    },
 	addMouseListener: function() {
 		(function(target) {
 			target.onPress = function(e) {
