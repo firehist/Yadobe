@@ -55,21 +55,21 @@ var GroupGraphClass = {
 				if(!target.clicked) {
 					console.log('Group clicked');
 				}
-			}
+			};
 			target.onMouseOver = function() {
 				if(!target.clicked) {
 					target.alpha = 0.8;
 					$('body').css('cursor', 'pointer');
 					Yadobe.getInstance().setUpdate();
 				}
-			}
+			};
 			target.onMouseOut = function() {
 				if(!target.clicked) {
 					target.alpha = 1;
 					$('body').css('cursor', 'default');
 					Yadobe.getInstance().setUpdate();
 				}
-			}
+			};
 		})(this._graph);
 	}
 

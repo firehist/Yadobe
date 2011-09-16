@@ -150,13 +150,12 @@ var WaitingPageClass = {
 	 * @public
 	 */
 	launchLoading: function() {
-		var index;
 		// Bind images load
-		for(index in this.toLoad.images) {
+		for (var index in this.toLoad.images) {
 			this.loadImages(this.toLoad.images[index]);
 		}
 		// Bind ressources load
-		for(index in this.toLoad.js) {
+		for (var index in this.toLoad.js) {
 			this.loadJSs(this.toLoad.js[index]);
 		}
 	},
@@ -175,7 +174,7 @@ var WaitingPageClass = {
 			imgObject[x] = new Image();
 			imgObject[x].onload = function(){
 				var wp = WaitingPage.getInstance();
-				wp.loadDone.call(wp)
+				wp.loadDone.call(wp);
 			};
 			imgObject[x].src = src;
 		}
@@ -192,7 +191,7 @@ var WaitingPageClass = {
 		for(var i in jsObject) {
 			var callback = function(){
 				var wp = WaitingPage.getInstance();
-				wp.loadDone.call(wp)
+				wp.loadDone.call(wp);
 			};
 			JS.require(jsObject[i], callback);
 		}

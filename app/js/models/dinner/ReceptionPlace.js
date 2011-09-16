@@ -6,23 +6,25 @@
  * @class ReceptionPlace
  **/
 var ReceptionPlaceClass = {
+		
 	// Attributes
 	/**
 	 * The name of creation group Constante in DINNERCONST.TIME
-	 * @var String _groupCreationTimer
+	 * @type String
 	 * @private
 	 */
 	_groupCreationTimer: 'createGroup',
 	/**
 	 * List of group waiting to reception desk
-	 * @var Array<Group> groupList
+	 * @type Group[]
 	 */
 	groupList: new Array(),
 	/**
 	 * Max length of groupList
-	 * @var int maxGroupList
+	 * @type Integer
 	 */
 	maxGroupList: 2,
+	
 	// Constructor
 	/**
 	 * @constructor
@@ -30,25 +32,24 @@ var ReceptionPlaceClass = {
 	 * @method initialize
 	 * @author Benjamin Longearet <firehist@gmail.com>
 	 * @since 31/08/2011
-	 * @param {String} name Name of this place
-	 * @param {int} maxGroupList Maximum waiting list
-     * @param {Point} coordinates Grid coordinates to access the place by the waiter
+	 * @param String name Name of this place
+	 * @param Integer maxGroupList Maximum waiting list
+     * @param Point coordinates Grid coordinates to access the place by the waiter
 	 */
 	initialize: function(name, maxGroupList, coordinates) {
 		console.log('Reception init');
 		this.callSuper(name, coordinates);
 		this.maxGroupList = maxGroupList;
 	},
+	
 	// Methods
 	/**
 	 * Test if groupList is empty
 	 * @class ReceptionPlace
-	 * @method _isGroupEmpty
 	 * @author Benjamin Longearet <firehist@gmail.com>
 	 * @since 30/08/2011
 	 * @private
-	 * @return boolean true groupList is empty, false else
-	 * @private
+	 * @return Boolean true groupList is empty, false else
 	 */
 	_isGroupEmpty: function() {
 		return this.menuList.length == 0;
@@ -91,7 +92,7 @@ var ReceptionPlaceClass = {
 	/**
 	 * Add a group to the list if reception
 	 * @class ReceptionPlace
-	 * @method addGroup
+	 * @param Group group
 	 * @author Benjamin Longearet <firehist@gmail.com>
 	 * @since 30/08/2011
 	 * @return boolean true if successful, false else

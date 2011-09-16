@@ -1,12 +1,12 @@
-JS.ENV.JSLIBS_PATH = (typeof JSLIBS_PATH === 'undefined') ? 'js/libs/' : JSLIBS_PATH
-JS.ENV.JSCLASS_PATH = (typeof JSCLASS_PATH === 'undefined') ? 'js/libs/JSClass/' : JSCLASS_PATH
-JS.ENV.JSCONFIG_PATH = (typeof JSCONFIG_PATH === 'undefined') ? 'js/configs/' : JSCONFIG_PATH
-JS.ENV.JSTEMPLATE_PATH = (typeof JSVIEW_PATH === 'undefined') ? 'js/templates/' : JSTEMPLATE_PATH
-JS.ENV.JSMODEL_PATH = (typeof JSMODEL_PATH === 'undefined') ? 'js/models/' : JSMODEL_PATH
-JS.ENV.JSVIEW_PATH = (typeof JSVIEW_PATH === 'undefined') ? 'js/views/' : JSVIEW_PATH
-JS.ENV.JSMODEL_DINNER_PATH = (typeof JSMODEL_DINNER_PATH === 'undefined') ? 'js/models/dinner/' : JSMODEL_DINNER_PATH
-JS.ENV.JSMODEL_UI_PATH = (typeof JSMODEL_UI_PATH === 'undefined') ? 'js/models/ui/' : JSMODEL_UI_PATH
-JS.ENV.JSVIEW_DINNER_PATH = (typeof JSVIEW_DINNER_PATH === 'undefined') ? 'js/views/dinner/' : JSVIEW_DINNER_PATH
+JS.ENV.JSLIBS_PATH = (typeof JSLIBS_PATH === 'undefined') ? 'js/libs/' : JSLIBS_PATH;
+JS.ENV.JSCLASS_PATH = (typeof JSCLASS_PATH === 'undefined') ? 'js/libs/JSClass/' : JSCLASS_PATH;
+JS.ENV.JSCONFIG_PATH = (typeof JSCONFIG_PATH === 'undefined') ? 'js/configs/' : JSCONFIG_PATH;
+JS.ENV.JSTEMPLATE_PATH = (typeof JSVIEW_PATH === 'undefined') ? 'js/templates/' : JSTEMPLATE_PATH;
+JS.ENV.JSMODEL_PATH = (typeof JSMODEL_PATH === 'undefined') ? 'js/models/' : JSMODEL_PATH;
+JS.ENV.JSVIEW_PATH = (typeof JSVIEW_PATH === 'undefined') ? 'js/views/' : JSVIEW_PATH;
+JS.ENV.JSMODEL_DINNER_PATH = (typeof JSMODEL_DINNER_PATH === 'undefined') ? 'js/models/dinner/' : JSMODEL_DINNER_PATH;
+JS.ENV.JSMODEL_UI_PATH = (typeof JSMODEL_UI_PATH === 'undefined') ? 'js/models/ui/' : JSMODEL_UI_PATH;
+JS.ENV.JSVIEW_DINNER_PATH = (typeof JSVIEW_DINNER_PATH === 'undefined') ? 'js/views/dinner/' : JSVIEW_DINNER_PATH;
 
 JS.cacheBust = true;
 

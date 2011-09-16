@@ -36,8 +36,10 @@ var RecipeManagerClass = {
 	 * @return mixed recipe object or false if an error occured
 	 */
 	getRecipe: function(name, type) {
-		for(var index in this.listRecipes[type]) {
-			if(this.listRecipes[type][index].name === name) return this.listRecipes[type][index]
+		for (var index in this.listRecipes[type]) {
+			if (this.listRecipes[type][index].name === name) {
+				return this.listRecipes[type][index];
+			}
 		}
 		return false;
 	},
@@ -111,12 +113,22 @@ var RecipeManager = new JS.Class(RecipeManagerClass);
  * RecipeManager singleton managment
  * @author BenjaminLongearet
  * @since 30/08/2011
+ * @type RecipeManager
+ * @static
  */
 RecipeManager.instance = null;
+
+/**
+ * @author BenjaminLongearet
+ * @since 30/08/2011
+ * @return RecipeManager
+ * @static
+ */
 RecipeManager.getInstance = function() {
 	if(RecipeManager.instance != null) {
 		return RecipeManager.instance;
-	} else {
+	}
+	else {
 		return new RecipeManager();
 	}
-}
+};

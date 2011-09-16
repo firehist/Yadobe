@@ -70,7 +70,7 @@ function restart() {
 	// Quadrillage
 	var quadrillage = new Container();
 	var i;
-	var shape
+	var shape;
 	for(i=0;i<canvas.width;i+=gridPas) {
 		console.debug(i);
 		shape = new Shape();
@@ -107,21 +107,21 @@ function restart() {
 						target.clicked = true;
 						update = true;
 					}
-				}
+				};
 				circle.onMouseOver = function() {
 					if(!target.clicked) {
 						target.alpha = 1;
 						$('body').css('cursor', 'pointer');
 						update = true;
 					}
-				}
+				};
 				circle.onMouseOut = function() {
 					if(!target.clicked) {
 						target.alpha = 0.1;
 						$('body').css('cursor', 'default');
 						update = true;
 					}
-				}
+				};
 			})(circle);
 
 			var length = circles.length;
@@ -158,5 +158,5 @@ $().ready(function() {
 		logCurrentPath($("#namePath").val());
 		paths[$("#namePath").val()] = currentPath;
 		restart();
-	})
+	});
 });

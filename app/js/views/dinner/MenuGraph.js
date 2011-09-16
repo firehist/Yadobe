@@ -82,19 +82,19 @@ var MenuGraphClass = {
 				if(!menuGraph._graph.clicked) {
 					DinnerGamePage.getInstance().kitchen.model.runAction(menuGraph);
 				}
-			}
+			};
 			menuGraph._graph.onMouseOver = function() {
 				if(!menuGraph._graph.clicked) {
 					menuGraph._graph.gotoAndStop(menuGraph._graph.currentFrame + 4);
 					$('body').css('cursor', 'pointer');
 				}
-			}
+			};
 			menuGraph._graph.onMouseOut = function() {
 				if(!menuGraph._graph.clicked) {
 					menuGraph._graph.gotoAndStop(menuGraph._graph.currentFrame - 4);
 					$('body').css('cursor', 'default');
 				}
-			}
+			};
 		})(this);
 	}
 };

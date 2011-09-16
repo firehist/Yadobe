@@ -18,10 +18,10 @@ var PageClass = {
 		this.pageContainer.visible = false;
 	},
 	save: function() {
-		throw new Error('save() must be implemented.')
+		throw new Error('save() must be implemented.');
 	},
 	restore: function() {
-		throw new Error('restore() must be implemented.')
+		throw new Error('restore() must be implemented.');
 	},
 	create: function() {
 		throw new Error('create() must be implemented.');

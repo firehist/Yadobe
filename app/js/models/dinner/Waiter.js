@@ -43,7 +43,7 @@ var WaiterClass = {
      * @constructor
      */
 	initialize: function(name, position, inventoryMax) {
-		this.name = name
+		this.name = name;
 		this.destination = [];
 		if (position instanceof Place) {
 			this.position = position;

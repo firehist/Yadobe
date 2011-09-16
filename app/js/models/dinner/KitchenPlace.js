@@ -62,7 +62,9 @@ var KitchenPlaceClass = {
 	runAction: function(menuGraph) {
 		if(Tools.ObjSize(this.readyMenuList) > 0) {
 			// @TODO Envoyer ordre de déplacement au serveur avec un callback
-			var callback = function(){DinnerGamePage.getInstance().kitchen.removePlate(menuGraph)};
+			var callback = function(){
+				DinnerGamePage.getInstance().kitchen.removePlate(menuGraph);
+			};
 			DinnerGamePage.getInstance().kitchen.removePlate(menuGraph);
 			DinnerGamePage.getInstance().updateConsoleLog('Kitchen clicked - Menu dépilé et ajouter au serveur');
 		} else {

@@ -123,9 +123,10 @@ DINNERCONST.ACCESS = {
  * Paths of points that the waiter follow to move between two Places
  * @author Yannick Galatol <yannick.galatol@gmail.com>
  * @since 13/09/2011
- * @type Array
+ * @static
+ * @type Array<Point>
  */
-DINNERCONST.PATH = [];
+DINNERCONST.PATH = new Array();
 DINNERCONST.PATH['Cuisine-Réception'] = [new Point(550,100), new Point(240,160), new Point(240,210), new Point(140,210)];
 DINNERCONST.PATH['Cuisine-Table0'] = [new Point(550,100), new Point(290,160), new Point(290,220)];
 DINNERCONST.PATH['Cuisine-Table1'] = [new Point(550,100), new Point(550,160), new Point(520,220)];

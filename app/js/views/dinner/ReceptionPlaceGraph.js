@@ -54,21 +54,21 @@ var ReceptionPlaceGraphClass = {
                     });
 					DinnerGamePage.getInstance().waiter.model.moveTo(destination);
 				}
-			}
+			};
 			target._graph.onMouseOver = function() {
 				if(!target._graph.clicked) {
 					target._graph.alpha = 0.8;
 					$('body').css('cursor', 'pointer');
 					Yadobe.getInstance().setUpdate();
 				}
-			}
+			};
 			target._graph.onMouseOut = function() {
 				if(!target._graph.clicked) {
 					target._graph.alpha = 1;
 					$('body').css('cursor', 'default');
 					Yadobe.getInstance().setUpdate();
 				}
-			}
+			};
 		})(this);
 	}
 	// Methods

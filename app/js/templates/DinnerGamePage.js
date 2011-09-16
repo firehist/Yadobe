@@ -8,7 +8,7 @@ var DinnerGamePageClass = {
 	// Attributes
 	text: null,
 	/**
-	 * @type KitchenPlaceGraph
+	 * @type {KitchenPlaceGraph}
 	 */
 	kitchen: null,
 	/**
@@ -22,12 +22,12 @@ var DinnerGamePageClass = {
 	tables: new Array(),
 	/**
 	 * The waiterGraph
-	 * @type WaiterGraph
+	 * @type {WaiterGraph}
 	 */
 	waiter: null,
 	/**
 	 * List of menuGraph
-	 * @type MenuGraph
+	 * @type {MenuGraph}
 	 */
 	menuList: [],
 	// Constructor

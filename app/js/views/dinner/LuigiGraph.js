@@ -4,17 +4,19 @@
  * @author Benjamin Longearet <firehist@gmail.com>
  **/
 var LuigiGraphClass = {
+		
 	// Includes
 	include: JS.State,
+	
 	// Attributes
 	/**
 	 * The base y coord of Luigi
-	 * @type int
+	 * @type Integer
 	 */
 	x: 0,
 	/**
 	 * The base x coord of Luigi
-	 * @type int
+	 * @type Integer
 	 */
 	y: 0,
 	/**
@@ -24,20 +26,21 @@ var LuigiGraphClass = {
 	kitchen: null,
 	/**
 	 * Counter use to fix speed of _graph
-	 * @type int
+	 * @type Integer
 	 */
 	count: 0,
 	/**
 	 * Display object available for Luigi
-	 * @type {DisplayObject}
+	 * @type DisplayObject
 	 */
 	_graph: null,
+	
 	// Constructor
 	/**
 	 * @constructor
 	 * @param kitchen KitchenGraph
-	 * @param x int
-	 * @param y int
+	 * @param x Integer
+	 * @param y Integer
 	 */
 	initialize: function(kitchen, x, y) {
 		LuigiGraph.instance = this;
@@ -45,9 +48,10 @@ var LuigiGraphClass = {
 		this.x = x;
 		this.y = y;
 		this.setState('Nothing');
-		this._graph = new Container();
 		this.createLuigi();
 	},
+	
+	// Methods
 	/**
 	 * Create the bitmatSequence for luigi
 	 * @author Benjamin Longearet <firehist@gmail.com>
@@ -81,8 +85,15 @@ var LuigiGraph = new JS.Class(LuigiGraphClass);
 
 /**
  * LuigiGraph singleton implement
+ * @type LuigiGraph
+ * @static
  */
 LuigiGraph.instance = null;
+
+/**
+ * @returns LuigiGraph
+ * @static
+ */
 LuigiGraph.getInstance = function() {
 	if (LuigiGraph.instance != null) {
 		return LuigiGraph.instance;
@@ -90,7 +101,7 @@ LuigiGraph.getInstance = function() {
 	else {
 		return null;
 	}
-}
+};
 
 /**
  * LuigiGraph states declaration
