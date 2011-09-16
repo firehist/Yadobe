@@ -34,8 +34,13 @@ var WaiterClass = {
 	 */
 	inventory: new Array(),
 	/**
-	 * Inventory size
-	 * @type int
+	 * Inventory current size
+	 * @type Integer
+	 */
+	inventoryCurrent: 0,
+	/**
+	 * Inventory max size
+	 * @type Integer
 	 */
 	inventoryMax: 2,
     
@@ -53,6 +58,7 @@ var WaiterClass = {
 		}
 		this.inventoryMax = inventoryMax;
 	},
+	
 	// Methods
 	/**
 	 * Set destination to the waiter
@@ -84,14 +90,41 @@ var WaiterClass = {
 			throw 'Unknown destination';
 		}
 	},
-	addToInventory: function(menu) {
-		if ((menu instanceof Menu) && (this.inventory.length < this.inventoryMax)) {
-			this.inventory.push(menu);
+	addToInventory: function(item) {
+		
+		// Added item is a menu
+		if ((item instanceof Menu) && (this.inventoryCurrent <= this.inventoryMax + item.size())) {
+			this.inventory.push(item);
+			this.inventoryCurrent += item.size();
+			console.log("A menu for table " + item.table + " was added to Waiter.");
+		}
+
+		// Added item is a group of persons. The inventory must be empty to add a group.
+		if ((item instanceof Group) && (this.inventoryCurrent == 0)) {
+			
+			this.inventory.push(item);
+			
+			// A group fill all the spaces of the inventory
+			this.inventoryCurrent = this.inventoryMax;
+			
+			console.log("A group was added to Waiter.");
 		}
 	},
-	delFromInventory: function() {
-		if(this.inventory.length > 0) {
-			return this.inventory.shift();
+	delFromInventory: function(index) {
+		if (this.inventoryCurrent > 0) {
+			var item;
+			
+			if (index) {
+				item = this.inventory[index];
+				delete this.inventory[index];
+			}
+			else {
+				// If no index is specified return the first item of the list and delete it
+				item = this.inventory.shift();
+			}
+			
+			this.inventoryCurrent -= item.size();
+			return item;
 		}
 		return false;
 	},

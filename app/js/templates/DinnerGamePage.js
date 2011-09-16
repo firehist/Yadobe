@@ -59,7 +59,7 @@ var DinnerGamePageClass = {
 		this.tables = new Array();
 		var colors = ['red','blue','green','yellow'];
 		for (var i=0; i < 4; i++) {
-			var tableModel = new TablePlace('Table' + i, colors[i], DINNERCONST.ACCESS.tables[i]);
+			var tableModel = new TablePlace(i + 1, colors[i], DINNERCONST.ACCESS.tables[i]);
 			var tableGraph = new TablePlaceGraph(tableModel);
 			this.tables.push(tableGraph);
 			this.pageContainer.addChildAt(tableGraph.getGraph(), DINNERCONST.SCENES.tables[i]);
@@ -71,6 +71,21 @@ var DinnerGamePageClass = {
 		this.waiter = new WaiterGraph(waiterModel);
 		this.pageContainer.addChild(this.waiter.getGraph());
         
+	},
+	/**
+	 * Refresh the elements of the game
+	 */
+	tick: function() {
+		
+		// Refresh the kitchen
+		if ((this.kitchen) && (this.kitchen instanceof KitchenPlaceGraph)) {
+			this.kitchen.update();
+		}
+		
+		// Refresh the waiter
+		if ((this.waiter) && (this.waiter instanceof WaiterGraph)) {
+			this.waiter.update();
+		}
 	},
 	createConsoleLog: function() {
 		var log = new Shape();

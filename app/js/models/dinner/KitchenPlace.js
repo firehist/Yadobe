@@ -60,6 +60,7 @@ var KitchenPlaceClass = {
 	 * @since 30/08/2011
 	 */
 	runAction: function(menuGraph) {
+		/*
 		if(Tools.ObjSize(this.readyMenuList) > 0) {
 			// @TODO Envoyer ordre de déplacement au serveur avec un callback
 			var callback = function(){
@@ -67,10 +68,11 @@ var KitchenPlaceClass = {
 			};
 			DinnerGamePage.getInstance().kitchen.removePlate(menuGraph);
 			DinnerGamePage.getInstance().updateConsoleLog('Kitchen clicked - Menu dépilé et ajouter au serveur');
-		} else {
+		}
+		else {
 			DinnerGamePage.getInstance().updateConsoleLog('Kitchen clicked - Pas d\'action');
 		}
-
+		 */
 	},
 	/**
 	 * Add a menu to the list

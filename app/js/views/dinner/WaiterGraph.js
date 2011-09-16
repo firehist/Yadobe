@@ -369,47 +369,5 @@ WaiterGraph.states({
 			this._graph.gotoAndPlay('stopped_bottom');
 			this.setState('Nothing');
 		}
-	},
-	/**
-	 * StopFrontEmpty2Full state
-     * @author Yannick Galatol <yannick.galatol@gmail.com>
-     * @since 07/09/2011
-	 */
-	StopFrontEmpty2Full: {
-		update: function() {
-			if (this.count == 0) {
-				this._graph.gotoAndStop('walking_left');
-				this._graph.loop = true;
-				this.count++;
-			}
-			else if (this.count < 5) {
-				this.count++;
-			}
-			else if (this.count == 5) {
-				this._graph.gotoAndPlay('stop_front_full2empty');
-				this.count++;
-			}
-			else if (this.count == 6) {
-				if (this._graph.currentFrame == this._graph.currentEndFrame) {
-					this._graph.gotoAndStop(this._graph.currentEndFrame);
-					this.count++;
-				}
-				else if (this._graph.currentFrame == (this._graph.currentStartFrame + 4) ) {
-			//this.kitchen.displayPlate();
-			}
-			}
-			else if (this.count == 7) {
-				//this.kitchen.model.setReadyDone();
-				this.count++;
-			}
-			else if (this.count > 7) {
-				this.count++;
-				if (this.count == 10) {
-					this.count = 0;
-					this._graph.gotoAndPlay('walking_right_empty');
-					this.setState('WalkingRightEmpty');
-				}
-			}
-		}
 	}
 });

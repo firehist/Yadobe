@@ -24,6 +24,11 @@ var TablePlaceClass = {
 	 * @type {List<Menu>}
 	 */
 	menuList: new Array(),
+	/**
+	 * Number of the table 
+	 * @type Integer
+	 */
+	number : null,
 	
     /*
      * @constructor
@@ -31,8 +36,9 @@ var TablePlaceClass = {
      * @param {String} color
      * @param {Point} coordinates Grid coordinates to access the place by the waiter
      */
-	initialize: function(name, color, coordinates) {
-		this.callSuper(name, coordinates);
+	initialize: function(number, color, coordinates) {
+		this.callSuper("Table" + number, coordinates);
+		this.number = number;
 		this.color = color;
 		this.setState('Empty');
 	},

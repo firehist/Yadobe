@@ -80,7 +80,13 @@ var MenuGraphClass = {
 		(function(menuGraph) {
 			menuGraph._graph.onPress = function(e) {
 				if(!menuGraph._graph.clicked) {
-					DinnerGamePage.getInstance().kitchen.model.runAction(menuGraph);
+					// Remove the plate from the kitchen and add it to the waiter
+					var kitchen = DinnerGamePage.getInstance().kitchen;
+                    var destination = new Destination(kitchen.model, function() {
+                    	kitchen.removePlate(menuGraph);
+                    	DinnerGamePage.getInstance().waiter.model.addToInventory(menuGraph.model);
+                    });
+					DinnerGamePage.getInstance().waiter.model.moveTo(destination);
 				}
 			};
 			menuGraph._graph.onMouseOver = function() {
