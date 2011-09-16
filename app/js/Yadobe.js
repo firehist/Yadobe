@@ -88,8 +88,8 @@ var YadobeClass = {
 	 * @public
 	 */
 	loadGame: function() {
-		this.setCurrentPage(IndexPage.getInstance());
-		//this.setCurrentPage(DinnerGamePage.getInstance());
+//		this.setCurrentPage(IndexPage.getInstance());
+		this.setCurrentPage(DinnerGamePage.getInstance());
 		this.setUpdate();
 	},
 	/**
@@ -112,13 +112,13 @@ var YadobeClass = {
 	 * @public
 	 */
 	tick: function() {
-		//if(this.update) {
-			//this.update = false; // only update once
-			if(typeof DinnerGamePage != "undefined" && this.currentPage instanceof DinnerGamePage) {
-				DinnerGamePage.getInstance().kitchen.update();
-			}
-			this.stage.update();
-		//}
+		
+		// Refresh the current page
+		if ((this.currentPage) && (this.currentPage instanceof Page)) {
+			this.currentPage.tick();
+		}
+		
+		this.stage.update();
 	},
 	/**
 	 * Set the current display page and hide the old one

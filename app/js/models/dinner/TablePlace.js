@@ -7,28 +7,42 @@
 var TablePlaceClass = {
 	// Includes
 	include: JS.State,
+    
 	// Attributes
 	/**
 	 * A HTML string color name (red, orange, black, etc...)
-	 * @var string color
+	 * @type {String}
 	 */
 	color: '',
 	/**
 	 * Refer to the group which actually are at the table
-	 * @var Group group
+	 * @type {Group}
 	 */
 	group: null,
 	/**
 	 * Save the menu of the table during customers are here
-	 * @var List<Menu> menuList
+	 * @type {List<Menu>}
 	 */
 	menuList: new Array(),
-	// Constructor
-	initialize: function(name, color) {
-		this.callSuper(name);
+	/**
+	 * Number of the table 
+	 * @type Integer
+	 */
+	number : null,
+	
+    /*
+     * @constructor
+     * @param {String} name
+     * @param {String} color
+     * @param {Point} coordinates Grid coordinates to access the place by the waiter
+     */
+	initialize: function(number, color, coordinates) {
+		this.callSuper("Table" + number, coordinates);
+		this.number = number;
 		this.color = color;
 		this.setState('Empty');
 	},
+    
 	// Methods
 	/**
 	 * Compute the table bill by adding all menu price

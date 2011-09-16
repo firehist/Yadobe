@@ -45,7 +45,7 @@
 **/
 Bitmap = function(image) {
   this.initialize(image);
-}
+};
 var p = Bitmap.prototype = new DisplayObject();
 
 	// public properties:

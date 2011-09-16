@@ -110,7 +110,6 @@ String.prototype.lpad = function (padLength, padString) {
     };
     return a.join('');
 }
-
 String.prototype.rpad = function (padLength, padString) {
     if (!padString) {
         padString = ' ';
@@ -122,3 +121,9 @@ String.prototype.rpad = function (padLength, padString) {
     };
     return a.join('');
 }
+String.prototype.startsWith = function (str){
+    return this.slice(0, str.length) == str;
+};
+String.prototype.endsWith = function (str){
+    return this.slice(-str.length) == str;
+};

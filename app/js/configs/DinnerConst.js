@@ -74,7 +74,8 @@ DINNERCONST.IMAGE = {
     index: 'img/dinnerGame/fond_cartoon_01_empty.png',
 	background: 'img/dinnerGame/stage_01.jpg',
 	menus: 'img/dinnerGame/kitchen/menus.png',
-	luigi_walking: 'img/dinnerGame/kitchen/luigi_walking.png'
+	luigi_walking: 'img/dinnerGame/kitchen/luigi_walking.png',
+	carrier: 'img/dinnerGame/carrier.png'
 //	luigi_walking_right_empty: 'img/dinnerGame/kitchen/luigi_walking_right_empty.png',
 //	luigi_walking_left_full: 'img/dinnerGame/kitchen/luigi_walking_left_full.png',
 //	luigi_stop_front_full2empty: 'img/dinnerGame/kitchen/luigi_stop_front_full2empty.png',
@@ -82,6 +83,7 @@ DINNERCONST.IMAGE = {
 };
 /**
  * DINNERCONST.POSITION Struct
+ * Position in pixels of a PlaceGraph on the container
  * @author Benjamin Longearet <firehist@gmail.com>
  * @since 01/09/2011
  * @type Object
@@ -92,11 +94,55 @@ DINNERCONST.POSITION = {
 	tables: [
 		new Point(340, 240),
 		new Point(570, 240),
-		new Point(570, 410),
-		new Point(340, 410)
+		new Point(340, 410),
+		new Point(570, 410)
 	],
     firstgroup : new Point(50, 300)
 };
+
+/**
+ * DINNERCONST.ACCESS Struct
+ * Coordinates on the grid where the waiter can access a place
+ * @author Yannick Galatol <yannick.galatol@gmail.com>
+ * @since 07/09/2011
+ * @type Object
+ */
+DINNERCONST.ACCESS = {
+	kitchen: new Point(550,100),
+	reception: new Point(140,210),
+	tables: [
+		new Point(290,220),
+		new Point(520,220),
+		new Point(290,390),
+		new Point(520,390)
+	]
+};
+
+/**
+ * DINNERCONST.PATH Struct
+ * Paths of points that the waiter follow to move between two Places
+ * @author Yannick Galatol <yannick.galatol@gmail.com>
+ * @since 13/09/2011
+ * @static
+ * @type Array<Point>
+ */
+DINNERCONST.PATH = new Array();
+DINNERCONST.PATH['Cuisine-Réception'] = [new Point(550,100), new Point(240,160), new Point(240,210), new Point(140,210)];
+DINNERCONST.PATH['Cuisine-Table1'] = [new Point(550,100), new Point(290,160), new Point(290,220)];
+DINNERCONST.PATH['Cuisine-Table2'] = [new Point(550,100), new Point(550,160), new Point(520,220)];
+DINNERCONST.PATH['Cuisine-Table3'] = [new Point(550,100), new Point(240,160), new Point(240,390), new Point(290,390)];
+DINNERCONST.PATH['Cuisine-Table4'] = [new Point(550,100), new Point(470,100), new Point(470,390), new Point(520,390)];
+DINNERCONST.PATH['Réception-Table1'] = [new Point(140,210), new Point(290,210), new Point(290,220)];
+DINNERCONST.PATH['Réception-Table2'] = [new Point(140,210), new Point(240,210), new Point(240,160), new Point(520,160), new Point(520,220)];
+DINNERCONST.PATH['Réception-Table3'] = [new Point(140,210), new Point(270,390), new Point(290,390)];
+DINNERCONST.PATH['Réception-Table4'] = [new Point(140,210), new Point(240,330), new Point(520,330), new Point(520,390)];
+DINNERCONST.PATH['Table1-Table2'] = [new Point(290,220), new Point(290,160), new Point(520,160), new Point(520,220)];
+DINNERCONST.PATH['Table1-Table3'] = [new Point(290,220), new Point(270,220), new Point(270,390), new Point(290,390)];
+DINNERCONST.PATH['Table1-Table4'] = [new Point(290,220), new Point(270,220), new Point(270,330), new Point(290,330), new Point(520,330), new Point(520,390)];
+DINNERCONST.PATH['Table2-Table4'] = [new Point(520,220), new Point(500,220), new Point(500,390), new Point(520,390)];
+DINNERCONST.PATH['Table2-Table3'] = [new Point(520,220), new Point(500,220), new Point(500,330), new Point(290,330), new Point(290,390)];
+DINNERCONST.PATH['Table3-Table4'] = [new Point(290,390), new Point(290,330), new Point(520,330), new Point(520,390)];
+
 /**
  * DINNERCONST.SCENES Struct
  * @author Benjamin Longearet <firehist@gmail.com>

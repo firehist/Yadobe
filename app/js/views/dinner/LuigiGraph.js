@@ -4,17 +4,19 @@
  * @author Benjamin Longearet <firehist@gmail.com>
  **/
 var LuigiGraphClass = {
+		
 	// Includes
 	include: JS.State,
+	
 	// Attributes
 	/**
 	 * The base y coord of Luigi
-	 * @type int
+	 * @type Integer
 	 */
 	x: 0,
 	/**
 	 * The base x coord of Luigi
-	 * @type int
+	 * @type Integer
 	 */
 	y: 0,
 	/**
@@ -23,21 +25,22 @@ var LuigiGraphClass = {
 	 */
 	kitchen: null,
 	/**
-	 * Counter use to fix speed of bitmapSeq
-	 * @type int
+	 * Counter use to fix speed of _graph
+	 * @type Integer
 	 */
 	count: 0,
 	/**
-	 * BitmapSeq available for Luigi
-	 * @type BitmapSequence
+	 * Display object available for Luigi
+	 * @type DisplayObject
 	 */
-	bitmapSeq: null,
+	_graph: null,
+	
 	// Constructor
 	/**
 	 * @constructor
 	 * @param kitchen KitchenGraph
-	 * @param x int
-	 * @param y int
+	 * @param x Integer
+	 * @param y Integer
 	 */
 	initialize: function(kitchen, x, y) {
 		LuigiGraph.instance = this;
@@ -45,9 +48,10 @@ var LuigiGraphClass = {
 		this.x = x;
 		this.y = y;
 		this.setState('Nothing');
-		this.container = new Container();
 		this.createLuigi();
 	},
+	
+	// Methods
 	/**
 	 * Create the bitmatSequence for luigi
 	 * @author Benjamin Longearet <firehist@gmail.com>
@@ -61,23 +65,43 @@ var LuigiGraphClass = {
 			stop_front_full2empty: [24, 31]
 		};
 		var sprite = new SpriteSheet(DINNERCONST.IMAGE.luigi_walking, 128, 128, frameData);
-		this.bitmapSeq = new BitmapSequence(sprite);
-		this.bitmapSeq.x = this.x;
-		this.bitmapSeq.y = this.y;
-		this.bitmapSeq.scaleX = this.bitmapSeq.scaleY = 1.2;
-		this.bitmapSeq.shadow = new Shadow("#454", 0, 5, 4);
+		this._graph = new BitmapSequence(sprite);
+		this._graph.x = this.x;
+		this._graph.y = this.y;
+		this._graph.scaleX = this._graph.scaleY = 1.2;
+		this._graph.shadow = new Shadow("#454", 0, 5, 4);
+	},
+	/**
+	 * Get Luigi graph
+     * @author Yannick Galatol <yannick.galatol@gmail.com>
+     * @since 07/09/2011
+	 * @return {DisplayObject} The Luigi graph
+	 */
+	getGraph: function() {
+		return this._graph;
 	}
 };
 var LuigiGraph = new JS.Class(LuigiGraphClass);
 
 /**
  * LuigiGraph singleton implement
+ * @type LuigiGraph
+ * @static
  */
 LuigiGraph.instance = null;
+
+/**
+ * @returns LuigiGraph
+ * @static
+ */
 LuigiGraph.getInstance = function() {
-	if(LuigiGraph.instance != null) return LuigiGraph.instance;
-	else return null;
-}
+	if (LuigiGraph.instance != null) {
+		return LuigiGraph.instance;
+	}
+	else {
+		return null;
+	}
+};
 
 /**
  * LuigiGraph states declaration
@@ -92,7 +116,8 @@ LuigiGraph.states({
 	 */
 	Nothing: {
 		update: function() {
-			this.bitmapSeq.gotoAndPlay('walking_left_full');
+			this._graph.gotoAndPlay('walking_left_full');
+			console.debug('Luigi : Chaud devant, chaud !');
 			this.setState('WalkingLeftFull');
 		}
 	},
@@ -102,39 +127,39 @@ LuigiGraph.states({
 	 * @since 06/01/2011
 	 */
 	WalkingLeftFull: {
-        update: function() {
+		update: function() {
 			// @TODO not test with length but with position empty
-            var xMin = Yadobe.getInstance().canvas.width - 290 + (Tools.ObjSize(this.kitchen.model.readyMenuList) * 30);
-			if(this.bitmapSeq.x <= xMin) {
-				console.debug('lol');
-				this.bitmapSeq.gotoAndPlay('stop_front_full2empty');
+			var xMin = Yadobe.getInstance().canvas.width - 290 + (Tools.ObjSize(this.kitchen.model.readyMenuList) * 30);
+			if(this._graph.x <= xMin) {
+				console.debug('Luigi : Une assiette de prête !');
+				this._graph.gotoAndPlay('stop_front_full2empty');
 				this.setState('StopFrontEmpty2Full');
 			} else {
-				this.bitmapSeq.x -= 5;
+				this._graph.x -= 5;
 			}
-        }
-    },
+		}
+	},
 	/**
 	 * StopFrontEmpty2Full state
 	 * @author Benjamin Longearet <firehist@gmail.com>
 	 * @since 06/01/2011
 	 */
-    StopFrontEmpty2Full: {
-        update: function() {
+	StopFrontEmpty2Full: {
+		update: function() {
 			if(this.count == 0) {
-				this.bitmapSeq.gotoAndStop('stop_front_full2empty');
-				this.bitmapSeq.loop = false;
+				this._graph.gotoAndStop('stop_front_full2empty');
+				this._graph.loop = false;
 				this.count++;
 			} else if(this.count < 5) {
 				this.count++;
 			} else if(this.count == 5) {
-				this.bitmapSeq.gotoAndPlay('stop_front_full2empty');
+				this._graph.gotoAndPlay('stop_front_full2empty');
 				this.count++;
 			} else if(this.count == 6) {
-				if(this.bitmapSeq.currentFrame == this.bitmapSeq.currentEndFrame) {
-					this.bitmapSeq.gotoAndStop(this.bitmapSeq.currentEndFrame);
+				if(this._graph.currentFrame == this._graph.currentEndFrame) {
+					this._graph.gotoAndStop(this._graph.currentEndFrame);
 					this.count++;
-				} else if(this.bitmapSeq.currentFrame == (this.bitmapSeq.currentStartFrame + 4) ) {
+				} else if(this._graph.currentFrame == (this._graph.currentStartFrame + 4) ) {
 					this.kitchen.displayPlate();
 				}
 			} else if(this.count == 7) {
@@ -144,24 +169,25 @@ LuigiGraph.states({
 				this.count++;
 				if(this.count == 10) {
 					this.count = 0;
-					this.bitmapSeq.gotoAndPlay('walking_right_empty');
+					this._graph.gotoAndPlay('walking_right_empty');
 					this.setState('WalkingRightEmpty');
 				}
 			}
-        }
-    },
+		}
+	},
 	/**
 	 * WalkingRightEmpty state
 	 * @author Benjamin Longearet <firehist@gmail.com>
 	 * @since 06/01/2011
 	 */
-    WalkingRightEmpty: {
-        update: function() {
-			if(this.bitmapSeq.x >= this.x) {
+	WalkingRightEmpty: {
+		update: function() {
+			if (this._graph.x >= this.x) {
 				this.setState('Nothing');
-			} else {
-				this.bitmapSeq.x += 5;
 			}
-        }
-    }
+			else {
+				this._graph.x += 5;
+			}
+		}
+	}
 });

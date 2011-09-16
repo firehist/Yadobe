@@ -28,8 +28,10 @@ var TimeManager = {
 	 * @param menu
 	 */
 	setCookTimer: function(time, context, menu) {
-		console.debug('TimerCook => '+time);
-		window.setTimeout(function(){context.setReady(menu)}, time);
+		console.debug('Luigi : Il va me falloir ' + time/1000 + ' secondes pour préparer ça.');
+		window.setTimeout(function(){
+			context.setReady(menu);
+		}, time);
 	},
 	/**
 	 * Build and return the unique key for timer
@@ -41,7 +43,7 @@ var TimeManager = {
 	 * @public
 	 */
 	getDinnerTimerKey: function(ConstTimeName, context) {
-		return context.toString() + '_' + ConstTimeName
+		return context.toString() + '_' + ConstTimeName;
 	},
 	/**
 	 * Clear timeout
