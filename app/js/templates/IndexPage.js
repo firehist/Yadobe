@@ -34,7 +34,7 @@ var IndexPageClass = {
 		Yadobe.getInstance().setUpdate();
 	},
 	createBackground: function() {
-		var background = new Bitmap(DINNERCONST.IMAGE.index);
+		var background = new Bitmap(INDEXCONST.IMAGE.index);
 		background.x = 0;
 		background.y = 0;
 		this.pageContainer.addChildAt(background, 0);
