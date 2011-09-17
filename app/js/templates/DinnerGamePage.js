@@ -105,7 +105,6 @@ var DinnerGamePageClass = {
 	 */
 	launch: function() {
 		console.debug("DinnerGamePage.launch()");
-        //this.reception.model.launch();
         TimeManager.setDinnerTimer('createGroup', this.createGroup, this);
 	},
 	/**
@@ -129,6 +128,15 @@ var DinnerGamePageClass = {
 	getGroupListLength: function(){
 		return this.groupList.length;
 	},
+	getNumOfGroupInRecep: function() {
+		var counter = 0;
+		for (var i=0; i<this.groupList.length; i++) {
+			if (this.groupList[i].inState("Walking2Reception") || this.groupList[i].inState("Waiting")) {
+				counter++;
+			}
+		}
+		return counter;
+	},
 	/**
 	 * Create a random group
 	 * @class ReceptionPlace
@@ -138,7 +146,7 @@ var DinnerGamePageClass = {
 	 */
 	createGroup: function() {
         console.debug("DinnerGamePage.createGroup()");
-		if (this.reception.getMaxGroupList() > this.getGroupListLength()) {
+		if (this.reception.getMaxGroupList() > this.getNumOfGroupInRecep()) {
             console.debug('Create Group');
 			var g = Group.Factory.newInstance();
 			this.addGroup(g);
@@ -151,7 +159,6 @@ var DinnerGamePageClass = {
     addGroup: function(groupModel) {
         var groupGraph = new GroupGraph(groupModel);
         this.groupList.push(groupGraph);
-        //this.pageContainer.addChild(groupGraph.getContainer());
         this.pageContainer.addChildAt(groupGraph.getContainer(), DINNERCONST.SCENES.group);
     },
 	/**
@@ -159,18 +166,21 @@ var DinnerGamePageClass = {
 	 * @since 12/09/2011
 	 */
 	linkGroupWithTable: function(obj) {
-        console.debug("linkGroupWithTable: obj is instanceof :" + obj.className);
+        console.debug("[DinnerGamePage] linkGroupWithTable: obj is instanceof :" + obj.className);
 		if (obj.className == "GroupGraphClass") {
-            console.debug("linkGroupWithTable: a groupgrpah is selected");
+            //console.debug("linkGroupWithTable: a groupgrpah is selected");
 			this.groupGraphSelected = obj;
 		} else if (obj.className == "TablePlaceGraphClass") {
-            console.debug("linkGroupWithTable: a table is selected");
-            //search index corresponding to table's color
+            //console.debug("[DinnerGamePage] linkGroupWithTable: a table is selected");
+            // search index corresponding to table's color
             for (var i=0; i<DINNERCONST.POSITION.tables.length; i++) {
                 if (DINNERCONST.POSITION.tables[i].name == obj.model.color) {
-                    this.groupGraphSelected.goToTablePoint = DINNERCONST.POSITION.tables[i].coord;
-                    console.debug("linkGroupWithTable: setState at ReadMenu");
+				    console.debug("linkGroupWithTable: setState at ReadMenu");
+                    //this.groupGraphSelected.goToTablePoint = DINNERCONST.POSITION.tables[i].coord;
 					this.groupGraphSelected.setState('ReadMenu');
+					obj.setGroupGraph(this.groupGraphSelected);
+					this.groupGraphSelected._graph.x = DINNERCONST.POSITION.tables[i].coord.x;
+					this.groupGraphSelected._graph.y = DINNERCONST.POSITION.tables[i].coord.y;
                     break;
                 }
             }

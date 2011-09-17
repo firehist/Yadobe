@@ -125,6 +125,7 @@ Group.Factory.newInstance = function() {
         i++;
         if (i == indexColor) colorName = color;
     }
-    console.debug("colorName: "+ colorName);
-	return new Group('Group', colorName, 3);
+    //console.debug("colorName: "+ colorName);
+	var numberOfPerson = Tools.randomXToY(1, 4);
+	return new Group('Group', colorName, numberOfPerson);
 };

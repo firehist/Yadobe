@@ -65,47 +65,42 @@ var GroupGraphClass = {
      * @method createGroup
      */
     createGroup: function() {
-		this.setGraph("standup");
+		this.setGraph();
 		this._graph.x = this.x;
 		this._graph.y = this.y;
 		this._graph.scaleX = this._graph.scaleY = 1.5;
-		this._graph.shadow = new Shadow("#454", 0, 5, 4);
+		//this._graph.shadow = new Shadow("#454", 0, 5, 4);
 		this.container.addChild(this._graph);
 	},
     /**
      *
      */
-    setGraph: function(state) {
-        if (state == "standup") {
-            var imageName = eval("DINNERCONST.IMAGE.human_" + this.model.color);
-            console.debug("imageName : " + imageName);
-            var sprite = new SpriteSheet(
-                imageName,
-                96, 96,
-                {
-                    walking_east: [0, 7],
-                    walking_north: [8, 15],
-                    walking_south: [16, 23],
-                    waiting: 14
-                    //at_table: 15
-                }
-            );
-            sprite = SpriteSheetUtils.flip(
-                sprite,
-                {
-                    walking_west:["walking_east", true, false, false]
-                }
-            );
+    setGraph: function() {
+		var imageName = "DINNERCONST.IMAGE.human_" + this.model.color;
+		console.debug("[GroupGraph.setGraph] imageName : " + imageName);
+		var sprite = new SpriteSheet(
+			eval(imageName),
+			96, 96,
+			{
+				walking_east: [0, 7],
+				walking_north: [8, 15],
+				walking_south: [16, 23],
+				waiting: 14,
+				at_table_0: 24,
+				at_table_1: 25,
+				at_table_2: 26,
+				at_table_3: 27
+			}
+		);
+		sprite = SpriteSheetUtils.flip(
+			sprite,
+			{
+				walking_west:["walking_east", true, false, false]
+			}
+		);
 
-            this._graph = new BitmapSequence(sprite);
-        } else if (state == "sitdown") {
-            imageName = eval("DINNERCONST.IMAGE.human_table_" + this.model.color);
-            console.debug("imageName: " + imageName);
-            this._graph = new Bitmap(imageName);
-        } else {
-            console.debug("[GroupGraph.setGraph] ERROR: " + state + " is not a valid state.");
-        }
-    },
+		this._graph = new BitmapSequence(sprite);
+    },	
     /**
      * @method addMouseListener
      */
@@ -113,7 +108,7 @@ var GroupGraphClass = {
 		(function(target, obj) {
 			target.onPress = function() {
 				if(!target.clicked) {
-					console.log('Group clicked');
+					console.debug('[GroupGraph.onPress] Group clicked');
 					DinnerGamePage.getInstance().linkGroupWithTable(obj);
 				}
 			}
@@ -252,10 +247,18 @@ GroupGraph.states({
 	 */
     ReadMenu: {
         update: function() {
-            console.debug("[GroupGraph.ReadMenu.update]");
-            //this._graph.gotoAndPlay('eating');
-            this.setGraph('sitdown');
-            
+            //console.debug("[GroupGraph.ReadMenu.update]");
+            var xSave = this._graph.x;
+			var ySave = this._graph.y;
+			for (var i=0; i<this.model.personNumber; i++) {
+				this._graph.x += DINNERCONST.POSITION.at_table[i].dx;
+				this._graph.y += DINNERCONST.POSITION.at_table[i].dy;
+				this._graph.scaleX = this._graph.scaleY = 1;
+				this._graph.shadow = new Shadow("#454", 0, 0, 0);
+				this._graph.gotoAndPlay('at_table_'+i);
+			}
+            this._graph.x = xSave;
+			this._graph.y = ySave;
         }
     },
     /**
@@ -266,7 +269,7 @@ GroupGraph.states({
     WaitingOrder: {
         update: function() {
             //console.debug("[GroupGraph.Eating.update]");
-            this.setGraph('sitdown');
+           
             
         }
     },
@@ -278,10 +281,7 @@ GroupGraph.states({
     Eating: {
         update: function() {
             //console.debug("[GroupGraph.Eating.update]");
-            //if (this._graph  instanceof BitmapSequence) {
-            // this.bitmpaSeq = new Bitmap();
-            //}
-            //this._graph.gotoAndPlay('eating');
+        
         }
     }
 });

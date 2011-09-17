@@ -112,9 +112,14 @@ DINNERCONST.POSITION = {
             coord: new Point(340, 410)
         }
     ],
+	at_table: [
+		{dx: 5, dy: -30},
+		{dx: 30, dy: 0},
+		{dx: 0, dy: 30},
+		{dx: -30, dy: 0}
+	],
     firstgroup: new Point(2, 510)
 };
-console.debug("DINNERCONST.POSITION Ok");
 /**
  * DINNERCONST.ACCESS Struct
  * Coordinates on the grid where the waiter can access a place
@@ -132,7 +137,6 @@ DINNERCONST.ACCESS = {
 		new Point(340, 410)
 	]
 };
-console.debug("DINNERCONST.ACCESS Ok");
 /**
  * DINNERCONST.SCENES Struct
  * @author Benjamin Longearet <firehist@gmail.com>
@@ -149,7 +153,6 @@ DINNERCONST.SCENES = {
 	waiter: 10,
     group: 11
 };
-console.debug("DINNERCONST.SCENES Ok");
 /**
  * DINNERCONST.COOK Struct
  * @author Benjamin Longearet <firehist@gmail.com>

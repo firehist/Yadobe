@@ -13,6 +13,11 @@ var TablePlaceGraphClass = {
 	 */
 	model: null,
 	/**
+	 * Refer to the group which actually are at the table
+	 * @type {GroupGraph}
+	 */
+	groupGraph: null,
+	/**
 	 * Container for Table
 	 * @type Container
 	 */
@@ -40,6 +45,12 @@ var TablePlaceGraphClass = {
 		table.x = DINNERCONST.POSITION.tables[index].coord.x;
 		table.y = DINNERCONST.POSITION.tables[index].coord.y;
 		this.container.addChildAt(table, 0);
+	},
+	setGroupGraph: function(groupGraph) {
+		this.groupGraph = groupGraph;
+	},
+	getGroupGraph: function() {
+		return this.groupGraph;
 	},
 	addMouseListener: function() {
 		(function(target, obj) {
