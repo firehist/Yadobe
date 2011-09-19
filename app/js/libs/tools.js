@@ -25,6 +25,19 @@ var Tools = {
 		}
 		return len;
 	},
+    /* Returns the class name of the argument or undefined if
+     * it's not a valid JavaScript object.
+     */
+    getObjectClass: function (obj) {
+        if (obj && obj.constructor && obj.constructor.toString) {
+            var arr = obj.constructor.toString().match(/function\s*(\w+)/);
+            if (arr && arr.length == 2) {
+                return arr[1];
+            }
+        }
+
+        return undefined;
+    },
 	randomXToY: function(minVal,maxVal,floatVal) {
 		var randVal = minVal+(Math.random()*(maxVal-minVal));
 		return typeof floatVal=='undefined'?Math.round(randVal):randVal.toFixed(floatVal);

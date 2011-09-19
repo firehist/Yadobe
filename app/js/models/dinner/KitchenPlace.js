@@ -38,9 +38,10 @@ var KitchenPlaceClass = {
 	 * @since 06/09/2011
 	 * @param {String} name
 	 * @param {int} maxMenuList
+     * @param {Point} coordinates Grid coordinates to access the place by the waiter
 	 */
-	initialize: function(name, maxMenuList) {
-		this.callSuper(name);
+	initialize: function(name, maxMenuList, coordinates) {
+		this.callSuper(name, coordinates);
 		if(maxMenuList)	this.maxMenuList = maxMenuList;
 	},
 	// Methods
@@ -77,7 +78,7 @@ var KitchenPlaceClass = {
 	 * @return boolean true if successful, false else
 	 */
 	addMenu: function(menu) {
-		if(this._getTotalLength() < this.maxMenuList && menu.klass === Menu) {
+		if ((this._getTotalLength() < this.maxMenuList) && (menu instanceof Menu)) {
 			this.pendingMenuList.push(menu);
 			this.launchCook();
 			return true;
@@ -90,13 +91,16 @@ var KitchenPlaceClass = {
 	 * @since 05/09/2011
 	 */
 	launchCook: function() {
-		// Test if menu are pending
-		if(this.pendingMenuList.length > 0) {
-			// Test if kitchen are not full
-			if(this.cookingMenuList < DINNERCONST.COOK.maxCooking) {
+		
+        // Test if menu are pending
+		if (this.pendingMenuList.length > 0) {
+			
+            // Test if kitchen is not full
+			if (this.cookingMenuList < DINNERCONST.COOK.maxCooking) {
 				var menu = this.pendingMenuList.shift();
 				this.cookingMenuList.push( menu );
-				//TimeManager.setCookTimer(menu.getDurationMenuInMs(), this, menu);
+				
+                //TimeManager.setCookTimer(menu.getDurationMenuInMs(), this, menu);
 				TimeManager.setCookTimer(2000, this, menu);
 			}
 		}

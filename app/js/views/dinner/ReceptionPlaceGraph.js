@@ -7,24 +7,28 @@
 var ReceptionPlaceGraphClass = {
 	// Attributes
 	/**
-	 * Model of KitchenPlaceGraph
-	 * @type KitchenPlace
+	 * Model of ReceptionPlaceGraph
+	 * @type ReceptionPlace
 	 */
 	model: null,
 	/**
-	 * Container for kitchen
+	 * @type array of GroupGraph
+	 */
+	//groupGraphList: new Array(),
+	/**
+	 * Container for reception
 	 * @type Container
 	 */
 	container: null,
 	// Constructor
 	/**
 	 * @constructor
-	 * @class KitchenPlace
+	 * @class ReceptionPlace
 	 * @method initialize
-	 * @param {KitchenPlace} model
+	 * @param {ReceptionPlace} model
 	 */
 	initialize: function(model) {
-		console.log('KitchenPlaceGraph.initialize(model)');	
+		console.log('ReceptionPlaceGraph.initialize(model)');	
 		this.model = model;
 		this.container = new Container();
 		this.addMouseListener();
@@ -39,11 +43,15 @@ var ReceptionPlaceGraphClass = {
 		reception.y = DINNERCONST.POSITION.reception.y;
 		this.container.addChildAt(reception, 0);
 	},
+    getMaxGroupList: function() {
+        return this.model.maxGroupList;
+    },
 	addMouseListener: function() {
 		(function(target) {
 			target.onPress = function(e) {
 				if(!target.clicked) {
 					console.log('Reception clicked');
+					this.model.isSelected = !this.model.isSelected;
 				}
 			}
 			target.onMouseOver = function() {

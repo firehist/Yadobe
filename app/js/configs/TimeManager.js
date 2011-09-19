@@ -16,7 +16,8 @@ var TimeManager = {
 	 * @param context
 	 */
 	setDinnerTimer: function(ConstTimeName, callback, context) {
-		var constStruct = DINNERCONST.TIME[ConstTimeName];
+		console.debug("TimeManager.setDinnerTimer()");
+        var constStruct = DINNERCONST.TIME[ConstTimeName];
 		var key = TimeManager.getDinnerTimerKey(ConstTimeName, context);
 		callback.call(context);
 		TimeManager.timerList[key] = window.setTimeout(TimeManager.setDinnerTimer, constStruct.getRandTime(), ConstTimeName, callback, context);
@@ -28,7 +29,7 @@ var TimeManager = {
 	 * @param menu
 	 */
 	setCookTimer: function(time, context, menu) {
-		console.debug('TimerCook => '+time);
+		console.debug('Luigi : Il va me falloir ' + time/1000 + ' secondes pour préparer ça.');
 		window.setTimeout(function(){context.setReady(menu)}, time);
 	},
 	/**

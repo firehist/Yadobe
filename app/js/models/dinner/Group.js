@@ -38,6 +38,11 @@ var GroupClass ={
 	 */
 	waitingTime: null,
 	/**
+	 * define its end of life
+	 * @var bool
+	 */
+	isGone: false,
+	/**
 	 * The total time of waiting state for this group
 	 * @var int totalWaitingTime in milliseconds
 	 * @default 0
@@ -112,5 +117,15 @@ Group.Factory = {};
  * @return Group new group instance
  */
 Group.Factory.newInstance = function() {
-	return new Group('Group', 'red', 3);
+    var indexColor = Tools.randomXToY(0, 3);
+    console.debug('indexColor: ' + indexColor);
+    var colorName = '';
+    var i = -1;
+    for (color in DINNERCONST.COLOR) {
+        i++;
+        if (i == indexColor) colorName = color;
+    }
+    //console.debug("colorName: "+ colorName);
+	var numberOfPerson = Tools.randomXToY(1, 4);
+	return new Group('Group', colorName, numberOfPerson);
 };

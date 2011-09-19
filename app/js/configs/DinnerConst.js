@@ -36,7 +36,7 @@ DINNERCONST.TIME = {
 	 * @since 30/08/2011
 	 */
 	createGroup: {
-		timeRef: 1000,
+		timeRef: Tools.randomXToY(5000, 15000),
 		getRandTime: function() {
 			return DINNERCONST.TIME.createGroup.timeRef;
 		}
@@ -71,12 +71,22 @@ DINNERCONST.IMAGE = {
 	human_table_green: 'img/dinnerGame/stage_01_table_human_green.png',
 	human_table_yellow: 'img/dinnerGame/stage_01_table_human_yellow.png',
 	human_table_blue: 'img/dinnerGame/stage_01_table_human_blue.png',
+	human_red: 'img/dinnerGame/stage_01_human_red.png',
+	human_green: 'img/dinnerGame/stage_01_human_green.png',
+	human_yellow: 'img/dinnerGame/stage_01_human_yellow.png',
+	human_blue: 'img/dinnerGame/stage_01_human_blue.png',
 	background: 'img/dinnerGame/stage_01.jpg',
 	menus: 'img/dinnerGame/kitchen/menus.png',
-	luigi_walking: 'img/dinnerGame/kitchen/luigi_walking.png'
+	luigi_walking: 'img/dinnerGame/kitchen/luigi_walking.png',
+	carrier: 'img/dinnerGame/carrier.png'
+//	luigi_walking_right_empty: 'img/dinnerGame/kitchen/luigi_walking_right_empty.png',
+//	luigi_walking_left_full: 'img/dinnerGame/kitchen/luigi_walking_left_full.png',
+//	luigi_stop_front_full2empty: 'img/dinnerGame/kitchen/luigi_stop_front_full2empty.png',
+//	luigi_walking_left_empty: 'img/dinnerGame/kitchen/luigi_walking_left_empty.png'
 };
 /**
  * DINNERCONST.POSITION Struct
+ * Position in pixels of a PlaceGraph on the container
  * @author Benjamin Longearet <firehist@gmail.com>
  * @since 01/09/2011
  * @type Object
@@ -85,12 +95,47 @@ DINNERCONST.POSITION = {
 	kitchen: new Point(500, 70),
 	reception: new Point(0, 225),
 	tables: [
+        {
+            name: "red",
+            coord: new Point(340, 240)
+        },
+		{
+            name: "blue",
+            coord: new Point(570, 240)
+        },
+		{
+            name: "green",
+            coord: new Point(570, 410)
+        },
+		{
+            name: "yellow",
+            coord: new Point(340, 410)
+        }
+    ],
+	at_table: [
+		{dx: 5, dy: -30},
+		{dx: 30, dy: 0},
+		{dx: 0, dy: 30},
+		{dx: -30, dy: 0}
+	],
+    firstgroup: new Point(2, 510)
+};
+/**
+ * DINNERCONST.ACCESS Struct
+ * Coordinates on the grid where the waiter can access a place
+ * @author Yannick Galatol <yannick.galatol@gmail.com>
+ * @since 07/09/2011
+ * @type Object
+ */
+DINNERCONST.ACCESS = {
+	kitchen: new Point(500, 70),
+	reception: new Point(0, 225),
+	tables: [
 		new Point(340, 240),
 		new Point(570, 240),
 		new Point(570, 410),
 		new Point(340, 410)
-	],
-    firstgroup : new Point(50, 300)
+	]
 };
 /**
  * DINNERCONST.SCENES Struct
@@ -105,7 +150,8 @@ DINNERCONST.SCENES = {
 	kitchen: 4,
 	reception: 5,
 	tables: [6,7,8,9],
-	waiter: 10
+	waiter: 10,
+    group: 11
 };
 /**
  * DINNERCONST.COOK Struct
