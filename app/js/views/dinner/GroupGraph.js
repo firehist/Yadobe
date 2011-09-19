@@ -14,9 +14,9 @@ var GroupGraphClass = {
 	 * @type Group
 	 */
     model: null,
-    /**
-	 * Container for Group
-	 * @type Container
+	/**
+	 * Display object available for the group
+	 * @type {DisplayObject}
 	 */
 	container: null,
 	/**
@@ -54,12 +54,14 @@ var GroupGraphClass = {
         this.createGroup();
 		this.addMouseListener();
 	},
-    /**
-     * @method getContainer
-     * @return container
-     */
-    getContainer: function() {
-		return this.container;
+	/**
+	 * Get group graph
+     * @author Yannick Galatol <yannick.galatol@gmail.com>
+     * @since 07/09/2011
+	 * @return {DisplayObject} The group graph
+	 */
+	getGraph: function() {
+		return this._graph;
 	},
     /**
      * @method createGroup
@@ -105,28 +107,28 @@ var GroupGraphClass = {
      * @method addMouseListener
      */
     addMouseListener: function() {
-		(function(target, obj) {
-			target.onPress = function() {
-				if(!target.clicked) {
+		(function(target) {
+			target._graph.onPress = function() {
+				if(!target._graph.clicked) {
 					console.debug('[GroupGraph.onPress] Group clicked');
-					DinnerGamePage.getInstance().linkGroupWithTable(obj);
+					DinnerGamePage.getInstance().linkGroupWithTable(target);
 				}
-			}
-			target.onMouseOver = function() {
-				if(!target.clicked) {
-					target.alpha = 0.8;
+			};
+			target._graph.onMouseOver = function() {
+				if(!target._graph.clicked) {
+					target._graph.alpha = 0.8;
 					$('body').css('cursor', 'pointer');
 					Yadobe.getInstance().setUpdate();
 				}
-			}
-			target.onMouseOut = function() {
-				if(!target.clicked) {
-					target.alpha = 1;
+			};
+			target._graph.onMouseOut = function() {
+				if(!target._graph.clicked) {
+					target._graph.alpha = 1;
 					$('body').css('cursor', 'default');
 					Yadobe.getInstance().setUpdate();
 				}
 			}
-		})(this.container, this);
+		})(this);
 	}
 };
 var GroupGraph = new JS.Class(GroupGraphClass);

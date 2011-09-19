@@ -14,6 +14,14 @@ var DestinationClass = {
 	 * Function to execute when the waiter arrive on it destination
 	 * @param Function actionOnArrival
 	 */
-	actionOnArrival: null
+	actionOnArrival: null,
+    
+    /**
+     * @constructor
+     */
+	initialize: function(position, callback) {
+        this.position = position;
+        this.actionOnArrival = callback;
+    }
 };
 var Destination = new JS.Class(DestinationClass);

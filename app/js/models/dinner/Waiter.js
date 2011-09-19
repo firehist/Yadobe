@@ -14,10 +14,15 @@ var WaiterClass = {
 	 */
 	name: null,
 	/**
-	 * Destination of waiter	 
-	 * @type Destination
+	 * Destination of waiter
+	 * @type List<Destination>
 	 */
 	destination: null,
+	/**
+	 * Destinations size
+	 * @type int
+	 */
+	destinationMax: 2,
 	/**
 	 * Current position of waiter
 	 * @type Place
@@ -29,22 +34,31 @@ var WaiterClass = {
 	 */
 	inventory: new Array(),
 	/**
-	 * Inventory size
-	 * @type int
+	 * Inventory current size
+	 * @type Integer
+	 */
+	inventoryCurrent: 0,
+	/**
+	 * Inventory max size
+	 * @type Integer
 	 */
 	inventoryMax: 2,
     
-	// Constructor
+	/**
+     * @constructor
+     */
 	initialize: function(name, position, inventoryMax) {
-		this.name = name
+		this.name = name;
+		this.destination = [];
 		if (position instanceof Place) {
 			this.position = position;
 		}
-        else {
-            throw new Exception('Given position does not inerhit from Place.');
-        }
+		else {
+			throw new Exception('Given position does not inerhit from Place.');
+		}
 		this.inventoryMax = inventoryMax;
 	},
+	
 	// Methods
 	/**
 	 * Set destination to the waiter
@@ -53,25 +67,80 @@ var WaiterClass = {
 	 * @author Yannick Galatol <yannick.galatol@gmail.com>
 	 * @since 07/09/2011
 	 */
-	moveTo: function(destination) {
+	moveTo: function(destination) {        
+		// Check the destination passed in parameter is a Destination and got a Place as position
 		if (destination instanceof Destination) {
-			this.destination = destination;
-            this.setState('Moving');
+			if ((!destination.position) || (!destination.position instanceof Place)) {
+				throw 'Please give a Place as position of the Waiter destination.';
+			}
+			else {
+                
+				// If all destination slots are full, replace the destination of the last slot
+				if (this.destination.length == this.destinationMax) {
+					this.destination[this.destinationMax - 1]= destination;
+				}
+				else {
+					this.destination.push(destination);
+				}
+				this.setState('Moving');
+			}
 		}
-        else {
-            throw new Exception('Unknown destination');
-        }
-	},
-	addToInventory: function(menu) {
-		if ((menu instanceof Menu) && (this.inventory.length < this.inventoryMax)) {
-			this.inventory.push(menu);
+		else {
+			throw 'Unknown destination';
 		}
 	},
-	delFromInventory: function() {
-		if(this.inventory.length > 0) {
-			return this.inventory.shift();
+	addToInventory: function(item) {
+		
+		// Added item is a menu
+		if ((item instanceof Menu) && (this.inventoryCurrent <= this.inventoryMax + item.size())) {
+			this.inventory.push(item);
+			this.inventoryCurrent += item.size();
+			console.log("A menu for table " + item.table + " was added to Waiter.");
+		}
+
+		// Added item is a group of persons. The inventory must be empty to add a group.
+		if ((item instanceof Group) && (this.inventoryCurrent == 0)) {
+			
+			this.inventory.push(item);
+			
+			// A group fill all the spaces of the inventory
+			this.inventoryCurrent = this.inventoryMax;
+			
+			console.log("A group was added to Waiter.");
+		}
+	},
+	delFromInventory: function(index) {
+		if (this.inventoryCurrent > 0) {
+			var item;
+			
+			if (index) {
+				item = this.inventory[index];
+				delete this.inventory[index];
+			}
+			else {
+				// If no index is specified return the first item of the list and delete it
+				item = this.inventory.shift();
+			}
+			
+			this.inventoryCurrent -= item.size();
+			return item;
 		}
 		return false;
+	},
+	arrivedToDestination : function() {
+		// Execute the method on arrival to the destination
+		this.destination[0].actionOnArrival();
+        
+		// Set the current position of the waiter with the destination position
+		this.position = this.destination[0].position;
+        
+		// Clear the last destination
+		this.destination.shift();
+        
+		// Execute the next action
+		if (this.destination.length > 0) {
+			this.setState('Moving');
+		}
 	}
 };
 var Waiter = new JS.Class(WaiterClass);
@@ -94,5 +163,11 @@ Waiter.states({
 	 * @author Yannick Galatol <yannick.galatol@gmail.com>
 	 * @since 07/09/2011
 	 */
-	Moving: {}
+	Moving: {},
+	/**
+	 * TakingOrder state
+	 * @author Yannick Galatol <yannick.galatol@gmail.com>
+	 * @since 15/09/2011
+	 */
+	TakingOrder: {}
 });

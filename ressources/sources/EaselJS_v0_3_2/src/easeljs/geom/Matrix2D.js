@@ -49,7 +49,7 @@
 **/
 Matrix2D = function(a, b, c, d, tx, ty) {
   this.initialize(a, b, c, d, tx, ty);
-}
+};
 var p = Matrix2D.prototype;
 
 // static public properties:
@@ -264,7 +264,7 @@ var p = Matrix2D.prototype;
 			this.prepend(cos*scaleX, sin*scaleX, -sin*scaleY, cos*scaleY, x, y);
 		}
 
-	}
+	};
 
 	/**
 	* Generates matrix properties from the specified display object transform properties, and appends them with this matrix.
@@ -306,7 +306,7 @@ var p = Matrix2D.prototype;
 			this.tx -= regX*this.a+regY*this.c;
 			this.ty -= regX*this.b+regY*this.d;
 		}
-	}
+	};
 
 	/**
 	* Applies a rotation transformation to the matrix.
@@ -327,7 +327,7 @@ var p = Matrix2D.prototype;
 		this.d = c1*sin+this.d*cos;
 		this.tx = tx1*cos-this.ty*sin;
 		this.ty = tx1*sin+this.ty*cos;
-	}
+	};
 
 	/**
 	* Applies a skew transformation to the matrix.
@@ -339,7 +339,7 @@ var p = Matrix2D.prototype;
 		skewX = skewX*Matrix2D.DEG_TO_RAD;
 		skewY = skewY*Matrix2D.DEG_TO_RAD;
 		this.append(Math.cos(skewY), Math.sin(skewY), -Math.sin(skewX), Math.cos(skewX), 0, 0);
-	}
+	};
 	
 	/**
 	* Applies a scale transformation to the matrix.
@@ -352,7 +352,7 @@ var p = Matrix2D.prototype;
 		this.d *= y;
 		this.tx *= x;
 		this.ty *= y;
-	}
+	};
 	
 	/**
 	* Translates the matrix on the x and y axes.
@@ -373,7 +373,7 @@ var p = Matrix2D.prototype;
 		this.alpha = this.a = this.d = 1;
 		this.b = this.c = this.tx = this.ty = 0;
 		this.shadow = this.compositeOperation = null;
-	}
+	};
 	
 	/**
 	* Inverts the matrix, causing it to perform the opposite transformation.
@@ -393,7 +393,7 @@ var p = Matrix2D.prototype;
 		this.d = a1/n;
 		this.tx = (c1*this.ty-d1*tx1)/n;
 		this.ty = -(a1*this.ty-b1*tx1)/n;
-	}
+	};
 
 	/**
 	* Decomposes the matrix into transform properties (x, y, scaleX, scaleY, and rotation). Note that this these values
@@ -425,7 +425,7 @@ var p = Matrix2D.prototype;
 			target.skewY = skewY/Matrix2D.DEG_TO_RAD;
 		}
 		return target;
-	}
+	};
 
 	/**
 	* Appends the specified visual properties to the current matrix.
@@ -438,7 +438,7 @@ var p = Matrix2D.prototype;
 		this.alpha *= alpha;
 		this.shadow = shadow || this.shadow;
 		this.compositeOperation = compositeOperation || this.compositeOperation;
-	}
+	};
 
 	/**
 	 * Prepends the specified visual properties to the current matrix.
@@ -451,7 +451,7 @@ var p = Matrix2D.prototype;
 		this.alpha *= alpha;
 		this.shadow = this.shadow || shadow;
 		this.compositeOperation = this.compositeOperation || compositeOperation;
-	}
+	};
 	
 	/**
 	* Returns a clone of the Matrix2D instance.
@@ -464,7 +464,7 @@ var p = Matrix2D.prototype;
 		mtx.alpha = this.alpha;
 		mtx.compositeOperation = this.compositeOperation;
 		return mtx;
-	}
+	};
 
 	/**
 	* Returns a string representation of this object.
@@ -473,7 +473,7 @@ var p = Matrix2D.prototype;
 	**/
 	p.toString = function() {
 		return "[Matrix2D (a="+this.a+" b="+this.b+" c="+this.c+" d="+this.d+" tx="+this.tx+" ty="+this.ty+")]";
-	}
+	};
 
 	// this has to be populated after the class is defined:
 	Matrix2D.identity = new Matrix2D(1, 0, 0, 1, 0, 0);

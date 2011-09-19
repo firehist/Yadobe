@@ -9,7 +9,7 @@ var DinnerGamePageClass = {
 	// Attributes
 	text: null,
 	/**
-	 * @type KitchenPlaceGraph
+	 * @type {KitchenPlaceGraph}
 	 */
 	kitchen: null,
 	/**
@@ -23,12 +23,12 @@ var DinnerGamePageClass = {
 	tables: new Array(),
 	/**
 	 * The waiterGraph
-	 * @type WaiterGraph
+	 * @type {WaiterGraph}
 	 */
 	waiter: null,
 	/**
 	 * List of menuGraph
-	 * @type MenuGraph
+	 * @type {MenuGraph}
 	 */
 	menuList: [],
     /**
@@ -49,32 +49,65 @@ var DinnerGamePageClass = {
 	 */
 	initialize: function() {
 		
-        // Init Page Container
+		// Init Page Container
 		this.callSuper();
 		
-        // Init background
+		// Init background
 		this.createBackground();
 		this.createConsoleLog();
 		
-        // Kitchen
+		// Kitchen
 		var kitchenModel = new KitchenPlace('Cuisine', DINNERCONST.COOK.maxMenuInKitchen, DINNERCONST.ACCESS.kitchen);
 		this.kitchen = new KitchenPlaceGraph(kitchenModel);
-		this.pageContainer.addChildAt(this.kitchen.getContainer(), DINNERCONST.SCENES.kitchen);
-		// Reception
-		var receptionModel = new ReceptionPlace('Reception', 6);
-		this.reception = new ReceptionPlaceGraph(receptionModel);
-		this.pageContainer.addChildAt(this.reception.getContainer(), DINNERCONST.SCENES.reception);
+		this.pageContainer.addChildAt(this.kitchen.getGraph(), DINNERCONST.SCENES.kitchen);
 		
-        // Tables
+		// Reception
+		var receptionModel = new ReceptionPlace('Réception', 6, DINNERCONST.ACCESS.reception);
+		this.reception = new ReceptionPlaceGraph(receptionModel);
+		this.pageContainer.addChildAt(this.reception.getGraph(), DINNERCONST.SCENES.reception);
+		
+		// Tables
 		this.tables = new Array();
 		var colors = ['red','blue','green','yellow'];
-		for (var i=0; i<4; i++) {
-            console.debug("DINNERCONST.POSITION.tables[i].coord: " + DINNERCONST.POSITION.tables[i].coord);
-			var tableModel = new TablePlace(i, colors[i], DINNERCONST.POSITION.tables[i].coord);
+		for (var i=0; i<colors.length; i++) {
+			console.debug("[DinnerGamePage.initialize] table: " +  i + " START");
+            var tableModel = new TablePlace(i + 1, colors[i], DINNERCONST.ACCESS.tables[i]);
+            console.debug("[DinnerGamePage.initialize] model ok");
 			var tableGraph = new TablePlaceGraph(tableModel);
+            console.debug("[DinnerGamePage.initialize] graph ok");
 			this.tables.push(tableGraph);
-			this.pageContainer.addChildAt(tableGraph.getContainer(), DINNERCONST.SCENES.tables[i]);
+			this.pageContainer.addChildAt(tableGraph.getGraph(), DINNERCONST.SCENES.tables[i]);
+            console.debug("[DinnerGamePage.initialize] table: " +  i + " END");
 		}
+        
+		// Waiter
+		// Display the waiter on the kitchen at the beginning
+		var waiterModel = new Waiter('Serveur', kitchenModel, 1);
+		this.waiter = new WaiterGraph(waiterModel);
+		this.pageContainer.addChild(this.waiter.getGraph());
+        
+	},
+	/**
+	 * Refresh the elements of the game
+	 */
+	tick: function() {
+		// Refresh the kitchen
+		if ((this.kitchen) && (this.kitchen instanceof KitchenPlaceGraph)) {
+			this.kitchen.update();
+		}
+		
+		// Refresh the waiter
+		if ((this.waiter) && (this.waiter instanceof WaiterGraph)) {
+			this.waiter.update();
+        }
+
+        // Refresh the group
+        var groupGraphList = DinnerGamePage.getInstance().groupList;
+        for(var i=0; i<groupGraphList.length; i++) {
+            if (!groupGraphList[i].model.isGone) {
+                groupGraphList[i].update();
+            }
+        }
 	},
 	createConsoleLog: function() {
 		var log = new Shape();
@@ -159,7 +192,7 @@ var DinnerGamePageClass = {
     addGroup: function(groupModel) {
         var groupGraph = new GroupGraph(groupModel);
         this.groupList.push(groupGraph);
-        this.pageContainer.addChildAt(groupGraph.getContainer(), DINNERCONST.SCENES.group);
+        this.pageContainer.addChildAt(groupGraph.getGraph(), DINNERCONST.SCENES.group);
     },
 	/**
 	 * @author Dominique Jeannin <jeannin.dominique@gmail.com>
@@ -211,5 +244,5 @@ DinnerGamePage.getInstance = function() {
 	if ((DinnerGamePage.instance == null) || (!DinnerGamePage.instance instanceof DinnerGamePage)) {
 		DinnerGamePage.instance = new DinnerGamePage();
 	}
-    return DinnerGamePage.instance;
+	return DinnerGamePage.instance;
 };

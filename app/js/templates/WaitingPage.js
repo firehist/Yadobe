@@ -79,22 +79,27 @@ var WaitingPageClass = {
 	create: function() {
 		// Fond gris clais
 		$(Yadobe.getInstance().canvas).css('background-color','#CCC');
+		
 		// Rectangle fond
 		var center = this.getPointCenterProgressBar();
 		var rectGraphic = new Graphics().beginStroke("#000").beginFill("#999").setStrokeStyle(2).drawRoundRect(center.x, center.y, this.progressBar.width, this.progressBar.height, 10);
 		var rectShape = new Shape(rectGraphic);
+		
 		// Text
 		var t = new Text('0%', 'bold 36px Arial', '#000');
 		t.x = parseInt(Yadobe.getInstance().canvas.width / 2, 10);
 		t.y = parseInt(Yadobe.getInstance().canvas.height / 2, 10) + 12;
 		t.textAlign = 'center';
 		this.progressBar.text = t;
+		
 		// progress bar
 		this.progressBar.shape = new Shape();
+		
 		// Add elements to container
 		this.pageContainer.addChildAt(rectShape, 0);
 		this.pageContainer.addChildAt(this.progressBar.shape, 1);
 		this.pageContainer.addChildAt(this.progressBar.text, 2);
+		
 		// Progress bar
 		this.drawProgressBar();
 	},
@@ -150,13 +155,12 @@ var WaitingPageClass = {
 	 * @public
 	 */
 	launchLoading: function() {
-		var index;
 		// Bind images load
-		for(index in this.toLoad.images) {
+		for (var index in this.toLoad.images) {
 			this.loadImages(this.toLoad.images[index]);
 		}
 		// Bind ressources load
-		for(index in this.toLoad.js) {
+		for (var index in this.toLoad.js) {
 			this.loadJSs(this.toLoad.js[index]);
 		}
 	},
@@ -175,7 +179,7 @@ var WaitingPageClass = {
 			imgObject[x] = new Image();
 			imgObject[x].onload = function(){
 				var wp = WaitingPage.getInstance();
-				wp.loadDone.call(wp)
+				wp.loadDone.call(wp);
 			};
 			imgObject[x].src = src;
 		}
@@ -192,7 +196,7 @@ var WaitingPageClass = {
 		for(var i in jsObject) {
 			var callback = function(){
 				var wp = WaitingPage.getInstance();
-				wp.loadDone.call(wp)
+				wp.loadDone.call(wp);
 			};
 			JS.require(jsObject[i], callback);
 		}
@@ -222,7 +226,8 @@ var WaitingPageClass = {
 	 */
 	hide: function() {
 		this.pageContainer.visible = false;
-	}
+	},
+	tick : function() {}
 };
 var WaitingPage = new JS.Class(Page, WaitingPageClass);
 
