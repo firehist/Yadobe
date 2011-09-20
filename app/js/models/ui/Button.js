@@ -40,7 +40,7 @@ var ButtonClass = {
             this.onPress = function() {
                 onPress.call(this);
                 params.click();
-            }
+            };
         }
         
         // Draw a rounded rectangle on the button
@@ -95,6 +95,6 @@ var ButtonClass = {
             Yadobe.getInstance().setUpdate();
         }
     }
-    
-}
+};
+
 var Button = new JS.Class(Container, ButtonClass);

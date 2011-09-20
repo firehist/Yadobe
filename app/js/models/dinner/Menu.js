@@ -28,7 +28,10 @@ var MenuClass = {
 	 * @type Recipe
 	 */
 	drink: null,
-	// Constructor
+	
+	/**
+	 * @construct
+	 */
 	initialize: function(starter, dish, dessert, drink, table) {
 		this.table = table;
 		this.starter = starter;
@@ -36,6 +39,7 @@ var MenuClass = {
 		this.dessert = dessert;
 		this.drink = drink;
 	},
+	
 	// Methods
 	_validRecipe: function(object) {
 		return (object != null && object instanceof Recipe);
@@ -62,6 +66,25 @@ var MenuClass = {
 	 */
 	getDurationMenuInMs: function() {
 		return this.getDurationMenu() * 100;
-	}	
+	},
+	/**
+	 * Return the size of the menu
+	 * @return Integer the size of the menu
+	 */
+	size: function() {
+		var size = 0;
+		
+		// Dish need 1 space in the Waiter inventory
+		if (this.dish != null) {
+			size++;
+		}
+		
+		// 1 space is required for one or two items between starter and dessert 
+		if ((this.starter != null) || (this.dessert != null)) {
+			size++;
+		}
+		
+		return size;
+	}
 };
 var Menu = new JS.Class(MenuClass);

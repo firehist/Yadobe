@@ -113,6 +113,9 @@ var IndexPageClass = {
         this.pageContainer.addChild(exitButton);
         
 		Yadobe.getInstance().setUpdate();
+	},
+	tick : function() {
+		
 	}
 };
 var IndexPage = new JS.Class(Page, IndexPageClass);

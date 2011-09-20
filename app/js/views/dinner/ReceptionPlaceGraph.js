@@ -19,7 +19,7 @@ var ReceptionPlaceGraphClass = {
 	 * Container for reception
 	 * @type Container
 	 */
-	container: null,
+	_graph: null,
 	// Constructor
 	/**
 	 * @constructor
@@ -30,45 +30,56 @@ var ReceptionPlaceGraphClass = {
 	initialize: function(model) {
 		console.log('ReceptionPlaceGraph.initialize(model)');	
 		this.model = model;
-		this.container = new Container();
+		this._graph = new Container();
 		this.addMouseListener();
 		this.createReception();
 	},
-	getContainer: function() {
-		return this.container;
+	/**
+	 * Get reception graph
+     * @author Yannick Galatol <yannick.galatol@gmail.com>
+     * @since 07/09/2011
+	 * @return {DisplayObject} The reception graph
+	 */
+	getGraph: function() {
+		return this._graph;
 	},
 	createReception: function() {
 		var reception = new Bitmap(DINNERCONST.IMAGE.reception);
 		reception.x = DINNERCONST.POSITION.reception.x;
 		reception.y = DINNERCONST.POSITION.reception.y;
-		this.container.addChildAt(reception, 0);
+		this._graph.addChildAt(reception, 0);
 	},
     getMaxGroupList: function() {
         return this.model.maxGroupList;
     },
 	addMouseListener: function() {
 		(function(target) {
-			target.onPress = function() {
-				if(!target.clicked) {
-					console.log('Reception clicked');
-					this.model.isSelected = !this.model.isSelected;
+			target._graph.onPress = function(e) {
+				if(!target._graph.clicked) {
+                    console.log('Reception clicked');
+					target.model.isSelected = !target.model.isSelected;
+
+                    var destination = new Destination(target.model, function() {
+                        DinnerGamePage.getInstance().updateConsoleLog('Arrived to ' + target.model.name);
+                    });
+					DinnerGamePage.getInstance().waiter.model.moveTo(destination);
 				}
-			}
-			target.onMouseOver = function() {
-				if(!target.clicked) {
-					target.alpha = 0.8;
+			};
+			target._graph.onMouseOver = function() {
+				if(!target._graph.clicked) {
+					target._graph.alpha = 0.8;
 					$('body').css('cursor', 'pointer');
 					Yadobe.getInstance().setUpdate();
 				}
-			}
-			target.onMouseOut = function() {
-				if(!target.clicked) {
-					target.alpha = 1;
+			};
+			target._graph.onMouseOut = function() {
+				if(!target._graph.clicked) {
+					target._graph.alpha = 1;
 					$('body').css('cursor', 'default');
 					Yadobe.getInstance().setUpdate();
 				}
-			}
-		})(this.container);
+			};
+		})(this);
 	}
 	// Methods
 };
