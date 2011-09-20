@@ -48,7 +48,7 @@ var ReceptionPlaceGraphClass = {
     },
 	addMouseListener: function() {
 		(function(target) {
-			target.onPress = function(e) {
+			target.onPress = function() {
 				if(!target.clicked) {
 					console.log('Reception clicked');
 					this.model.isSelected = !this.model.isSelected;
