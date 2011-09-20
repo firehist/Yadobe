@@ -49,7 +49,7 @@ var GroupGraphClass = {
 		this.model = model;
 		this.x = DINNERCONST.POSITION.firstgroup.x;
 		this.y = DINNERCONST.POSITION.firstgroup.y;
-		this.setState('Waiting');
+		this.setState('Walking2Reception');
 		this.container = new Container();
         this.createGroup();
 		this.addMouseListener();
@@ -148,12 +148,13 @@ GroupGraph.states({
 		update: function() {
 			//console.debug("[GroupGraph.Waiting.update]");
 			if (this._graph.y == DINNERCONST.POSITION.firstgroup.y) {
-				this.setState('Walking2Reception');
+				// Before group are really waiting
+                this.setState('Walking2Reception');
 				this._graph.gotoAndPlay('walking_north');
                 this.direction = 'north';
 			} else {
-				this.setState('Walking2Reception');
-			}
+                // TODO: we manage time of waiting adn decrease mood related to time spent
+            }
 		}
 	},
 	/**
