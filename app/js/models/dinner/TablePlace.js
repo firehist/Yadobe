@@ -39,7 +39,7 @@ var TablePlaceClass = {
 		this.callSuper("Table" + number, coordinates);
 		this.number = number;
 		this.color = color;
-		this.setState('Empty');
+		this.setState('Free');
 	},
     
 	// Methods
@@ -71,63 +71,23 @@ var TablePlace = new JS.Class(Place, TablePlaceClass);
  */
 TablePlace.states({
 	/**
-	 * Empty state
-	 * @author Benjamin Longearet <firehist@gmail.com>
-	 * @since 30/08/2011
+	 * Free state
+	 * @author Yannick Galatol <yannick.galatol@gmail.com>
+	 * @since 20/09/2011
 	 */
-	Empty: {
+	Free: {
         runAction: function() {
-            console.log('Empty State : runAction()');
+            console.log('Free State : runAction()');
         }
     },
 	/**
-	 * Idle state
-	 * @author Benjamin Longearet <firehist@gmail.com>
-	 * @since 30/08/2011
+	 * Free state
+	 * @author Yannick Galatol <yannick.galatol@gmail.com>
+	 * @since 20/09/2011
 	 */
-    Idle: {
+	Busy: {
         runAction: function() {
-            console.log('Idle State : runAction()');
-        }
-    },
-	/**
-	 * WaitingForOrder state
-	 * @author Benjamin Longearet <firehist@gmail.com>
-	 * @since 30/08/2011
-	 */
-    WaitingForOrder: {
-        runAction: function() {
-            console.log('WaitingForOrder State : runAction()');
-        }
-    },
-	/**
-	 * WaitingMeal state
-	 * @author Benjamin Longearet <firehist@gmail.com>
-	 * @since 30/08/2011
-	 */
-    WaitingMeal: {
-        runAction: function() {
-            console.log('WaitingMeal State : runAction()');
-        }
-    },
-	/**
-	 * Eating state
-	 * @author Benjamin Longearet <firehist@gmail.com>
-	 * @since 30/08/2011
-	 */
-    Eating: {
-        runAction: function() {
-            console.log('Eating State : runAction()');
-        }
-    },
-	/**
-	 * WaitingForPaymentState state
-	 * @author Benjamin Longearet <firehist@gmail.com>
-	 * @since 30/08/2011
-	 */
-    WaitingForPaymentState: {
-        runAction: function() {
-            console.log('WaitingForPaymentState State : runAction()');
+            console.log('Busy State : runAction()');
         }
     }
 });

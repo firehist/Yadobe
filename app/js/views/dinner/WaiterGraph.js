@@ -199,7 +199,7 @@ var WaiterGraph = new JS.Class(WaiterGraphClass);
  * @static
  * @type {Integer}
  */
-WaiterGraph.stepInPixels = 5;
+WaiterGraph.stepInPixels = 8;
 
 /**
  * WaiterGraph states declaration

@@ -109,30 +109,12 @@ DINNERCONST.POSITION = {
         }
     ],
 	at_table: [
-		{dx: 5, dy: -30},
-		{dx: 30, dy: 0},
-		{dx: 0, dy: 30},
-		{dx: -30, dy: 0}
+		{dx: 20, dy: -20},
+		{dx: 60, dy: 35},
+		{dx: 20, dy: 90},
+		{dx: -28, dy: 35}
 	],
     firstgroup: new Point(2, 510)
-};
-/**
- * DINNERCONST.ACCESS Struct
- * Coordinates on the grid where the waiter can access a place
- * @author Yannick Galatol <yannick.galatol@gmail.com>
- * @since 07/09/2011
- * @type Object
- */
-DINNERCONST.ACCESS = {
-	kitchen: new Point(500, 70),
-	reception: new Point(0, 225),
-	tables: [
-		new Point(340, 240),
-		new Point(570, 240),
-		new Point(570, 410),
-		new Point(340, 410)
-	],
-    firstgroup : new Point(50, 300)
 };
 
 /**
@@ -150,7 +132,8 @@ DINNERCONST.ACCESS = {
 		new Point(520,220),
 		new Point(290,390),
 		new Point(520,390)
-	]
+	],
+    firstgroup : new Point(50, 300)
 };
 
 /**

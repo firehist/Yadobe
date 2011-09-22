@@ -5,9 +5,10 @@
  * @module dinner
  */
 var GroupGraphClass = {
+	
     // Includes
 	include: JS.State,
-    className: 'GroupGraphClass',
+	
     // Attributes
 	/**
 	 * Model of GroupGraph
@@ -16,12 +17,7 @@ var GroupGraphClass = {
     model: null,
 	/**
 	 * Display object available for the group
-	 * @type {DisplayObject}
-	 */
-	container: null,
-	/**
-	 * Bitmap or BitmapSquence available for Group
-	 * @type BitmapSequence or Bitmap
+	 * @type {DisplayObject} or Bitmap
 	 */
 	_graph: null,
     /**
@@ -47,10 +43,8 @@ var GroupGraphClass = {
 	initialize: function(model) {
 		console.log('GroupGraph.initialize(model)');
 		this.model = model;
-		this.x = DINNERCONST.POSITION.firstgroup.x;
-		this.y = DINNERCONST.POSITION.firstgroup.y;
 		this.setState('Waiting');
-		this.container = new Container();
+		this._graph = new Container();
         this.createGroup();
 		this.addMouseListener();
 	},
@@ -67,21 +61,25 @@ var GroupGraphClass = {
      * @method createGroup
      */
     createGroup: function() {
-		this.setGraph();
-		this._graph.x = this.x;
-		this._graph.y = this.y;
-		this._graph.scaleX = this._graph.scaleY = 1.5;
-		//this._graph.shadow = new Shadow("#454", 0, 5, 4);
-		this.container.addChild(this._graph);
+    	// Create all the persons of the group
+    	this._graph.x = DINNERCONST.POSITION.firstgroup.x;
+    	this._graph.y = DINNERCONST.POSITION.firstgroup.y;
+		for (var i=0; i < this.model.personNumber; i++) {
+			var person = this.createPerson();
+			person.x = i * 50;
+			person.y = 0;
+			person.scaleX = 1.5;
+			person.scaleY = 1.5;
+			this._graph.addChildAt(person, i);
+		}
+
 	},
     /**
      *
      */
-    setGraph: function() {
-		var imageName = "DINNERCONST.IMAGE.human_" + this.model.color;
-		console.debug("[GroupGraph.setGraph] imageName : " + imageName);
+    createPerson: function() {
 		var sprite = new SpriteSheet(
-			eval(imageName),
+			DINNERCONST.IMAGE["human_" + this.model.color],
 			96, 96,
 			{
 				walking_east: [0, 7],
@@ -94,14 +92,11 @@ var GroupGraphClass = {
 				at_table_3: 27
 			}
 		);
-		sprite = SpriteSheetUtils.flip(
-			sprite,
-			{
-				walking_west:["walking_east", true, false, false]
-			}
-		);
-
-		this._graph = new BitmapSequence(sprite);
+		
+		var bitmapSequence = new BitmapSequence(sprite);
+		bitmapSequence.shadow = new Shadow("#454", 0, 5, 4);
+		
+		return bitmapSequence;
     },	
     /**
      * @method addMouseListener
@@ -111,7 +106,7 @@ var GroupGraphClass = {
 			target._graph.onPress = function() {
 				if(!target._graph.clicked) {
 					console.debug('[GroupGraph.onPress] Group clicked');
-					DinnerGamePage.getInstance().linkGroupWithTable(target);
+                	DinnerGamePage.getInstance().waiter.model.addToInventory(target.model);
 				}
 			};
 			target._graph.onMouseOver = function() {
@@ -127,11 +122,18 @@ var GroupGraphClass = {
 					$('body').css('cursor', 'default');
 					Yadobe.getInstance().setUpdate();
 				}
-			}
+			};
 		})(this);
 	}
 };
 var GroupGraph = new JS.Class(GroupGraphClass);
+
+/**
+ * Number of pixels for a step of the group
+ * @static
+ * @type {Integer}
+ */
+GroupGraph.stepInPixels = 8;
 
 /**
  * GroupGraph states declaration
@@ -146,13 +148,21 @@ GroupGraph.states({
 	 */
 	Waiting: {
 		update: function() {
-			//console.debug("[GroupGraph.Waiting.update]");
-			if (this._graph.y == DINNERCONST.POSITION.firstgroup.y) {
-				this.setState('Walking2Reception');
-				this._graph.gotoAndPlay('walking_north');
-                this.direction = 'north';
-			} else {
-				this.setState('Walking2Reception');
+			if (this.model.inState('QueuingUp')) {
+				//console.debug("[GroupGraph.Waiting.update]");
+				if (this._graph.y == DINNERCONST.POSITION.firstgroup.y) {
+					this.setState('Walking2Reception');
+					for (var i=0; i < this.model.personNumber; i++) {
+						this._graph.getChildAt(i).gotoAndPlay('walking_north');
+					}
+	                this.direction = 'north';
+				}
+				else {
+					this.setState('Walking2Reception');
+				}
+			}
+			else if (this.model.inState('WaitingToOrder')) {
+				this.setState('SittingDown');
 			}
 		}
 	},
@@ -163,14 +173,17 @@ GroupGraph.states({
 	 */
 	Walking2Reception: {
         update: function() {
-            var dy = 8;
-            //console.debug("[GroupGraph.Walking2Reception.update]");
-			var yMin = DINNERCONST.POSITION.reception.y + 10 + DinnerGamePage.getInstance().getIndexOfFirstEmpty()*20;
+            var dy = GroupGraph.stepInPixels;
+			var yMin = DINNERCONST.POSITION.reception.y + 10 + DinnerGamePage.getInstance().getIndexOfFirstEmpty()*30;
 			if (yMin >= this._graph.y) {
 				this.setState('Waiting');
-				this._graph.gotoAndPlay('waiting');
+				for (var i=0; i < this.model.personNumber; i++) {
+					this._graph.getChildAt(i).gotoAndPlay('waiting');
+				}
                 this.direction = '';
-			} else {
+			}
+			else {
+				// Move the group and it persons forward
 				this._graph.y -= dy;
 			}
         }
@@ -249,18 +262,41 @@ GroupGraph.states({
 	 */
     ReadMenu: {
         update: function() {
-            //console.debug("[GroupGraph.ReadMenu.update]");
-            var xSave = this._graph.x;
-			var ySave = this._graph.y;
-			for (var i=0; i<this.model.personNumber; i++) {
-				this._graph.x += DINNERCONST.POSITION.at_table[i].dx;
-				this._graph.y += DINNERCONST.POSITION.at_table[i].dy;
-				this._graph.scaleX = this._graph.scaleY = 1;
-				this._graph.shadow = new Shadow("#454", 0, 0, 0);
-				this._graph.gotoAndPlay('at_table_'+i);
+			
+        }
+    },
+    /**
+	 * ReadMenu state
+	 * @author Dominique Jeannin <jeannin.dominique@gmail.com>
+	 * @since 12/09/2011
+	 */
+    SittingDown: {
+        update: function() {
+			
+			// Place each person of the group at the sits of the table
+        	this._graph.x = DINNERCONST.POSITION.tables[this.model.position.number - 1].coord.x;
+        	this._graph.y = DINNERCONST.POSITION.tables[this.model.position.number - 1].coord.y;
+        	
+        	// List of available sits
+        	var possibleSits = [0, 1, 2, 3];
+        	
+        	// For each person of the group, sit down them
+			for (var i=0; i < this.model.personNumber; i++) {
+				var person = this._graph.getChildAt(i);
+				
+				// Choose a sit on the table randomly and which is not already used by another person
+				var sit = Tools.randomFromArray(possibleSits);
+				person.x = DINNERCONST.POSITION.at_table[sit].dx;
+				person.y = DINNERCONST.POSITION.at_table[sit].dy;
+				person.gotoAndPlay('at_table_' + sit);
+				
+				// Remove this sit from the list of available sits
+				possibleSits.splice(possibleSits.indexOf(sit), 1);
+				
+				person.scaleX = 1;
+				person.scaleY = 1;
 			}
-            this._graph.x = xSave;
-			this._graph.y = ySave;
+			this.setState('ReadMenu');
         }
     },
     /**

@@ -99,7 +99,7 @@ var WaiterClass = {
 		}
 
 		// Added item is a group of persons. The inventory must be empty to add a group.
-		if ((item instanceof Group) && (this.inventoryCurrent == 0)) {
+		else if ((item instanceof Group) && (this.inventoryCurrent == 0)) {
 			
 			this.inventory.push(item);
 			
@@ -122,7 +122,12 @@ var WaiterClass = {
 				item = this.inventory.shift();
 			}
 			
-			this.inventoryCurrent -= item.size();
+			if (item instanceof Menu) {
+				this.inventoryCurrent -= item.size();
+			}
+			else if (item instanceof Group) {
+				this.inventoryCurrent = 0;
+			}
 			return item;
 		}
 		return false;

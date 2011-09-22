@@ -5,7 +5,7 @@
  * @class DinnerGamePage
  */
 var DinnerGamePageClass = {
-    className: 'DinnerGamePageClass',
+    
 	// Attributes
 	text: null,
 	/**
@@ -179,7 +179,7 @@ var DinnerGamePageClass = {
 	 */
 	createGroup: function() {
         console.debug("DinnerGamePage.createGroup()");
-		if (this.reception.getMaxGroupList() > this.getNumOfGroupInRecep()) {
+		if (this.getNumOfGroupInRecep() <= this.reception.getMaxGroupList()) {
             console.debug('Create Group');
 			var g = Group.Factory.newInstance();
 			this.addGroup(g);
@@ -199,6 +199,7 @@ var DinnerGamePageClass = {
 	 * @since 12/09/2011
 	 */
 	linkGroupWithTable: function(obj) {
+		/*
         console.debug("[DinnerGamePage] linkGroupWithTable: obj is instanceof :" + obj.className);
 		if (obj.className == "GroupGraphClass") {
             //console.debug("linkGroupWithTable: a groupgrpah is selected");
@@ -218,6 +219,7 @@ var DinnerGamePageClass = {
                 }
             }
 		}
+		*/
 	},
     /**
      * @author Dominique Jeannin <jeannin.dominique@gmail.com>

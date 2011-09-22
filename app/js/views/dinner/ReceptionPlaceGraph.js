@@ -57,12 +57,6 @@ var ReceptionPlaceGraphClass = {
 			target._graph.onPress = function(e) {
 				if(!target._graph.clicked) {
                     console.log('Reception clicked');
-					target.model.isSelected = !this.model.isSelected;
-
-                    var destination = new Destination(target.model, function() {
-                        DinnerGamePage.getInstance().updateConsoleLog('Arrived to ' + target.model.name);
-                    });
-					DinnerGamePage.getInstance().waiter.model.moveTo(destination);
 				}
 			};
 			target._graph.onMouseOver = function() {
