@@ -150,18 +150,17 @@ GroupGraph.states({
 		update: function() {
 			if (this.model.inState('QueuingUp')) {
 				//console.debug("[GroupGraph.Waiting.update]");
-				if (this._graph.y == DINNERCONST.POSITION.firstgroup.y) {
+                var yMin = DINNERCONST.POSITION.reception.y + 10 + DinnerGamePage.getInstance().getIndexOfFirstEmpty(this.model)*30;
+                if (yMin < this._graph.y) {
+				this.setState('Waiting');
+                //if (this._graph.y == DINNERCONST.POSITION.firstgroup.y) {
 					this.setState('Walking2Reception');
 					for (var i=0; i < this.model.personNumber; i++) {
 						this._graph.getChildAt(i).gotoAndPlay('walking_north');
 					}
 	                this.direction = 'north';
 				}
-				else {
-					this.setState('Walking2Reception');
-				}
-			}
-			else if (this.model.inState('WaitingToOrder')) {
+			} else if (this.model.inState('WaitingToOrder')) {
 				this.setState('SittingDown');
 			}
 		}
@@ -174,7 +173,8 @@ GroupGraph.states({
 	Walking2Reception: {
         update: function() {
             var dy = GroupGraph.stepInPixels;
-			var yMin = DINNERCONST.POSITION.reception.y + 10 + DinnerGamePage.getInstance().getIndexOfFirstEmpty()*30;
+            console.debug("[GroupGraph.Walking2Reception] getIndexOfFirstEmpty: " + DinnerGamePage.getInstance().getIndexOfFirstEmpty(this.model));
+			var yMin = DINNERCONST.POSITION.reception.y + 10 + DinnerGamePage.getInstance().getIndexOfFirstEmpty(this.model)*30;
 			if (yMin >= this._graph.y) {
 				this.setState('Waiting');
 				for (var i=0; i < this.model.personNumber; i++) {

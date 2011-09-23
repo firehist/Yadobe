@@ -36,7 +36,7 @@ DINNERCONST.TIME = {
 	 * @since 30/08/2011
 	 */
 	createGroup: {
-		timeRef: Tools.randomXToY(5000, 15000),
+		timeRef: Tools.randomXToY(1000, 5000),
 		getRandTime: function() {
 			return DINNERCONST.TIME.createGroup.timeRef;
 		}
@@ -114,7 +114,7 @@ DINNERCONST.POSITION = {
 		{dx: 20, dy: 90},
 		{dx: -28, dy: 35}
 	],
-    firstgroup: new Point(2, 510)
+    firstgroup: new Point(-35, 510)
 };
 
 /**
@@ -132,8 +132,7 @@ DINNERCONST.ACCESS = {
 		new Point(520,220),
 		new Point(290,390),
 		new Point(520,390)
-	],
-    firstgroup : new Point(50, 300)
+	]
 };
 
 /**

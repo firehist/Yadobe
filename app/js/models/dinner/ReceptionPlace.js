@@ -25,10 +25,10 @@ var ReceptionPlaceClass = {
 	 */
 	maxGroupList: 5,
     /**
-     * store the position int the queue
-     * @type array of boolean
+     * store the position in the queue
+     * @type array of Group
      */
-    busyList: new Array(),
+    waitingGroups: new Array(),
 	/**
 	 * @var bool isSelected
 	 */
@@ -49,7 +49,15 @@ var ReceptionPlaceClass = {
 		this.callSuper(name, coordinates);
 		this.maxGroupList = maxGroupList;
 	},
-	
+	getOutGroup: function(group) {
+        for (var i=0; i<this.waitingGroups.length; i++) {
+            if (this.waitingGroups[i] == group) {
+                this.waitingGroups.splice(i, 1);
+                console.log("[ReceptionPalce.getOutGroup] Le group " + i + " est sorti de la reception");
+                break;
+            }
+        }
+    },
 	// Methods
 	/**
 	 * Test if groupList is empty
@@ -61,26 +69,6 @@ var ReceptionPlaceClass = {
 	 */
 	_isGroupEmpty: function() {
 		return this.menuList.length == 0;
-	},
-	/**
-	 * Launch the game
-	 * @class ReceptionPlace
-	 * @method launch
-	 * @author Benjamin Longearet <firehist@gmail.com>
-	 * @since 31/08/2011	 
-	 */
-	launch: function() {
-		TimeManager.setDinnerTimer(this._groupCreationTimer, this.createGroup, this);
-	},
-	/**
-	 * Pause the game
-	 * @class ReceptionPlace
-	 * @method pause
-	 * @author Benjamin Longearet <firehist@gmail.com>
-	 * @since 31/08/2011	 
-	 */
-	pause: function() {
-		TimeManager.stopDinnerTimer(this._groupCreationTimer, this);
 	},
 	/**
 	 * Run action of reception with moving group to a table

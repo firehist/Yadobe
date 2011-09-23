@@ -120,7 +120,8 @@ var TablePlaceGraphClass = {
                     else if (target.model.inState('Free')) {
 
                         var waiterModel = DinnerGamePage.getInstance().waiter.model;
-                        
+                        var receptionModel = DinnerGamePage.getInstance().reception.model;
+
                     	// Check if there a group is in the Waiter inventory
                     	if ((waiterModel.inventory) && (waiterModel.inventoryCurrent > 0)) {
 
@@ -131,7 +132,9 @@ var TablePlaceGraphClass = {
                     			
                                 // The item is a group
                     			if (item instanceof Group) {
-                    				
+                                    // free the position of the group in the reception
+                                    receptionModel.getOutGroup(item);
+
                     				// Set the group on the table
                                     target.model.group = item;
                                     

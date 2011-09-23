@@ -148,7 +148,8 @@ var DinnerGamePageClass = {
 	 * @since 31/08/2011
 	 */
 	pause: function() {
-		this.reception.pause();
+		//this.reception.pause();
+        TimeManager.stopDinnerTimer('createGroup', this);
 	},
 	/**
 	 * Get the current group list length
@@ -183,6 +184,7 @@ var DinnerGamePageClass = {
             console.debug('Create Group');
 			var g = Group.Factory.newInstance();
 			this.addGroup(g);
+            this.reception.model.waitingGroups.push(g);
 		}
 	},
     /**
@@ -192,47 +194,23 @@ var DinnerGamePageClass = {
     addGroup: function(groupModel) {
         var groupGraph = new GroupGraph(groupModel);
         this.groupList.push(groupGraph);
-        this.pageContainer.addChildAt(groupGraph.getGraph(), DINNERCONST.SCENES.group);
+        //this.pageContainer.addChildAt(groupGraph.getGraph(), DINNERCONST.SCENES.group);
+        this.pageContainer.addChild(groupGraph.getGraph());
     },
-	/**
-	 * @author Dominique Jeannin <jeannin.dominique@gmail.com>
-	 * @since 12/09/2011
-	 */
-	linkGroupWithTable: function(obj) {
-		/*
-        console.debug("[DinnerGamePage] linkGroupWithTable: obj is instanceof :" + obj.className);
-		if (obj.className == "GroupGraphClass") {
-            //console.debug("linkGroupWithTable: a groupgrpah is selected");
-			this.groupGraphSelected = obj;
-		} else if (obj.className == "TablePlaceGraphClass") {
-            //console.debug("[DinnerGamePage] linkGroupWithTable: a table is selected");
-            // search index corresponding to table's color
-            for (var i=0; i<DINNERCONST.POSITION.tables.length; i++) {
-                if (DINNERCONST.POSITION.tables[i].name == obj.model.color) {
-				    console.debug("linkGroupWithTable: setState at ReadMenu");
-                    //this.groupGraphSelected.goToTablePoint = DINNERCONST.POSITION.tables[i].coord;
-					this.groupGraphSelected.setState('ReadMenu');
-					obj.setGroupGraph(this.groupGraphSelected);
-					this.groupGraphSelected._graph.x = DINNERCONST.POSITION.tables[i].coord.x;
-					this.groupGraphSelected._graph.y = DINNERCONST.POSITION.tables[i].coord.y;
-                    break;
-                }
-            }
-		}
-		*/
-	},
     /**
      * @author Dominique Jeannin <jeannin.dominique@gmail.com>
      * @since 13/09/2011
      */
-    getIndexOfFirstEmpty: function() {
-        //TODO: this must be done by ReceptionPlace model
-        var counter = 0;
-        for (var i=0; i<this.groupList.length; i++) {
-            if (!this.groupList[i].model.isGone) {
-                counter++;
+    getIndexOfFirstEmpty: function(askingGroup) {
+        var waitingGroups = this.reception.model.waitingGroups;
+        counter = 1;
+        for (var i=0; i<waitingGroups.length; i++) {
+            if (waitingGroups[i] == askingGroup) {
+                counter = i+1;
+                break;
             }
         }
+        //return this.reception.model.waitingGroups.length;
         return counter;
     }
 };
