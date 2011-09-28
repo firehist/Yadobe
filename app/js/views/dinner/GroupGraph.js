@@ -262,11 +262,19 @@ GroupGraph.states({
 	 */
     ReadMenu: {
         update: function() {
-			
+            console.debug("[Group " + this.model.color + "] nous lisons le menu");
+            // TODO : créer la méthode this.model.generateDinnerMenu()
+            // qui génère les menus pour chaque person du groupe
+            //this.model.generateDinnerMenu();
+			TimeManager.setDinnerTimer(
+                'ReadMenu',
+                this.setState('WaitingOrder');,
+                , this);
+            }
         }
     },
     /**
-	 * ReadMenu state
+	 * SittingDown state
 	 * @author Dominique Jeannin <jeannin.dominique@gmail.com>
 	 * @since 12/09/2011
 	 */
@@ -306,9 +314,10 @@ GroupGraph.states({
 	 */
     WaitingOrder: {
         update: function() {
-            //console.debug("[GroupGraph.Eating.update]");
-           
-            
+            console.debug("[Group " + this.model.color + "] nous attendons pour commander");
+            // TODO : ajouter au container les bitmap des plats choisis
+            // if suffit de regarder dans le model ce qui a été généré par la méthode
+            // this.model.generateDinnerMenu().
         }
     },
 	/**
