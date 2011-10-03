@@ -316,7 +316,7 @@ GroupGraph.states({
             //console.debug("[Group " + this.model.color + "] nous attendons pour commander");
             // TODO : ajouter au container les bitmap des plats choisis
             // if suffit de regarder dans le model ce qui a été généré par la méthode
-            // this.model.generateDinnerMenu().
+            // this.model.getDinnerMenu().
         }
     },
 	/**
