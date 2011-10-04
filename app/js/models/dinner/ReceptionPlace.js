@@ -23,7 +23,7 @@ var ReceptionPlaceClass = {
 	 * Max length of groupList
 	 * @type Integer
 	 */
-	maxGroupList: 5,
+	maxGroupList: 1,
     /**
      * store the position in the queue
      * @type array of Group

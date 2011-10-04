@@ -67,6 +67,7 @@ var GroupClass ={
 	 * @param name String Name of this group
 	 * @param color String Color set in DINNERCONST.COLOR
 	 * @param personNumber int Number of person in this group
+	 * @param position @TODO
 	 */
 	initialize: function(name, color, personNumber, position) {
 		this.name = name;

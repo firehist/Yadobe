@@ -62,7 +62,7 @@ var DinnerGamePageClass = {
 		this.pageContainer.addChildAt(this.kitchen.getGraph(), DINNERCONST.SCENES.kitchen);
 		
 		// Reception
-		var receptionModel = new ReceptionPlace('Réception', 2, DINNERCONST.ACCESS.reception);
+		var receptionModel = new ReceptionPlace('Réception', 1, DINNERCONST.ACCESS.reception);
 		this.reception = new ReceptionPlaceGraph(receptionModel);
 		this.pageContainer.addChildAt(this.reception.getGraph(), DINNERCONST.SCENES.reception);
 		
@@ -179,7 +179,7 @@ var DinnerGamePageClass = {
 	 * @since 30/08/2011
 	 */
 	createGroup: function() {
-		if (this.getNumOfGroupInRecep() <= this.reception.getMaxGroupList()) {
+		if (this.getNumOfGroupInRecep() < this.reception.model.maxGroupList) {
             console.debug('Create Group');
 			var g = Group.Factory.newInstance();
 			this.addGroup(g);

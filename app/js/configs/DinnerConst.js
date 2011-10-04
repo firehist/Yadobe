@@ -78,7 +78,10 @@ DINNERCONST.IMAGE = {
 	background: 'img/dinnerGame/stage_01.jpg',
 	menus: 'img/dinnerGame/kitchen/menus.png',
 	luigi_walking: 'img/dinnerGame/kitchen/luigi_walking.png',
-	carrier: 'img/dinnerGame/carrier.png'
+	carrier: 'img/dinnerGame/carrier.png',
+	group_WaitingToOrder: 'img/dinnerGame/group/bubble_menu.png',
+	group_WaitingMeal: 'img/dinnerGame/group/bubble_waiting.png',
+	group_WaitingForPayment: 'img/dinnerGame/group/bubble_payment.png'
 };
 /**
  * DINNERCONST.POSITION Struct
