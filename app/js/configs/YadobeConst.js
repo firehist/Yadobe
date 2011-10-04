@@ -29,7 +29,7 @@ YADOBECONST.RECIPES = {
 			price: 5
 		},
 		{
-			name: 'Magret de canard',
+			name: 'Poisson',
 			duration: 90,
 			price: 15
 		}

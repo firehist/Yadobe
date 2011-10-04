@@ -34,6 +34,17 @@ var TimeManager = {
 			context.setReady(menu);
 		}, time);
 	},
+    /**
+	 * Set state timer
+	 * @param time
+	 * @param context
+	 * @param state
+	 */
+	setStateTimer: function(time, context, state) {
+		window.setTimeout(function(){
+			context.setState(state);
+		}, time);
+	},
 	/**
 	 * Build and return the unique key for timer
 	 * @author Benjamin Longearet <firehist@gmail.com>

@@ -173,7 +173,7 @@ GroupGraph.states({
 	Walking2Reception: {
         update: function() {
             var dy = GroupGraph.stepInPixels;
-            console.debug("[GroupGraph.Walking2Reception] getIndexOfFirstEmpty: " + DinnerGamePage.getInstance().getIndexOfFirstEmpty(this.model));
+            //console.debug("[GroupGraph.Walking2Reception] getIndexOfFirstEmpty: " + DinnerGamePage.getInstance().getIndexOfFirstEmpty(this.model));
 			var yMin = DINNERCONST.POSITION.reception.y + 10 + DinnerGamePage.getInstance().getIndexOfFirstEmpty(this.model)*30;
 			if (yMin >= this._graph.y) {
 				this.setState('Waiting');
@@ -215,7 +215,7 @@ GroupGraph.states({
             var distByWest = Math.sqrt(xSquareByWest+ySquare);
 			
             if (distByNorth <= 2*dy || distBySouth <= 2*dy || distByEast <= 2*dx || distByWest <= 2*dx) {
-                console.debug("Eating state");
+                //console.debug("Eating state");
                 this.setState('Eating');
 				this._graph.gotoAndPlay('waiting');
             } else {
@@ -262,11 +262,18 @@ GroupGraph.states({
 	 */
     ReadMenu: {
         update: function() {
-			
+            console.debug("[Group " + this.model.color + "] nous lisons le menu");
+            // TODO : créer la méthode this.model.generateDinnerMenu()
+            // qui génère les menus pour chaque person du groupe
+            //this.model.generateDinnerMenu();
+            TimeManager.setStateTimer(
+                Tools.randomXToY(1000, 5000),
+                this,
+                'WaitingOrder');
         }
     },
     /**
-	 * ReadMenu state
+	 * SittingDown state
 	 * @author Dominique Jeannin <jeannin.dominique@gmail.com>
 	 * @since 12/09/2011
 	 */
@@ -306,9 +313,10 @@ GroupGraph.states({
 	 */
     WaitingOrder: {
         update: function() {
-            //console.debug("[GroupGraph.Eating.update]");
-           
-            
+            //console.debug("[Group " + this.model.color + "] nous attendons pour commander");
+            // TODO : ajouter au container les bitmap des plats choisis
+            // if suffit de regarder dans le model ce qui a été généré par la méthode
+            // this.model.getDinnerMenu().
         }
     },
 	/**
