@@ -56,6 +56,11 @@ var GroupClass ={
 	 * @type Place
 	 */
 	position: null,
+    /**
+     * List of menu
+     * @type Array of Menu
+     */
+    menuList: new Array(),
 	
 	// Constructor
 	/**
@@ -113,6 +118,19 @@ var GroupClass ={
 		var d = new Date();
 		this.cumulWaitingTime += d.getTime() - this.waitingTime;
 		this.waitingTime = null;
+	},
+    /**
+	 * Set group in NO waiting state and clear saved time
+	 * @class Group
+	 * @method stopWaiting
+	 * @author Benjamin Longearet <firehist@gmail.com>
+	 * @since 31/08/2011
+	 */
+	generateMenu: function() {
+        var recipeManager = RecipeManager.getInstance();
+		for (var i=0; i<this.personNumber; i++) {
+            this.menuList.push(recipeManager.createRandomMenu());
+        }
 	}
 };
 var Group = new JS.Class(GroupClass);

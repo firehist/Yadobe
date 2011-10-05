@@ -93,19 +93,19 @@ DINNERCONST.POSITION = {
 	tables: [
         {
             name: "red",
-            coord: new Point(340, 240)
+            coord: new Point(340, 210)
         },
 		{
             name: "blue",
-            coord: new Point(570, 240)
+            coord: new Point(570, 210)
         },
 		{
             name: "green",
-            coord: new Point(570, 410)
+            coord: new Point(340, 410)
         },
 		{
             name: "yellow",
-            coord: new Point(340, 410)
+            coord: new Point(570, 410)
         }
     ],
 	at_table: [
@@ -128,8 +128,8 @@ DINNERCONST.ACCESS = {
 	kitchen: new Point(550,100),
 	reception: new Point(140,210),
 	tables: [
-		new Point(290,220),
-		new Point(520,220),
+		new Point(290,190),
+		new Point(520,190),
 		new Point(290,390),
 		new Point(520,390)
 	]
@@ -144,21 +144,21 @@ DINNERCONST.ACCESS = {
  * @type Array<Point>
  */
 DINNERCONST.PATH = new Array();
-DINNERCONST.PATH['Cuisine-Réception'] = [new Point(550,100), new Point(240,160), new Point(240,210), new Point(140,210)];
-DINNERCONST.PATH['Cuisine-Table1'] = [new Point(550,100), new Point(290,160), new Point(290,220)];
-DINNERCONST.PATH['Cuisine-Table2'] = [new Point(550,100), new Point(550,160), new Point(520,220)];
-DINNERCONST.PATH['Cuisine-Table3'] = [new Point(550,100), new Point(240,160), new Point(240,390), new Point(290,390)];
-DINNERCONST.PATH['Cuisine-Table4'] = [new Point(550,100), new Point(470,100), new Point(470,390), new Point(520,390)];
-DINNERCONST.PATH['Réception-Table1'] = [new Point(140,210), new Point(290,210), new Point(290,220)];
-DINNERCONST.PATH['Réception-Table2'] = [new Point(140,210), new Point(240,210), new Point(240,160), new Point(520,160), new Point(520,220)];
-DINNERCONST.PATH['Réception-Table3'] = [new Point(140,210), new Point(270,390), new Point(290,390)];
-DINNERCONST.PATH['Réception-Table4'] = [new Point(140,210), new Point(240,330), new Point(520,330), new Point(520,390)];
-DINNERCONST.PATH['Table1-Table2'] = [new Point(290,220), new Point(290,160), new Point(520,160), new Point(520,220)];
-DINNERCONST.PATH['Table1-Table3'] = [new Point(290,220), new Point(270,220), new Point(270,390), new Point(290,390)];
-DINNERCONST.PATH['Table1-Table4'] = [new Point(290,220), new Point(270,220), new Point(270,330), new Point(290,330), new Point(520,330), new Point(520,390)];
-DINNERCONST.PATH['Table2-Table4'] = [new Point(520,220), new Point(500,220), new Point(500,390), new Point(520,390)];
-DINNERCONST.PATH['Table2-Table3'] = [new Point(520,220), new Point(500,220), new Point(500,330), new Point(290,330), new Point(290,390)];
-DINNERCONST.PATH['Table3-Table4'] = [new Point(290,390), new Point(290,330), new Point(520,330), new Point(520,390)];
+DINNERCONST.PATH['Cuisine-Réception'] = [DINNERCONST.ACCESS.kitchen, new Point(240,160), new Point(240,210), DINNERCONST.ACCESS.reception];
+DINNERCONST.PATH['Cuisine-Table1'] = [DINNERCONST.ACCESS.kitchen, new Point(290,160), DINNERCONST.ACCESS.tables[0]];
+DINNERCONST.PATH['Cuisine-Table2'] = [DINNERCONST.ACCESS.kitchen, new Point(550,160), DINNERCONST.ACCESS.tables[1]];
+DINNERCONST.PATH['Cuisine-Table3'] = [DINNERCONST.ACCESS.kitchen, new Point(240,160), new Point(240,390), DINNERCONST.ACCESS.tables[2]];
+DINNERCONST.PATH['Cuisine-Table4'] = [DINNERCONST.ACCESS.kitchen, new Point(470,100), new Point(470,390), DINNERCONST.ACCESS.tables[3]];
+DINNERCONST.PATH['Réception-Table1'] = [DINNERCONST.ACCESS.reception, new Point(290,180), DINNERCONST.ACCESS.tables[0]];
+DINNERCONST.PATH['Réception-Table2'] = [DINNERCONST.ACCESS.reception, new Point(240,180), new Point(240,160), new Point(520,160), DINNERCONST.ACCESS.tables[1]];
+DINNERCONST.PATH['Réception-Table3'] = [DINNERCONST.ACCESS.reception, new Point(270,390), DINNERCONST.ACCESS.tables[2]];
+DINNERCONST.PATH['Réception-Table4'] = [DINNERCONST.ACCESS.reception, new Point(240,330), new Point(520,330), DINNERCONST.ACCESS.tables[3]];
+DINNERCONST.PATH['Table1-Table2'] = [DINNERCONST.ACCESS.tables[0], new Point(290,160), new Point(520,160), DINNERCONST.ACCESS.tables[1]];
+DINNERCONST.PATH['Table1-Table3'] = [DINNERCONST.ACCESS.tables[0], new Point(270,190), new Point(270,390), DINNERCONST.ACCESS.tables[2]];
+DINNERCONST.PATH['Table1-Table4'] = [DINNERCONST.ACCESS.tables[0], new Point(270,190), new Point(270,330), new Point(290,330), new Point(520,330), DINNERCONST.ACCESS.tables[3]];
+DINNERCONST.PATH['Table2-Table4'] = [DINNERCONST.ACCESS.tables[1], new Point(500,190), new Point(500,390), DINNERCONST.ACCESS.tables[3]];
+DINNERCONST.PATH['Table2-Table3'] = [DINNERCONST.ACCESS.tables[1], new Point(500,190), new Point(500,330), new Point(290,330), DINNERCONST.ACCESS.tables[2]];
+DINNERCONST.PATH['Table3-Table4'] = [DINNERCONST.ACCESS.tables[2], new Point(290,190), new Point(520,330), DINNERCONST.ACCESS.tables[3]];
 
 /**
  * DINNERCONST.SCENES Struct

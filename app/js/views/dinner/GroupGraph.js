@@ -269,7 +269,9 @@ GroupGraph.states({
             TimeManager.setStateTimer(
                 Tools.randomXToY(1000, 5000),
                 this,
-                'WaitingOrder');
+                'WaitingOrder'
+            );
+            
         }
     },
     /**
@@ -316,7 +318,10 @@ GroupGraph.states({
             //console.debug("[Group " + this.model.color + "] nous attendons pour commander");
             // TODO : ajouter au container les bitmap des plats choisis
             // if suffit de regarder dans le model ce qui a été généré par la méthode
-            // this.model.getDinnerMenu().
+            if (this.model.menuList.length == 0) {
+                console.debug("[GroupGraph] WaitingOrder: generation du menu");
+                this.model.generateMenu();
+            }
         }
     },
 	/**

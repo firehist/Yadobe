@@ -69,6 +69,7 @@ var MenuClass = {
 	},
 	/**
 	 * Return the size of the menu
+     * @author Yannick Galatol
 	 * @return Integer the size of the menu
 	 */
 	size: function() {
