@@ -20,6 +20,11 @@ var GroupGraphClass = {
 	 * @type {DisplayObject} or Bitmap
 	 */
 	_graph: null,
+	/**
+	 * Bitmap object available for the bubbles
+	 * @type {Bitmap}
+	 */
+	_bubbles: {},
     /**
      * indicates the current direction
      * @type string
@@ -46,6 +51,7 @@ var GroupGraphClass = {
 		this.setState('Waiting');
 		this._graph = new Container();
         this.createGroup();
+		this.createBubbles();
 		this.addMouseListener();
 	},
 	/**
@@ -73,6 +79,21 @@ var GroupGraphClass = {
 			this._graph.addChildAt(person, i);
 		}
 
+	},
+    /**
+     * @method createGroup
+     */
+    createBubbles: function() {
+		this._bubbles = {
+			"WaitingToOrder": new Bitmap(DINNERCONST.IMAGE.group_WaitingToOrder),
+			"WaitingMeal": new Bitmap(DINNERCONST.IMAGE.group_WaitingMeal),
+			"WaitingForPayment": new Bitmap(DINNERCONST.IMAGE.group_WaitingForPayment)			
+		};
+		// Add all bubbles with visible = false in the graph
+		for(var index in this._bubbles) {
+			this._bubbles[index].visible = false;
+			this._graph.addChild(this._bubbles[index]);
+		}
 	},
     /**
      *
@@ -124,6 +145,21 @@ var GroupGraphClass = {
 				}
 			};
 		})(this);
+	},
+	/**
+	 * Draw the correct bubble
+     * @author Yannick Galatol <yannick.galatol@gmail.com>
+     * @since 07/09/2011
+	 * @return {DisplayObject} The group graph
+	 */
+	drawBubble: function(index) {
+		for(var indexBubble in this._bubbles) {
+			if(indexBubble == index) {
+				this._bubbles[indexBubble].visible = true;
+			} else {
+				this._bubbles[indexBubble].visible = false;
+			}
+		}
 	}
 };
 var GroupGraph = new JS.Class(GroupGraphClass);
@@ -148,6 +184,7 @@ GroupGraph.states({
 	 */
 	Waiting: {
 		update: function() {
+			this.updateBubble();
 			if (this.model.inState('QueuingUp')) {
 				//console.debug("[GroupGraph.Waiting.update]");
                 var yMin = DINNERCONST.POSITION.reception.y + 10 + DinnerGamePage.getInstance().getIndexOfFirstEmpty(this.model)*30;
@@ -163,6 +200,9 @@ GroupGraph.states({
 			} else if (this.model.inState('WaitingToOrder')) {
 				this.setState('SittingDown');
 			}
+		},
+		updateBubble: function() {
+			this.drawBubble(null);
 		}
 	},
 	/**
@@ -186,7 +226,10 @@ GroupGraph.states({
 				// Move the group and it persons forward
 				this._graph.y -= dy;
 			}
-        }
+        },
+		updateBubble: function() {
+			this.drawBubble(null);
+		}
     },
 	/**
 	 * Walking2Table state
@@ -195,6 +238,7 @@ GroupGraph.states({
 	 */
 	Walking2Table: {
         update: function() {
+			this.updateBubble();
             //console.debug("Walking2Table");
             var dx = 10;
             var dy = 8;
@@ -253,7 +297,10 @@ GroupGraph.states({
                     }
                 }
             }
-        }
+        },
+		updateBubble: function() {
+			this.drawBubble(null);
+		}
     },
     /**
 	 * ReadMenu state
@@ -262,17 +309,19 @@ GroupGraph.states({
 	 */
     ReadMenu: {
         update: function() {
-            console.debug("[Group " + this.model.color + "] nous lisons le menu");
+			this.updateBubble();
+            //console.debug("[Group " + this.model.color + "] nous lisons le menu");
             // TODO : créer la méthode this.model.generateDinnerMenu()
             // qui génère les menus pour chaque person du groupe
             //this.model.generateDinnerMenu();
             TimeManager.setStateTimer(
                 Tools.randomXToY(1000, 5000),
                 this,
-                'WaitingOrder'
-            );
-            
-        }
+                'WaitingOrder');
+        },
+		updateBubble: function() {
+			this.drawBubble(null);
+		}
     },
     /**
 	 * SittingDown state
@@ -281,7 +330,7 @@ GroupGraph.states({
 	 */
     SittingDown: {
         update: function() {
-			
+			this.updateBubble();
 			// Place each person of the group at the sits of the table
         	this._graph.x = DINNERCONST.POSITION.tables[this.model.position.number - 1].coord.x;
         	this._graph.y = DINNERCONST.POSITION.tables[this.model.position.number - 1].coord.y;
@@ -306,7 +355,10 @@ GroupGraph.states({
 				person.scaleY = 1;
 			}
 			this.setState('ReadMenu');
-        }
+        },
+		updateBubble: function() {
+			this.drawBubble(null);
+		}
     },
     /**
 	 * WaitingOrder state
@@ -315,14 +367,20 @@ GroupGraph.states({
 	 */
     WaitingOrder: {
         update: function() {
+			this.updateBubble();
             //console.debug("[Group " + this.model.color + "] nous attendons pour commander");
-            // TODO : ajouter au container les bitmap des plats choisis
-            // if suffit de regarder dans le model ce qui a été généré par la méthode
             if (this.model.menuList.length == 0) {
                 console.debug("[GroupGraph] WaitingOrder: generation du menu");
                 this.model.generateMenu();
             }
-        }
+        },
+		updateBubble: function() {
+			if(this.model.inState("WaitingToOrder")) {
+				this.drawBubble("WaitingToOrder");
+			} else if(this.model.inState("WaitingMeal")) {
+                this.drawBubble("WaitingMeal");
+			}
+		}
     },
 	/**
 	 * Eating state
@@ -331,8 +389,12 @@ GroupGraph.states({
 	 */
     Eating: {
         update: function() {
+			this.updateBubble();
             //console.debug("[GroupGraph.Eating.update]");
         
-        }
+        },
+		updateBubble: function() {
+			this.drawBubble(null);
+		}
     }
 });

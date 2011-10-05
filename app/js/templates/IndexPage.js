@@ -59,7 +59,9 @@ var IndexPageClass = {
             color : "#000000",
             click : function() {
                 // Display the DinnerGame page
-                Yadobe.getInstance().setCurrentPage(DinnerGamePage.getInstance());
+                var dinnerGamePage = DinnerGamePage.getInstance();
+                Yadobe.getInstance().setCurrentPage(dinnerGamePage);
+                dinnerGamePage.launch();
             }
         });
         this.pageContainer.addChild(playButton);

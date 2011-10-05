@@ -74,6 +74,14 @@ var TablePlaceGraphClass = {
 	                            console.log("The table " + target.model.number + " passed an order and is waiting their meal.");
 	                            // @TODO The group pass the order
 	                            target.model.group.setState('WaitingMeal');
+                                // launch cooking
+                                var kitchenModel = DinnerGamePage.getInstance().kitchen.model;
+                                for (var i=0; i<target.model.group.menuList.length; i++) {
+                                    // TODO : définir la condition qui permet de vérifier si le menu est déjà en préparation ou pas
+                                    //if (kitchenModel.pendingMenuList.length == 0) {
+                                        kitchenModel.addMenu(target.model.group.menuList[i]);
+                                    //}
+                                }
 	                        });
 	                        
 	    					DinnerGamePage.getInstance().waiter.model.moveTo(destination);
@@ -110,6 +118,7 @@ var TablePlaceGraphClass = {
 		                    				console.log("The menu arrived to the bad table (table " + target.model.number + " instead of table " + item.table + ").");
 		                    			}
 		                    		}
+                                    target.model.group.setState('Eating'); // this is not the correct place (see TODOs in the loop for)
 		                    		
 		                    	}
 	                        });

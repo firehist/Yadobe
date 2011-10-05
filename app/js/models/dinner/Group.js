@@ -72,6 +72,7 @@ var GroupClass ={
 	 * @param name String Name of this group
 	 * @param color String Color set in DINNERCONST.COLOR
 	 * @param personNumber int Number of person in this group
+	 * @param position @TODO
 	 */
 	initialize: function(name, color, personNumber, position) {
 		this.name = name;
@@ -127,10 +128,12 @@ var GroupClass ={
 	 * @since 31/08/2011
 	 */
 	generateMenu: function() {
+        console.debug("[Group.generateMenu] Start");
         var recipeManager = RecipeManager.getInstance();
 		for (var i=0; i<this.personNumber; i++) {
             this.menuList.push(recipeManager.createRandomMenu());
         }
+        console.debug("[Group.generateMenu] Nombre de menu genere: " + this.menuList.length);
 	}
 };
 var Group = new JS.Class(GroupClass);
