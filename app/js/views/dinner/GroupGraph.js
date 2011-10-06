@@ -125,25 +125,19 @@ var GroupGraphClass = {
     addMouseListener: function() {
 		(function(target) {
 			target._graph.onPress = function() {
-				if(!target._graph.clicked) {
-					console.debug('[GroupGraph.onPress] Group clicked');
-                	DinnerGamePage.getInstance().waiter.model.addToInventory(target.model);
+				console.log('Group clicked');
+				// Test si le groupe est assis (fonctionne avec la table) ou non
+				if(target.model.inState('QueuingUp')) {
+					if(!target._graph.clicked) {
+						console.debug('[GroupGraph.onPress] Group clicked');
+						DinnerGamePage.getInstance().waiter.model.addToInventory(target.model);
+					}
+				} else {
+					TABLEGROUPMOUSELISTENER.onPressWaitingMeal(target);
 				}
 			};
-			target._graph.onMouseOver = function() {
-				if(!target._graph.clicked) {
-					target._graph.alpha = 0.8;
-					$('body').css('cursor', 'pointer');
-					Yadobe.getInstance().setUpdate();
-				}
-			};
-			target._graph.onMouseOut = function() {
-				if(!target._graph.clicked) {
-					target._graph.alpha = 1;
-					$('body').css('cursor', 'default');
-					Yadobe.getInstance().setUpdate();
-				}
-			};
+			target._graph.onMouseOver = TABLEGROUPMOUSELISTENER.onMouseOver(target);
+			target._graph.onMouseOut = TABLEGROUPMOUSELISTENER.onMouseOut(target);
 		})(this);
 	},
 	/**

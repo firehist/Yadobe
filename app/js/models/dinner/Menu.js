@@ -6,6 +6,9 @@
  * @class
  **/
 var MenuClass = {
+	// Includes
+	include: JS.State,
+	
 	// Attributes
 	table: 0,
 	/**
@@ -38,6 +41,7 @@ var MenuClass = {
 		this.dish = dish;
 		this.dessert = dessert;
 		this.drink = drink;
+		this.setState('Wait');
 	},
 	
 	// Methods
@@ -89,3 +93,16 @@ var MenuClass = {
 	}
 };
 var Menu = new JS.Class(MenuClass);
+
+/**
+ * Group states declaration
+ * @author Benjamin Longearet <firehist@gmail.com>
+ * @since 06/10/2011
+ * @module Group
+ */
+Menu.states({
+	Wait: {},
+	Ready: {},
+	Use: {},
+	Finish: {}
+});

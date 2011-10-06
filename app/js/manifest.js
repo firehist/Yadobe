@@ -19,6 +19,7 @@ JS.Packages(function() { with(this) {
 	file(JSCONFIG_PATH + 'TimeManager.js').provides('TimeManager').requires('DINNERCONST');
 	file(JSCONFIG_PATH + 'TranslationConst.js').provides('TRANSLATIONCONST', 'LANGUAGECONST');
 	file(JSCONFIG_PATH + 'Translation.js').provides('Translation').requires('TRANSLATIONCONST');
+	file(JSCONFIG_PATH + 'TableGroupMouseListener.js').provides('TABLEGROUPMOUSELISTENER');
     
 	/* Dinner models */
 	file(JSMODEL_DINNER_PATH + 'Place.js').provides('Place').requires('JS.Class', 'Easel');
@@ -92,7 +93,8 @@ JS.Packages(function() { with(this) {
 			'GroupGraph',
 			'RecipeManager',
 			'WaiterGraph',
-            'Destination'
+            'Destination',
+			'TABLEGROUPMOUSELISTENER'
 		);
 	/* Waiting */
 	file(JSTEMPLATE_PATH + 'WaitingPage.js')
