@@ -115,7 +115,7 @@ var WaiterClass = {
 			
 			if (index) {
 				item = this.inventory[index];
-				delete this.inventory[index];
+				this.inventory.slice(index, 1);
 			}
 			else {
 				// If no index is specified return the first item of the list and delete it
@@ -131,6 +131,27 @@ var WaiterClass = {
 			return item;
 		}
 		return false;
+	},
+	clearInventory: function() {
+		this.inventoryCurrent = 0;
+		this.inventory = [];
+		console.log("Inventory cleared.");
+	},
+	displayInventory: function() {
+		
+		var intentoryAsString = '';
+		for (var index in this.inventory) {
+			
+			var item = this.inventory[index];
+			
+			if (item instanceof Group) {
+				intentoryAsString += index + ' : Group : ' + item + '\n';
+			}
+			else if (item instanceof Menu) {
+				intentoryAsString += index + ' : Menu : ' + item + '\n';
+			}
+		}
+		console.log("Inventory:\n" + intentoryAsString);
 	},
 	arrivedToDestination : function() {
 		// Execute the method on arrival to the destination

@@ -29,6 +29,8 @@
 			<input type="button" value="DinnerGamePage" onclick="javascript:Yadobe.getInstance().setCurrentPage(DinnerGamePage.getInstance())" />
 			<input type="button" value="Add Group" onclick="javascript:DinnerGamePage.getInstance().launch()" />
 			<input type="button" value="Add Menu" onclick="javascript:DinnerGamePage.getInstance().kitchen.model.addMenu( RecipeManager.getInstance().createRandomMenu() )" />
+			<input type="button" value="See Inventory" onclick="javascript:DinnerGamePage.getInstance().waiter.model.displayInventory()" />
+			<input type="button" value="Clear Inventory" onclick="javascript:DinnerGamePage.getInstance().waiter.model.clearInventory()" />
 		</div>
 	</body>
 </html>

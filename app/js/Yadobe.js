@@ -88,8 +88,8 @@ var YadobeClass = {
 	 * @public
 	 */
 	loadGame: function() {
-		this.setCurrentPage(IndexPage.getInstance());
-//		this.setCurrentPage(DinnerGamePage.getInstance());
+//		this.setCurrentPage(IndexPage.getInstance());
+		this.setCurrentPage(DinnerGamePage.getInstance());
 		this.setUpdate();
 	},
 	/**
