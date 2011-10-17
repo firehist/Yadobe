@@ -48,9 +48,13 @@ var GroupGraphClass = {
 	initialize: function(model) {
 		console.log('GroupGraph.initialize(model)');
 		this.model = model;
-		this.setState('Waiting');
 		this._graph = new Container();
         this.createGroup();
+		this.setState('Walking2Reception');
+		for (var i=0; i < this.model.personNumber; i++) {
+			this._graph.getChildAt(i).gotoAndPlay('walking_north');
+		}
+		this.direction = 'north';
 		this.createBubbles();
 		this.addMouseListener();
 	},
@@ -72,7 +76,7 @@ var GroupGraphClass = {
     	this._graph.y = DINNERCONST.POSITION.firstgroup.y;
 		for (var i=0; i < this.model.personNumber; i++) {
 			var person = this.createPerson();
-			person.x = i * 50;
+			person.x = i * 15;
 			person.y = 0;
 			person.scaleX = 1.5;
 			person.scaleY = 1.5;
@@ -124,20 +128,24 @@ var GroupGraphClass = {
      */
     addMouseListener: function() {
 		(function(target) {
-			target._graph.onPress = function() {
-				console.log('Group clicked');
-				// Test si le groupe est assis (fonctionne avec la table) ou non
-				if(target.model.inState('QueuingUp')) {
-					if(!target._graph.clicked) {
-						console.debug('[GroupGraph.onPress] Group clicked');
-						DinnerGamePage.getInstance().waiter.model.addToInventory(target.model);
+			// if state is Walking2Reception we disable to click on group
+			console.debug("State of group: " + target.states);
+			//if (!target.inState('Walking2Reception')) {
+				target._graph.onPress = function() {
+					if (!target.inState('Walking2Reception')) {
+						// check if the group is sitting (is dependant on table)
+						if (target.model.inState('QueuingUp')) {
+							if (!target._graph.clicked) {
+								DinnerGamePage.getInstance().waiter.model.addToInventory(target.model);
+							}
+						} else {
+							TABLEGROUPMOUSELISTENER.onPressWaitingMeal(target);
+						}
 					}
-				} else {
-					TABLEGROUPMOUSELISTENER.onPressWaitingMeal(target);
-				}
-			};
-			target._graph.onMouseOver = TABLEGROUPMOUSELISTENER.onMouseOver(target);
-			target._graph.onMouseOut = TABLEGROUPMOUSELISTENER.onMouseOut(target);
+				};
+				target._graph.onMouseOver = TABLEGROUPMOUSELISTENER.onMouseOver(target);
+				target._graph.onMouseOut = TABLEGROUPMOUSELISTENER.onMouseOut(target);
+			//}
 		})(this);
 	},
 	/**
@@ -180,18 +188,11 @@ GroupGraph.states({
 		update: function() {
 			this.updateBubble();
 			if (this.model.inState('QueuingUp')) {
-				//console.debug("[GroupGraph.Waiting.update]");
-                var yMin = DINNERCONST.POSITION.reception.y + 10 + DinnerGamePage.getInstance().getIndexOfFirstEmpty(this.model)*30;
-                if (yMin < this._graph.y) {
-				this.setState('Waiting');
-                //if (this._graph.y == DINNERCONST.POSITION.firstgroup.y) {
-					this.setState('Walking2Reception');
-					for (var i=0; i < this.model.personNumber; i++) {
-						this._graph.getChildAt(i).gotoAndPlay('walking_north');
-					}
-	                this.direction = 'north';
+				for (var i=0; i < this.model.personNumber; i++) {
+					this._graph.getChildAt(i).gotoAndPlay('waiting');
 				}
-			} else if (this.model.inState('WaitingToOrder')) {
+                this.direction = '';
+			} else if (this.model.inState('ReadingMenu')) {
 				this.setState('SittingDown');
 			}
 		},
@@ -207,90 +208,13 @@ GroupGraph.states({
 	Walking2Reception: {
         update: function() {
             var dy = GroupGraph.stepInPixels;
-            //console.debug("[GroupGraph.Walking2Reception] getIndexOfFirstEmpty: " + DinnerGamePage.getInstance().getIndexOfFirstEmpty(this.model));
 			var yMin = DINNERCONST.POSITION.reception.y + 10 + DinnerGamePage.getInstance().getIndexOfFirstEmpty(this.model)*30;
-			if (yMin >= this._graph.y) {
+			if (this._graph.y <= yMin) {
 				this.setState('Waiting');
-				for (var i=0; i < this.model.personNumber; i++) {
-					this._graph.getChildAt(i).gotoAndPlay('waiting');
-				}
-                this.direction = '';
-			}
-			else {
+			} else {
 				// Move the group and it persons forward
 				this._graph.y -= dy;
 			}
-        },
-		updateBubble: function() {
-			this.drawBubble(null);
-		}
-    },
-	/**
-	 * Walking2Table state
-	 * @author Dominique Jeannin <jeannin.dominique@gmail.com>
-	 * @since 12/09/2011
-	 */
-	Walking2Table: {
-        update: function() {
-			this.updateBubble();
-            //console.debug("Walking2Table");
-            var dx = 10;
-            var dy = 8;
-            var xGridCoeff = 20;
-            //var yGridCoeff = 10;
-            
-            var xSquare = Math.pow(this.goToTablePoint.x - this._graph.x, 2);
-            var ySquare = Math.pow(this.goToTablePoint.y - this._graph.y, 2);
-
-			var xSquareByEast = Math.pow(this.goToTablePoint.x - (this._graph.x+dx), 2);
-			var xSquareByWest = Math.pow(this.goToTablePoint.x - (this._graph.x-dx), 2);
-			var ySquareByNorth = Math.pow(this.goToTablePoint.y - (this._graph.y-dy), 2);
-			var ySquareBySouth = Math.pow(this.goToTablePoint.y - (this._graph.y+dy), 2);
-
-            var distByNorth = Math.sqrt(xSquare+ySquareByNorth);
-            var distBySouth = Math.sqrt(xSquare+ySquareBySouth);
-            var distByEast = Math.sqrt(xSquareByEast+ySquare);
-            var distByWest = Math.sqrt(xSquareByWest+ySquare);
-			
-            if (distByNorth <= 2*dy || distBySouth <= 2*dy || distByEast <= 2*dx || distByWest <= 2*dx) {
-                //console.debug("Eating state");
-                this.setState('Eating');
-				this._graph.gotoAndPlay('waiting');
-            } else {
-                
-                if (distByNorth == Math.min(distByNorth, Math.min(distBySouth, Math.min(distByEast, distByWest)))) {
-                    this._graph.y -= dy;
-                    if (this.direction != 'north') {
-                        this.segment = 0;
-                        this.direction = 'north';
-                        this._graph.gotoAndPlay('walking_'+this.direction);
-                    }
-                } else if (distBySouth == Math.min(distBySouth, Math.min(distByNorth, Math.min(distByEast, distByWest)))) {
-                    this._graph.y += dy;
-                    this.segment += dy;
-                    if (this.direction != 'south') {
-                        this.segment = 0;
-                        this.direction = 'south';
-                        this._graph.gotoAndPlay('walking_'+this.direction);
-                    }
-                } else if (distByEast == Math.min(distByEast, Math.min(distByNorth, Math.min(distBySouth, distByWest)))) {
-                    this._graph.x += dx;
-                    this.segment += dx;
-                    if (this.direction != 'east' && this.segment > xGridCoeff*dx) {
-                        this.segment = 0;
-                        this.direction = 'east';
-                        this._graph.gotoAndPlay('walking_'+this.direction);
-                    }
-                } else {
-                    this._graph.x -= dx;
-                    this.segment += dx;
-                    if (this.direction != 'west' && this.segment > xGridCoeff*dx) {
-                        this.segment = 0;
-                        this.direction = 'west';
-                        this._graph.gotoAndPlay('walking_'+this.direction);
-                    }
-                }
-            }
         },
 		updateBubble: function() {
 			this.drawBubble(null);

@@ -17,15 +17,19 @@ var TABLEGROUPMOUSELISTENER = {
 					var item = waiterModel.inventory[index];
 					// The item is a menu and it is destined to this table
 					if ((item instanceof Menu) && (item.table == target.model.number)) {
-
-						// @TODO Add the menu to the table
-						console.log("The menu arrived to the good table :D");
+						console.debug("The menu arrived to the good table :D");
+						
+						// Add the menu to the table and change its state
+						item.setState("Use");
+						target.model.menuList.push(item);
+						
+						// we delete the item from the inventory
 						waiterModel.delFromInventory(index);
 
 						//@TODO replace "true" on the Table order : if (this.model.AreAllMenusServed()) {...}
 						// And move after the "for" loop
 						if (true) {
-							console.log("The group of the table " + target.model.number + " started to eat.");
+							console.debug("The group of the table " + target.model.number + " started to eat.");
 							target.model.group.setState('Eating');
 						}
 					}
@@ -42,17 +46,21 @@ var TABLEGROUPMOUSELISTENER = {
 	},
 	onMouseOver: function(target) {
 		return function() {
-			if (!target._graph.clicked) {
-				target._graph.alpha = 0.8;
-				$('body').css('cursor', 'pointer');
+			if (!target.inState('Walking2Reception')) {
+				if (!target._graph.clicked) {
+					target._graph.alpha = 0.8;
+					$('body').css('cursor', 'pointer');
+				}
 			}
 		}
 	},
 	onMouseOut: function(target) {
 		return function() {
-			if (!target._graph.clicked) {
-				target._graph.alpha = 1;
-				$('body').css('cursor', 'default');
+			if (!target.inState('Walking2Reception')) {
+				if (!target._graph.clicked) {
+					target._graph.alpha = 1;
+					$('body').css('cursor', 'default');
+				}
 			}
 		}
 	}

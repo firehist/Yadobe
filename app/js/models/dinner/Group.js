@@ -152,8 +152,18 @@ Group.states({
 	 */
 	QueuingUp: {
 	    runAction: function() {
-	        console.log('QueuingUp State : runAction()');
+	        console.debug('QueuingUp State : runAction()');
 	    }
+	},
+	/**
+	 * ReadingMenu state
+	 * @author Dominique Jeannin <jeannin.dominique@gmail.com>
+	 * @since 10/10/2011
+	 */
+	ReadingMenu: {
+		runAction: function() {
+			console.debug('ReadingMenu State : runAction()');
+		}
 	},
 	/**
 	 * WaitingToOrder state
@@ -162,7 +172,7 @@ Group.states({
 	 */
 	WaitingToOrder: {
 		runAction: function() {
-			console.log('WaitingToOrder State : runAction()');
+			console.debug('WaitingToOrder State : runAction()');
 		}
 	},
 	/**
@@ -172,7 +182,7 @@ Group.states({
 	 */
 	WaitingMeal: {
 	    runAction: function() {
-	        console.log('WaitingMeal State : runAction()');
+	        console.debug('WaitingMeal State : runAction()');
 	    }
 	},
 	/**
@@ -182,7 +192,7 @@ Group.states({
 	 */
 	Eating: {
 	    runAction: function() {
-	        console.log('Eating State : runAction()');
+	        console.debug('Eating State : runAction()');
 	    }
 	},
 	/**
@@ -192,7 +202,7 @@ Group.states({
 	 */
 	WaitingForPayment: {
 	    runAction: function() {
-	        console.log('WaitingForPaymentState : runAction()');
+	        console.debug('WaitingForPaymentState : runAction()');
 	    }
 	}
 });

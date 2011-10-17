@@ -54,6 +54,7 @@ var ReceptionPlaceGraphClass = {
     },
 	addMouseListener: function() {
 		(function(target) {
+		/*
 			target._graph.onPress = function(e) {
 				if(!target._graph.clicked) {
                     console.log('Reception clicked');
@@ -73,6 +74,7 @@ var ReceptionPlaceGraphClass = {
 					Yadobe.getInstance().setUpdate();
 				}
 			};
+		*/
 		})(this);
 	}
 	// Methods
