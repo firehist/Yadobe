@@ -22,6 +22,13 @@ var Tools = {
 		while (new Date().getTime() < startTime + milliSeconds)
 			; // hog cpu
 	},
+    dump : function (obj) {
+        var out = '';
+        for (var i in obj) {
+            out += i + ": " + obj[i] + "\n";
+        }
+        console.debug(out);
+    },
 	ObjSize : function(obj) {
 		var len = obj.length ? obj.length : 0;
 		if (len == 0) {

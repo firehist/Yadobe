@@ -62,7 +62,7 @@ var DinnerGamePageClass = {
 		this.pageContainer.addChildAt(this.kitchen.getGraph(), DINNERCONST.SCENES.kitchen);
 		
 		// Reception
-		var receptionModel = new ReceptionPlace('Réception', 1, DINNERCONST.ACCESS.reception);
+		var receptionModel = new ReceptionPlace('Réception', 4, DINNERCONST.ACCESS.reception);
 		this.reception = new ReceptionPlaceGraph(receptionModel);
 		this.pageContainer.addChildAt(this.reception.getGraph(), DINNERCONST.SCENES.reception);
 		
@@ -201,14 +201,13 @@ var DinnerGamePageClass = {
      */
     getIndexOfFirstEmpty: function(askingGroup) {
         var waitingGroups = this.reception.model.waitingGroups;
-        counter = 1;
+        counter = 0;
         for (var i=0; i<waitingGroups.length; i++) {
             if (waitingGroups[i] == askingGroup) {
-                counter = i+1;
+                counter = i;
                 break;
             }
         }
-        //return this.reception.model.waitingGroups.length;
         return counter;
     }
 };

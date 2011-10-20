@@ -16,7 +16,7 @@ var TimeManager = {
 	 * @param context
 	 */
 	setDinnerTimer: function(ConstTimeName, callback, context) {
-		console.debug("TimeManager.setDinnerTimer()");
+		//console.debug("TimeManager.setDinnerTimer()");
         var constStruct = DINNERCONST.TIME[ConstTimeName];
 		var key = TimeManager.getDinnerTimerKey(ConstTimeName, context);
 		callback.call(context);

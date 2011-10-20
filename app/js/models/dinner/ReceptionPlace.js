@@ -53,7 +53,7 @@ var ReceptionPlaceClass = {
         for (var i=0; i<this.waitingGroups.length; i++) {
             if (this.waitingGroups[i] == group) {
                 this.waitingGroups.splice(i, 1);
-                console.log("[ReceptionPalce.getOutGroup] Le group " + i + " est sorti de la reception");
+                console.log("[ReceptionPlace.getOutGroup] Le group " + i + " est sorti de la reception");
                 break;
             }
         }

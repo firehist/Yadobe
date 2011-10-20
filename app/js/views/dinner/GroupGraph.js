@@ -129,23 +129,20 @@ var GroupGraphClass = {
     addMouseListener: function() {
 		(function(target) {
 			// if state is Walking2Reception we disable to click on group
-			console.debug("State of group: " + target.states);
-			//if (!target.inState('Walking2Reception')) {
-				target._graph.onPress = function() {
-					if (!target.inState('Walking2Reception')) {
-						// check if the group is sitting (is dependant on table)
-						if (target.model.inState('QueuingUp')) {
-							if (!target._graph.clicked) {
-								DinnerGamePage.getInstance().waiter.model.addToInventory(target.model);
-							}
-						} else {
-							TABLEGROUPMOUSELISTENER.onPressWaitingMeal(target);
-						}
-					}
-				};
-				target._graph.onMouseOver = TABLEGROUPMOUSELISTENER.onMouseOver(target);
-				target._graph.onMouseOut = TABLEGROUPMOUSELISTENER.onMouseOut(target);
-			//}
+            target._graph.onPress = function() {
+                if (!target.inState('Walking2Reception')) {
+                    // check if the group is sitting (is dependant on table)
+                    if (target.model.inState('QueuingUp')) {
+                        if (!target._graph.clicked) {
+                            DinnerGamePage.getInstance().waiter.model.addToInventory(target.model);
+                        }
+                    } else {
+                        TABLEGROUPMOUSELISTENER.onPressWaitingMeal(target);
+                    }
+                }
+            };
+            target._graph.onMouseOver = TABLEGROUPMOUSELISTENER.onMouseOver(target);
+            target._graph.onMouseOut = TABLEGROUPMOUSELISTENER.onMouseOut(target);
 		})(this);
 	},
 	/**
@@ -186,6 +183,8 @@ GroupGraph.states({
 	 */
 	Waiting: {
 		update: function() {
+            var dy = GroupGraph.stepInPixels;
+            var yMin = DINNERCONST.POSITION.reception.y + 10 + DinnerGamePage.getInstance().getIndexOfFirstEmpty(this.model)*30;
 			this.updateBubble();
 			if (this.model.inState('QueuingUp')) {
 				for (var i=0; i < this.model.personNumber; i++) {
@@ -194,7 +193,13 @@ GroupGraph.states({
                 this.direction = '';
 			} else if (this.model.inState('ReadingMenu')) {
 				this.setState('SittingDown');
-			}
+			} else if (this._graph.y > yMin) {
+                this.setState('Walking2Reception');
+                for (var i=0; i < this.model.personNumber; i++) {
+                    this._graph.getChildAt(i).gotoAndPlay('walking_north');
+                }
+                this.direction = 'north';
+            }
 		},
 		updateBubble: function() {
 			this.drawBubble(null);
@@ -215,6 +220,43 @@ GroupGraph.states({
 				// Move the group and it persons forward
 				this._graph.y -= dy;
 			}
+        },
+		updateBubble: function() {
+			this.drawBubble(null);
+		}
+    },
+     /**
+	 * SittingDown state
+	 * @author Dominique Jeannin <jeannin.dominique@gmail.com>
+	 * @since 12/09/2011
+	 */
+    SittingDown: {
+        update: function() {
+			this.updateBubble();
+			// Place each person of the group at the sits of the table
+        	this._graph.x = DINNERCONST.POSITION.tables[this.model.position.number - 1].coord.x;
+        	this._graph.y = DINNERCONST.POSITION.tables[this.model.position.number - 1].coord.y;
+
+        	// List of available sits
+        	var possibleSits = [0, 1, 2, 3];
+
+        	// For each person of the group, sit down them
+			for (var i=0; i < this.model.personNumber; i++) {
+				var person = this._graph.getChildAt(i);
+
+				// Choose a sit on the table randomly and which is not already used by another person
+				var sit = Tools.randomFromArray(possibleSits);
+				person.x = DINNERCONST.POSITION.at_table[sit].dx;
+				person.y = DINNERCONST.POSITION.at_table[sit].dy;
+				person.gotoAndPlay('at_table_' + sit);
+
+				// Remove this sit from the list of available sits
+				possibleSits.splice(possibleSits.indexOf(sit), 1);
+
+				person.scaleX = 1;
+				person.scaleY = 1;
+			}
+			this.setState('ReadMenu');
         },
 		updateBubble: function() {
 			this.drawBubble(null);
@@ -242,55 +284,20 @@ GroupGraph.states({
 		}
     },
     /**
-	 * SittingDown state
-	 * @author Dominique Jeannin <jeannin.dominique@gmail.com>
-	 * @since 12/09/2011
-	 */
-    SittingDown: {
-        update: function() {
-			this.updateBubble();
-			// Place each person of the group at the sits of the table
-        	this._graph.x = DINNERCONST.POSITION.tables[this.model.position.number - 1].coord.x;
-        	this._graph.y = DINNERCONST.POSITION.tables[this.model.position.number - 1].coord.y;
-        	
-        	// List of available sits
-        	var possibleSits = [0, 1, 2, 3];
-        	
-        	// For each person of the group, sit down them
-			for (var i=0; i < this.model.personNumber; i++) {
-				var person = this._graph.getChildAt(i);
-				
-				// Choose a sit on the table randomly and which is not already used by another person
-				var sit = Tools.randomFromArray(possibleSits);
-				person.x = DINNERCONST.POSITION.at_table[sit].dx;
-				person.y = DINNERCONST.POSITION.at_table[sit].dy;
-				person.gotoAndPlay('at_table_' + sit);
-				
-				// Remove this sit from the list of available sits
-				possibleSits.splice(possibleSits.indexOf(sit), 1);
-				
-				person.scaleX = 1;
-				person.scaleY = 1;
-			}
-			this.setState('ReadMenu');
-        },
-		updateBubble: function() {
-			this.drawBubble(null);
-		}
-    },
-    /**
 	 * WaitingOrder state
 	 * @author Dominique Jeannin <jeannin.dominique@gmail.com>
 	 * @since 12/09/2011
 	 */
     WaitingOrder: {
         update: function() {
+            this.model.setState('WaitingToOrder');
 			this.updateBubble();
             //console.debug("[Group " + this.model.color + "] nous attendons pour commander");
             if (this.model.menuList.length == 0) {
                 console.debug("[GroupGraph] WaitingOrder: generation du menu");
                 this.model.generateMenu();
             }
+            
         },
 		updateBubble: function() {
 			if(this.model.inState("WaitingToOrder")) {

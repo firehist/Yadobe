@@ -52,7 +52,7 @@ var GroupClass ={
 	 */
 	totalWaitingTime: 0,
 	/**
-	 * Current position of waiter
+	 * Current position of group
 	 * @type Place
 	 */
 	position: null,

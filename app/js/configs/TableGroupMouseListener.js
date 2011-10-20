@@ -46,8 +46,12 @@ var TABLEGROUPMOUSELISTENER = {
 	},
 	onMouseOver: function(target) {
 		return function() {
-			if (!target.inState('Walking2Reception')) {
-				if (!target._graph.clicked) {
+			if (((target instanceof GroupGraph) && !target.inState('Walking2Reception')) || !(target instanceof GroupGraph)) {
+				if (((target instanceof GroupGraph)) {
+                    console.debug("State of group: " + target.getState());
+                    console.debug("Group before group "+target.model.name+": " + DinnerGamePage.getInstance().getIndexOfFirstEmpty(target.model));
+                }
+                if (!target._graph.clicked) {
 					target._graph.alpha = 0.8;
 					$('body').css('cursor', 'pointer');
 				}
@@ -56,7 +60,7 @@ var TABLEGROUPMOUSELISTENER = {
 	},
 	onMouseOut: function(target) {
 		return function() {
-			if (!target.inState('Walking2Reception')) {
+			if (((target instanceof GroupGraph) && !target.inState('Walking2Reception')) || !(target instanceof GroupGraph)) {
 				if (!target._graph.clicked) {
 					target._graph.alpha = 1;
 					$('body').css('cursor', 'default');

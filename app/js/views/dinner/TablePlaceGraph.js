@@ -59,7 +59,7 @@ var TablePlaceGraphClass = {
 	},
 	addMouseListener: function() {
 		(function(target) {
-			target._graph.onPress = function(e) {
+			target._graph.onPress = function() {
 				if (!target._graph.clicked) {
                     console.log('Table clicked');
 
@@ -67,13 +67,14 @@ var TablePlaceGraphClass = {
                     if (target.model.inState('Busy')) {
                     	var groupModel = target.model.group;
 	                    // If the persons of the table are waiting to order or reading the menu
-	                    if (groupModel.inState('WaitingToOrder') || groupModel.inState('ReadingMenu')) {
+	                    if (groupModel.inState('WaitingToOrder')) {
 	
 	                        var destination = new Destination(target.model, function() {
 	                            console.log("Waiter arrived to table " + target.model.number + ".");
 	                            console.log("The table " + target.model.number + " passed an order and is waiting their meal.");
-	                            // @TODO The group pass the order
-	                            groupModel.setState('WaitingMeal');
+
+                                groupModel.setState('WaitingMeal');
+                                
                                 // Launch cooking for all menu in Wait state
                                 var kitchenModel = DinnerGamePage.getInstance().kitchen.model;
                                 for (var i=0; i<groupModel.menuList.length; i++) {
@@ -107,6 +108,7 @@ var TablePlaceGraphClass = {
                     			
                                 // The item is a group
                     			if (item instanceof Group) {
+                                   
                                     // free the position of the group in the reception
                                     receptionModel.getOutGroup(item);
 
@@ -119,7 +121,7 @@ var TablePlaceGraphClass = {
                                     // Remove the group from the waiter inventory
                                     waiterModel.delFromInventory(index);
                                     
-                                    target.model.group.setState('WaitingToOrder');
+                                    target.model.group.setState('ReadingMenu');
                                     target.model.setState('Busy');
                     			}
                     			
