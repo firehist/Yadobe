@@ -47,7 +47,7 @@ var TABLEGROUPMOUSELISTENER = {
 	onMouseOver: function(target) {
 		return function() {
 			if (((target instanceof GroupGraph) && !target.inState('Walking2Reception')) || !(target instanceof GroupGraph)) {
-				if (((target instanceof GroupGraph)) {
+				if (target instanceof GroupGraph) {
                     console.debug("State of group: " + target.getState());
                     console.debug("Group before group "+target.model.name+": " + DinnerGamePage.getInstance().getIndexOfFirstEmpty(target.model));
                 }
