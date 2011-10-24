@@ -201,7 +201,7 @@ var DinnerGamePageClass = {
      */
     getIndexOfFirstEmpty: function(askingGroup) {
         var waitingGroups = this.reception.model.waitingGroups;
-        counter = 0;
+        counter = 1;
         for (var i=0; i<waitingGroups.length; i++) {
             if (waitingGroups[i] == askingGroup) {
                 counter = i;

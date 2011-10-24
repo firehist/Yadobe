@@ -65,26 +65,13 @@ var TablePlaceGraphClass = {
 
                     // A group is sitting at the table
                     if (target.model.inState('Busy')) {
-                    	var groupModel = target.model.group;
-	                    // If the persons of the table are waiting to order or reading the menu
-	                    if (groupModel.inState('WaitingToOrder')) {
-	
-	                        var destination = new Destination(target.model, function() {
-	                            console.log("Waiter arrived to table " + target.model.number + ".");
-	                            console.log("The table " + target.model.number + " passed an order and is waiting their meal.");
+                    	
+                        console.debug("[TablePlaceGraph.onPress]" + groupModel.getState());
 
-                                groupModel.setState('WaitingMeal');
-                                
-                                // Launch cooking for all menu in Wait state
-                                var kitchenModel = DinnerGamePage.getInstance().kitchen.model;
-                                for (var i=0; i<groupModel.menuList.length; i++) {
-									if (groupModel.menuList[i].inState('Wait')) {
-                                        kitchenModel.addMenu(groupModel.menuList[i]);
-									}
-                                }
-	                        });
-	                        
-	    					DinnerGamePage.getInstance().waiter.model.moveTo(destination);
+	                    // If the persons of the table are waiting to order
+	                    if (groupModel.inState('WaitingToOrder')) {
+                            // Use the common function with groupGraph
+							TABLEGROUPMOUSELISTENER.onPressWaitingToOrder(target);
 	                    }
 	                    // If the persons of the table are waiting their meals
 	                    else if (groupModel.inState('WaitingMeal')) {

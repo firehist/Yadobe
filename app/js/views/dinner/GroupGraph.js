@@ -187,19 +187,21 @@ GroupGraph.states({
             var yMin = DINNERCONST.POSITION.reception.y + 10 + DinnerGamePage.getInstance().getIndexOfFirstEmpty(this.model)*30;
 			this.updateBubble();
 			if (this.model.inState('QueuingUp')) {
-				for (var i=0; i < this.model.personNumber; i++) {
-					this._graph.getChildAt(i).gotoAndPlay('waiting');
-				}
-                this.direction = '';
+				if (this._graph.y > yMin) {
+                    this.setState('Walking2Reception');
+                    for (var i=0; i < this.model.personNumber; i++) {
+                        this._graph.getChildAt(i).gotoAndPlay('walking_north');
+                    }
+                    this.direction = 'north';
+                } else {
+                    for (var i=0; i < this.model.personNumber; i++) {
+                        this._graph.getChildAt(i).gotoAndPlay('waiting');
+                    }
+                    this.direction = '';
+                }
 			} else if (this.model.inState('ReadingMenu')) {
 				this.setState('SittingDown');
-			} else if (this._graph.y > yMin) {
-                this.setState('Walking2Reception');
-                for (var i=0; i < this.model.personNumber; i++) {
-                    this._graph.getChildAt(i).gotoAndPlay('walking_north');
-                }
-                this.direction = 'north';
-            }
+			}
 		},
 		updateBubble: function() {
 			this.drawBubble(null);

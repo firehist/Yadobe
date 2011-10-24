@@ -35,7 +35,7 @@ var TABLEGROUPMOUSELISTENER = {
 					}
 					// @TODO To suppress ! Just for test
 					else {
-						console.log("The menu arrived to the bad table (table " + target.model.number + " instead of table " + item.table + ").");
+						console.debug("The menu arrived to the bad table (table " + target.model.number + " instead of table " + item.table + ").");
 					}
 				}
 				target.model.group.setState('Eating'); // this is not the correct place (see TODOs in the loop for)
@@ -44,12 +44,29 @@ var TABLEGROUPMOUSELISTENER = {
 		});
 		DinnerGamePage.getInstance().waiter.model.moveTo(destination);
 	},
+    onPressWaitingToOrder: function(target) {
+        var groupModel = target.model.group;
+        var destination = new Destination(target.model, function() {
+            console.log("Waiter arrived to table " + target.model.number + ".");
+            console.log("The table " + target.model.number + " passed an order and is waiting their meal.");
+
+            groupModel.setState('WaitingMeal');
+
+            // Launch cooking for all menu in Wait state
+            var kitchenModel = DinnerGamePage.getInstance().kitchen.model;
+            for (var i=0; i<groupModel.menuList.length; i++) {
+                if (groupModel.menuList[i].inState('Wait')) {
+                    kitchenModel.addMenu(groupModel.menuList[i]);
+                }
+            }
+        });
+        DinnerGamePage.getInstance().waiter.model.moveTo(destination);
+    },
 	onMouseOver: function(target) {
 		return function() {
 			if (((target instanceof GroupGraph) && !target.inState('Walking2Reception')) || !(target instanceof GroupGraph)) {
 				if (target instanceof GroupGraph) {
-                    console.debug("State of group: " + target.getState());
-                    console.debug("Group before group "+target.model.name+": " + DinnerGamePage.getInstance().getIndexOfFirstEmpty(target.model));
+                    console.debug("[OnMouseOver] State of GroupGraph: " + target.getState() + " and its model: " + target.model.getState());
                 }
                 if (!target._graph.clicked) {
 					target._graph.alpha = 0.8;
