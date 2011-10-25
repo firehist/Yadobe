@@ -164,7 +164,7 @@ var DinnerGamePageClass = {
 	getNumOfGroupInRecep: function() {
 		var counter = 0;
 		for (var i=0; i<this.groupList.length; i++) {
-			if (this.groupList[i].inState("Walking2Reception") || this.groupList[i].inState("Waiting")) {
+			if (this.groupList[i].model.inState("QueuingUpBusy") || this.groupList[i].model.inState("QueuingUpWaiting")) {
 				counter++;
 			}
 		}

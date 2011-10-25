@@ -50,7 +50,8 @@ var TABLEGROUPMOUSELISTENER = {
             console.log("Waiter arrived to table " + target.model.number + ".");
             console.log("The table " + target.model.number + " passed an order and is waiting their meal.");
 
-            groupModel.setState('WaitingMeal');
+            //target.setState("WaitingOrder");
+            //groupModel.setState('WaitingMeal');
 
             // Launch cooking for all menu in Wait state
             var kitchenModel = DinnerGamePage.getInstance().kitchen.model;
@@ -64,9 +65,9 @@ var TABLEGROUPMOUSELISTENER = {
     },
 	onMouseOver: function(target) {
 		return function() {
-			if (((target instanceof GroupGraph) && !target.inState('Walking2Reception')) || !(target instanceof GroupGraph)) {
+			if (((target instanceof GroupGraph) && !target.model.inState('QueuingUpBusy')) || !(target instanceof GroupGraph)) {
 				if (target instanceof GroupGraph) {
-                    console.debug("[OnMouseOver] State of GroupGraph: " + target.getState() + " and its model: " + target.model.getState());
+                    console.debug("[OnMouseOver] State of Group: " + target.model.getState());
                 }
                 if (!target._graph.clicked) {
 					target._graph.alpha = 0.8;
@@ -77,7 +78,7 @@ var TABLEGROUPMOUSELISTENER = {
 	},
 	onMouseOut: function(target) {
 		return function() {
-			if (((target instanceof GroupGraph) && !target.inState('Walking2Reception')) || !(target instanceof GroupGraph)) {
+			if (((target instanceof GroupGraph) && !target.model.inState('QueuingUpBusy')) || !(target instanceof GroupGraph)) {
 				if (!target._graph.clicked) {
 					target._graph.alpha = 1;
 					$('body').css('cursor', 'default');

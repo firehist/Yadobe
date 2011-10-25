@@ -79,7 +79,7 @@ var GroupClass ={
 		this.color = color;
 		this.personNumber = personNumber;
 		this.position = position;
-		this.setState('QueuingUp');
+		this.setState('QueuingUpBusy');
 	},
 	// Methods
 	/**
@@ -146,14 +146,29 @@ var Group = new JS.Class(GroupClass);
  */
 Group.states({
 	/**
-	 * QueuingUp state
+	 * QueuingUpWaiting state
 	 * @author Yannick Galatol <yannick.galatol@gmail.com>
 	 * @since 21/09/2011
 	 */
-	QueuingUp: {
+	QueuingUpWaiting: {
 	    runAction: function() {
-	        console.debug('QueuingUp State : runAction()');
+	        //console.debug('QueuingUpWaiting State : runAction()');
 	    }
+	},
+    QueuingUpBusy: {
+       runAction: function() {
+	        //console.debug('QueuingUpBusy State : runAction()');
+	    }
+    },
+    /**
+	 * ReadingMenu state
+	 * @author Dominique Jeannin <jeannin.dominique@gmail.com>
+	 * @since 10/10/2011
+	 */
+	SittingDown: {
+		runAction: function() {
+			//console.debug('ReadingMenu State : runAction()');
+		}
 	},
 	/**
 	 * ReadingMenu state
@@ -162,7 +177,13 @@ Group.states({
 	 */
 	ReadingMenu: {
 		runAction: function() {
-			console.debug('ReadingMenu State : runAction()');
+			//console.debug('ReadingMenu State : runAction()');
+            TimeManager.setStateTimer(
+                Tools.randomXToY(1000, 5000),
+                this,
+                //'generateMenu');
+                'WaitingToOrder');
+            //this.setState("WaitingToOrder");
 		}
 	},
 	/**
@@ -172,7 +193,11 @@ Group.states({
 	 */
 	WaitingToOrder: {
 		runAction: function() {
-			console.debug('WaitingToOrder State : runAction()');
+			//console.debug('WaitingToOrder State : runAction()');
+            if (this.menuList.length == 0) {
+                console.debug("[Group] WaitingToOrder: generation du menu");
+                this.generateMenu();
+            }
 		}
 	},
 	/**
@@ -182,7 +207,7 @@ Group.states({
 	 */
 	WaitingMeal: {
 	    runAction: function() {
-	        console.debug('WaitingMeal State : runAction()');
+	        //console.debug('WaitingMeal State : runAction()');
 	    }
 	},
 	/**
@@ -192,7 +217,7 @@ Group.states({
 	 */
 	Eating: {
 	    runAction: function() {
-	        console.debug('Eating State : runAction()');
+	        //console.debug('Eating State : runAction()');
 	    }
 	},
 	/**
@@ -202,7 +227,7 @@ Group.states({
 	 */
 	WaitingForPayment: {
 	    runAction: function() {
-	        console.debug('WaitingForPaymentState : runAction()');
+	        //console.debug('WaitingForPaymentState : runAction()');
 	    }
 	}
 });

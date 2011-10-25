@@ -62,12 +62,10 @@ var TablePlaceGraphClass = {
 			target._graph.onPress = function() {
 				if (!target._graph.clicked) {
                     console.log('Table clicked');
+                    var groupModel = target.model.group;
 
                     // A group is sitting at the table
                     if (target.model.inState('Busy')) {
-                    	
-                        console.debug("[TablePlaceGraph.onPress]" + groupModel.getState());
-
 	                    // If the persons of the table are waiting to order
 	                    if (groupModel.inState('WaitingToOrder')) {
                             // Use the common function with groupGraph
@@ -87,34 +85,27 @@ var TablePlaceGraphClass = {
 
                     	// Check if there a group is in the Waiter inventory
                     	if ((waiterModel.inventory) && (waiterModel.inventoryCurrent > 0)) {
-
                     		// Look for the item(s) of the waiter inventory
                     		for (var index in waiterModel.inventory) {
-                    			
                     			var item = waiterModel.inventory[index];
-                    			
                                 // The item is a group
                     			if (item instanceof Group) {
-                                   
                                     // free the position of the group in the reception
                                     receptionModel.getOutGroup(item);
-
                     				// Set the group on the table
                                     target.model.group = item;
-                                    
                                     // Set the table on the group
                                     item.position = target.model;
-                                    
                                     // Remove the group from the waiter inventory
                                     waiterModel.delFromInventory(index);
-                                    
-                                    target.model.group.setState('ReadingMenu');
+
+                                    // change the state of group and table
+                                    target.model.group.setState('SittingDown');
                                     target.model.setState('Busy');
                     			}
-                    			
                     		}
                     	}
-                    }
+                    } // if inState('Free')
 				}
 			};
 			target._graph.onMouseOver = TABLEGROUPMOUSELISTENER.onMouseOver(target);
