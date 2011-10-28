@@ -146,8 +146,7 @@ var WaiterClass = {
 			
 			if (item instanceof Group) {
 				intentoryAsString += index + ' : Group : ' + item + '\n';
-			}
-			else if (item instanceof Menu) {
+			} else if (item instanceof Menu) {
 				intentoryAsString += index + ' : Menu : ' + item + '\n';
 			}
 		}

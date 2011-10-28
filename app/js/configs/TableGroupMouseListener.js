@@ -26,20 +26,14 @@ var TABLEGROUPMOUSELISTENER = {
 						// we delete the item from the inventory
 						waiterModel.delFromInventory(index);
 
-						//@TODO replace "true" on the Table order : if (this.model.AreAllMenusServed()) {...}
+						//@TODO replace "true" on the Table order : if (target.model.AreAllMenusServed()) {...}
 						// And move after the "for" loop
-						if (true) {
-							console.debug("The group of the table " + target.model.number + " started to eat.");
+						if (target.model.areAllMenusServed()) {
+							console.debug("The group of the table " + target.model.number + " has started to eat.");
 							target.model.group.setState('Eating');
 						}
 					}
-					// @TODO To suppress ! Just for test
-					else {
-						console.debug("The menu arrived to the bad table (table " + target.model.number + " instead of table " + item.table + ").");
-					}
 				}
-				target.model.group.setState('Eating'); // this is not the correct place (see TODOs in the loop for)
-
 			}
 		});
 		DinnerGamePage.getInstance().waiter.model.moveTo(destination);
@@ -49,17 +43,18 @@ var TABLEGROUPMOUSELISTENER = {
         var destination = new Destination(target.model, function() {
             console.log("Waiter arrived to table " + target.model.number + ".");
             console.log("The table " + target.model.number + " passed an order and is waiting their meal.");
-
-            //target.setState("WaitingOrder");
-            //groupModel.setState('WaitingMeal');
-
+ 
             // Launch cooking for all menu in Wait state
             var kitchenModel = DinnerGamePage.getInstance().kitchen.model;
             for (var i=0; i<groupModel.menuList.length; i++) {
                 if (groupModel.menuList[i].inState('Wait')) {
+                    // we need to set the table num of the menuList[i]
+                    groupModel.menuList[i].setTable(target.model.number);
                     kitchenModel.addMenu(groupModel.menuList[i]);
+                    groupModel.menuList[i].setState('Cooking');
                 }
             }
+            groupModel.setState('WaitingMeal');
         });
         DinnerGamePage.getInstance().waiter.model.moveTo(destination);
     },

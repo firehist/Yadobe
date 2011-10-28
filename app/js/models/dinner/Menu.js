@@ -10,7 +10,7 @@ var MenuClass = {
 	include: JS.State,
 	
 	// Attributes
-	table: 0,
+	table: -1,
 	/**
 	 * Starter
 	 * @type Recipe
@@ -90,7 +90,10 @@ var MenuClass = {
 		}
 		
 		return size;
-	}
+	},
+    setTable : function(tableNum) {
+        this.table = tableNum;
+    }
 };
 var Menu = new JS.Class(MenuClass);
 
@@ -102,6 +105,7 @@ var Menu = new JS.Class(MenuClass);
  */
 Menu.states({
 	Wait: {},
+    Cooking: {},
 	Ready: {},
 	Use: {},
 	Finish: {}
