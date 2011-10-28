@@ -135,7 +135,7 @@ var WaiterClass = {
 	clearInventory: function() {
 		this.inventoryCurrent = 0;
 		this.inventory = [];
-		console.log("Inventory cleared.");
+		console.debug("Inventory cleared.");
 	},
 	displayInventory: function() {
 		
@@ -151,7 +151,7 @@ var WaiterClass = {
 				intentoryAsString += index + ' : Menu : ' + item + '\n';
 			}
 		}
-		console.log("Inventory:\n" + intentoryAsString);
+		console.debug("Inventory:\n" + intentoryAsString);
 	},
 	arrivedToDestination : function() {
 		// Execute the method on arrival to the destination
