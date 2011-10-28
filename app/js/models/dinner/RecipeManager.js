@@ -98,12 +98,12 @@ var RecipeManagerClass = {
 	 * @return Menu random menu
 	 */
 	createRandomMenu: function() {
-		return new Menu(
+        return new Menu(
 			this.listRecipes.starter[Tools.randomXToY(0, this.listRecipes.starter.length - 1)],
 			this.listRecipes.dish[Tools.randomXToY(0, this.listRecipes.dish.length - 1)],
 			this.listRecipes.dessert[Tools.randomXToY(0, this.listRecipes.dessert.length - 1)],
 			this.listRecipes.drink[Tools.randomXToY(0, this.listRecipes.drink.length - 1)],
-			Tools.randomXToY(1,4)
+			-1
 		);
 	}
 };

@@ -80,6 +80,7 @@ DINNERCONST.IMAGE = {
 	luigi_walking: 'img/dinnerGame/kitchen/luigi_walking.png',
 	carrier: 'img/dinnerGame/carrier.png',
 	group_WaitingToOrder: 'img/dinnerGame/group/bubble_menu.png',
+    group_ReadingMenu: 'img/dinnerGame/group/bubble_menu.png',
 	group_WaitingMeal: 'img/dinnerGame/group/bubble_waiting.png',
 	group_WaitingForPayment: 'img/dinnerGame/group/bubble_payment.png'
 };

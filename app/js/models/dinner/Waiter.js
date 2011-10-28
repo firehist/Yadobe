@@ -135,7 +135,7 @@ var WaiterClass = {
 	clearInventory: function() {
 		this.inventoryCurrent = 0;
 		this.inventory = [];
-		console.log("Inventory cleared.");
+		console.debug("Inventory cleared.");
 	},
 	displayInventory: function() {
 		
@@ -146,12 +146,11 @@ var WaiterClass = {
 			
 			if (item instanceof Group) {
 				intentoryAsString += index + ' : Group : ' + item + '\n';
-			}
-			else if (item instanceof Menu) {
+			} else if (item instanceof Menu) {
 				intentoryAsString += index + ' : Menu : ' + item + '\n';
 			}
 		}
-		console.log("Inventory:\n" + intentoryAsString);
+		console.debug("Inventory:\n" + intentoryAsString);
 	},
 	arrivedToDestination : function() {
 		// Execute the method on arrival to the destination

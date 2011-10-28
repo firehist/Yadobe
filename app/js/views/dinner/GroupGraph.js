@@ -220,7 +220,7 @@ var GroupGraphClass = {
             this.model.setState("ReadingMenu");
         }
         if (this.model.inState("ReadingMenu")) {
-            this.updateBubble("ReadingMenu");
+            this.drawBubble("WaitingToOrder");
         }
         if (this.model.inState("WaitingToOrder")) {
 			this.drawBubble("WaitingToOrder");

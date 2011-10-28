@@ -88,6 +88,7 @@ var TablePlaceGraphClass = {
                     		// Look for the item(s) of the waiter inventory
                     		for (var index in waiterModel.inventory) {
                     			var item = waiterModel.inventory[index];
+                                console.debug("[TablePlaceGraph.OnClick] inventory.item: " + item.name);
                                 // The item is a group
                     			if (item instanceof Group) {
                                     // free the position of the group in the reception
@@ -102,7 +103,9 @@ var TablePlaceGraphClass = {
                                     // change the state of group and table
                                     target.model.group.setState('SittingDown');
                                     target.model.setState('Busy');
-                    			}
+                    			} else {
+                                    console.debug("[TablePlaceGraph.addMouseListener] Object type of item is not recognized.");
+                                }
                     		}
                     	}
                     } // if inState('Free')
