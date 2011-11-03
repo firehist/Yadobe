@@ -84,7 +84,6 @@ var GroupGraphClass = {
 			person.scaleY = 1.5;
 			this._graph.addChildAt(person, i);
 		}
-
 	},
     /**
      * @method createGroup
@@ -137,7 +136,7 @@ var GroupGraphClass = {
                     if (!target._graph.clicked) {
                        DinnerGamePage.getInstance().waiter.model.addToInventory(target.model);
                     }
-                } else {
+                } else if (!target.model.inState('QueuingUpBusy')) {
                     TABLEGROUPMOUSELISTENER.onPressWaitingMeal(target);
                 }
             };
