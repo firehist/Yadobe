@@ -47,6 +47,7 @@ JS.Packages(function() { with(this) {
     
 	/* tools libs */
 	file(JSLIBS_PATH + 'tools.js').provides('Tools');
+	file(JSLIBS_PATH + 'debug.js').provides('Debug');
     
 	/* jQuery libs */
 	//file('https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.js')
@@ -121,7 +122,13 @@ JS.Packages(function() { with(this) {
 	
 }});
 
-JS.require('Yadobe', function() {
-	console.log('Yadobe launch');
-	window.YadobeClass = new Yadobe('yadobe-canvas');
+JS.require('Debug', function() {
+	console.time('Yadobe');
+	console.groupCollapsed('Loading Yadobe');
+	JS.require('Yadobe', function() {
+		console.log('Yadobe launch');
+		console.timeEnd('Yadobe');
+		console.groupEnd();
+		window.YadobeClass = new Yadobe('yadobe-canvas');
+	});
 });

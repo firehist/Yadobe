@@ -5,6 +5,9 @@
  * @module Yadobe
  **/
 var WaiterClass = {
+	// Debug information
+	debug: true,
+	debugClassName: 'Waiter',
 	// Includes
 	include: JS.State,
 	// Attributes
@@ -48,6 +51,7 @@ var WaiterClass = {
      * @constructor
      */
 	initialize: function(name, position, inventoryMax) {
+		Debug.log(this, 'initialize', 'test');
 		this.name = name;
 		this.destination = [];
 		if (position instanceof Place) {
@@ -95,7 +99,7 @@ var WaiterClass = {
 		if ((item instanceof Menu) && (this.inventoryCurrent <= this.inventoryMax + item.size())) {
 			this.inventory.push(item);
 			this.inventoryCurrent += item.size();
-			console.log("A menu for table " + item.table + " was added to Waiter.");
+			Debug.log(this, 'addToInventory', "A menu for table " + item.table + " was added to Waiter.");
 		}
 
 		// Added item is a group of persons. The inventory must be empty to add a group.
@@ -105,8 +109,7 @@ var WaiterClass = {
 			
 			// A group fill all the spaces of the inventory
 			this.inventoryCurrent = this.inventoryMax;
-			
-			console.log("A group was added to Waiter.");
+			Debug.log(this, 'addToInventory', "A group was added to Waiter.");
 		}
 	},
 	delFromInventory: function(index) {
@@ -135,7 +138,7 @@ var WaiterClass = {
 	clearInventory: function() {
 		this.inventoryCurrent = 0;
 		this.inventory = [];
-		console.debug("Inventory cleared.");
+		Debug.log(this, 'clearInventory', "Inventory cleared.");
 	},
 	displayInventory: function() {
 		
@@ -150,7 +153,7 @@ var WaiterClass = {
 				intentoryAsString += index + ' : Menu : ' + item + '\n';
 			}
 		}
-		console.debug("Inventory:\n" + intentoryAsString);
+		Debug.log(this, 'clearInventory', "Inventory:\n" + intentoryAsString);
 	},
 	arrivedToDestination : function() {
 		// Execute the method on arrival to the destination

@@ -5,6 +5,9 @@
  * @module Dinner
  **/
 var ReceptionPlaceGraphClass = {
+	// Debug information
+	debug: true,
+	debugClassName: 'ReceptionPlaceGraph',
 	// Attributes
 	/**
 	 * Model of ReceptionPlaceGraph
@@ -28,7 +31,8 @@ var ReceptionPlaceGraphClass = {
 	 * @param {ReceptionPlace} model
 	 */
 	initialize: function(model) {
-		console.log('ReceptionPlaceGraph.initialize(model)');	
+		Debug.log(this, 'initialize', 'Initialisation avec model');
+		Debug.log(this, 'initialize', model);
 		this.model = model;
 		this._graph = new Container();
 		this.addMouseListener();
@@ -57,7 +61,7 @@ var ReceptionPlaceGraphClass = {
 		/*
 			target._graph.onPress = function(e) {
 				if(!target._graph.clicked) {
-                    console.log('Reception clicked');
+					Debug.log(target, 'addMouseListener.onPress', 'Reception clicked');
 				}
 			};
 			target._graph.onMouseOver = function() {

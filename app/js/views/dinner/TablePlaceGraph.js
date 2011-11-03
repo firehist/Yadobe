@@ -5,6 +5,9 @@
  * @module Dinner
  **/
 var TablePlaceGraphClass = {
+	// Debug information
+	debug: true,
+	debugClassName: 'TablePlaceGraph',
 	className: 'TablePlaceGraphClass',
     // Attributes
 	/**
@@ -30,7 +33,8 @@ var TablePlaceGraphClass = {
 	 * @param {TablePlace} model
 	 */
 	initialize: function(model) {
-		console.log('TablePlaceGraph.initialize(model)');
+		Debug.log(this, 'initialize', "Initialize table model");
+		Debug.log(this, 'initialize', model);
 		this.model = model;
 		this._graph = new Container();
 		this.addMouseListener();
@@ -61,9 +65,8 @@ var TablePlaceGraphClass = {
 		(function(target) {
 			target._graph.onPress = function() {
 				if (!target._graph.clicked) {
-                    console.log('Table clicked');
+					Debug.log(this, 'addMouseListener.onPress', "Table clicked");
                     var groupModel = target.model.group;
-
                     // A group is sitting at the table
                     if (target.model.inState('Busy')) {
 	                    // If the persons of the table are waiting to order
@@ -88,7 +91,7 @@ var TablePlaceGraphClass = {
                     		// Look for the item(s) of the waiter inventory
                     		for (var index in waiterModel.inventory) {
                     			var item = waiterModel.inventory[index];
-                                console.debug("[TablePlaceGraph.OnClick] inventory.item: " + item.name);
+								Debug.log(this, 'addMouseListener.onPress', "Inventory.item: " + item.name);
                                 // The item is a group
                     			if (item instanceof Group) {
                                     // free the position of the group in the reception
@@ -104,7 +107,7 @@ var TablePlaceGraphClass = {
                                     target.model.group.setState('SittingDown');
                                     target.model.setState('Busy');
                     			} else {
-                                    console.debug("[TablePlaceGraph.addMouseListener] Object type of item is not recognized.");
+									Debug.log(this, 'addMouseListener.onPress', "Object type of item is not recognized.");
                                 }
                     		}
                     	}

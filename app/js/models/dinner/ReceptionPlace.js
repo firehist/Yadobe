@@ -6,7 +6,9 @@
  * @class ReceptionPlace
  **/
 var ReceptionPlaceClass = {
-		
+	// Debug information
+	debug: true,
+	debugClassName: 'ReceptionPlace',
 	// Attributes
 	/**
 	 * The name of creation group Constante in DINNERCONST.TIME
@@ -44,8 +46,9 @@ var ReceptionPlaceClass = {
 	 * @param {Integer} maxGroupList Maximum waiting list
      * @param {Point} coordinates Grid coordinates to access the place by the waiter
 	 */
-	initialize: function(name, maxGroupList, coordinates) {
-		console.log('Reception init');
+	initialize: function (name, maxGroupList, coordinates) {
+		Debug.log(this, 'initialize', 'Initialisation de la réception');
+		// arguments properties
 		this.callSuper(name, coordinates);
 		this.maxGroupList = maxGroupList;
 	},
@@ -53,7 +56,7 @@ var ReceptionPlaceClass = {
         for (var i=0; i<this.waitingGroups.length; i++) {
             if (this.waitingGroups[i] == group) {
                 this.waitingGroups.splice(i, 1);
-                console.log("[ReceptionPlace.getOutGroup] Le group " + i + " est sorti de la reception");
+				Debug.log(this, 'getOutGroup', 'Le group ' + i + ' est sorti de la reception');
                 break;
             }
         }

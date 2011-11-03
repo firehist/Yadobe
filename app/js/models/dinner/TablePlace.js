@@ -5,6 +5,9 @@
  * @module Yadobe
  **/
 var TablePlaceClass = {
+	// Debug information
+	debug: true,
+	debugClassName: 'TablePlace',
 	// Includes
 	include: JS.State,
     
@@ -86,7 +89,7 @@ TablePlace.states({
 	 */
 	Free: {
         runAction: function() {
-            console.log('Free State : runAction()');
+			Debug.log(this, 'State[Free].runAction', "Free State");
         }
     },
 	/**
@@ -96,7 +99,7 @@ TablePlace.states({
 	 */
 	Busy: {
         runAction: function() {
-            console.log('Busy State : runAction()');
+			Debug.log(this, 'State[Busy].runAction', "Busy State");
         }
     }
 });

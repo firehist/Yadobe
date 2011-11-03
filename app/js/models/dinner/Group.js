@@ -5,6 +5,9 @@
  * @module Yadobe
  **/
 var GroupClass ={
+	// Debug information
+	debug: true,
+	debugClassName: 'Group',
 	// Includes
 	include: JS.State,
     
@@ -128,12 +131,12 @@ var GroupClass ={
 	 * @since 31/08/2011
 	 */
 	generateMenu: function() {
-        console.debug("[Group.generateMenu] Start");
+		Debug.log(this, 'generateMenu', 'Start');
         var recipeManager = RecipeManager.getInstance();
 		for (var i=0; i<this.personNumber; i++) {
             this.menuList.push(recipeManager.createRandomMenu());
         }
-        console.debug("[Group.generateMenu] Nombre de menu genere: " + this.menuList.length);
+		Debug.log(this, 'generateMenu', 'Nombre de menu généré: ' + this.menuList.length);
 	}
 };
 var Group = new JS.Class(GroupClass);
@@ -195,7 +198,7 @@ Group.states({
 		runAction: function() {
 			//console.debug('WaitingToOrder State : runAction()');
             if (this.menuList.length == 0) {
-                console.debug("[Group] WaitingToOrder: generation du menu");
+				Debug.log(this, 'State[WaitingToOrder] runAction', 'generation du menu');
                 this.generateMenu();
             }
 		}
