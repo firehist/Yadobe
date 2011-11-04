@@ -155,12 +155,14 @@ var WaitingPageClass = {
 	 * @public
 	 */
 	launchLoading: function() {
+		console.time('DinnerGamePage');
+		console.groupCollapsed('Loading DinnerGamePage');
 		// Bind images load
 		for (var index in this.toLoad.images) {
 			this.loadImages(this.toLoad.images[index]);
 		}
 		// Bind ressources load
-		for (var index in this.toLoad.js) {
+		for (index in this.toLoad.js) {
 			this.loadJSs(this.toLoad.js[index]);
 		}
 	},
@@ -214,6 +216,8 @@ var WaitingPageClass = {
 		this.setProgressBarValue(parseInt(this.numLoaded*100/this.numToLoad, 10));
 		if(this.numLoaded == this.numToLoad) {
 			Yadobe.getInstance().loadGame();
+			console.timeEnd('DinnerGamePage');
+			console.groupEnd();
 		}
 	},
 	/**

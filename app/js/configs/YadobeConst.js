@@ -24,11 +24,13 @@ YADOBECONST.RECIPES = {
 	],
 	dish: [
 		{
+			type: 'meat',
 			name: 'Steack-Frite',
 			duration: 70,
 			price: 5
 		},
 		{
+			type: 'fish',
 			name: 'Poisson',
 			duration: 90,
 			price: 15

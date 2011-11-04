@@ -5,7 +5,6 @@
  **/
 var MenuGraphClass = {
 	// Includes
-	include: JS.State,
 	// Attributes
 	/**
 	 * Menu model related to this Graph
@@ -28,7 +27,6 @@ var MenuGraphClass = {
 		this.model = model;
 		this.createMenuPlace();
 		this.addMouseListener();
-		this.setState('Nothing');
 	},
 	/**
 	 * Create the bitmapSequence for this menuGraph
@@ -36,20 +34,10 @@ var MenuGraphClass = {
 	 * @since 06/09/2011
 	 */
 	createMenuPlace: function() {
-		var frameData = {empty: 0, fish: 1, meat:2, ready: [3, 6], ready_hover: [7, 10] };
+		var frameData = {empty: 0, full:2, fullTable: [3, 6], fullTableHover: [7, 10] };
 		var sprite = new SpriteSheet(DINNERCONST.IMAGE.menus, 30, 30, frameData);
 		this._graph = new BitmapSequence(sprite);
 		this._graph.scaleX = this._graph.scaleY = 1.3;
-	},
-	/**
-	 * Combinate update function with a setState
-	 * @author Benjamin Longearet <firehist@gmail.com>
-	 * @since 06/09/2011
-	 * @para state State string
-	 */
-	changeState: function(state) {
-		this.setState(state);
-		this.update();
 	},
 	/**
 	 * Get menu graph
@@ -102,59 +90,28 @@ var MenuGraphClass = {
 				}
 			};
 		})(this);
+	},
+	/**
+	 * Update graph view
+	 * @author Benjamin Longearet <firehist@gmail.com>
+	 * @since 03/11/2011
+	 */
+	update: function() {
+		if(this.model.inState("Ordered") || this.model.inState("Preparing") || this.model.inState("")) {
+			// Not visible
+			this._graph.visible = false;
+		} else if(this.model.inState("WaitingToBeServed")) {
+			// Menu is displayed with related table number
+			this._graph.gotoAndStop("fullTable");
+			this._graph.gotoAndStop( this._graph.currentFrame + (this.model.table - 1) );
+			this._graph.visible = true;
+		} else if(this.model.inState("BeingEating")) {
+			this._graph.gotoAndStop("full");
+			this._graph.visible = true;
+		} else if(this.model.inState("Terminated")) {
+			this._graph.gotoAndStop("empty");
+			this._graph.visible = true;
+		}
 	}
 };
 var MenuGraph = new JS.Class(MenuGraphClass);
-
-/**
- * MenuGraph states declaration
- * @author Benjamin Longearet <firehist@gmail.com>
- * @since 06/01/2011
- */
-MenuGraph.states({
-	/**
-	 * Not visible
-	 */
-	Nothing: {
-		update: function() {
-			this._graph.visible = false;
-		}
-	},
-	/**
-	 * Fish plate
-	 */
-	FullFish: {
-		update: function() {
-			this._graph.gotoAndStop("meat");
-			this._graph.visible = true;
-		}
-	},
-	/**
-	 * Meat plate
-	 */
-	FullMeat: {
-		update: function() {
-			this._graph.gotoAndStop("fish");
-			this._graph.visible = true;
-		}
-	},
-	/**
-	 * Empty plate
-	 */
-	Empty: {
-        update: function() {
-			this._graph.gotoAndStop("empty");
-			this._graph.visible = true;
-        }
-    },
-	/**
-	 * Plate with number of table for kitchen
-	 */
-	Ready: {
-		update: function() {
-			this._graph.gotoAndStop("ready");
-			this._graph.gotoAndStop( this._graph.currentFrame + (this.model.table - 1) );
-			this._graph.visible = true;
-		}
-	}
-});

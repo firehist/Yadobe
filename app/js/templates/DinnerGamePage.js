@@ -5,7 +5,9 @@
  * @class DinnerGamePage
  */
 var DinnerGamePageClass = {
-    
+	// Debug information
+	debug: true,
+	debugClassName: 'DinnerGamePage',
 	// Attributes
 	text: null,
 	/**
@@ -70,14 +72,14 @@ var DinnerGamePageClass = {
 		this.tables = new Array();
 		var colors = ['red','blue','green','yellow'];
 		for (var i=0; i<colors.length; i++) {
-			console.debug("[DinnerGamePage.initialize] table: " +  i + " START");
+			Debug.log(this, 'initialize', 'table: ' +  i + ' START');
             var tableModel = new TablePlace(i + 1, colors[i], DINNERCONST.ACCESS.tables[i]);
-            console.debug("[DinnerGamePage.initialize] model ok");
+			Debug.log(this, 'initialize', 'model ok');
 			var tableGraph = new TablePlaceGraph(tableModel);
-            console.debug("[DinnerGamePage.initialize] graph ok");
+			Debug.log(this, 'initialize', 'graph ok');
 			this.tables.push(tableGraph);
 			this.pageContainer.addChildAt(tableGraph.getGraph(), DINNERCONST.SCENES.tables[i]);
-            console.debug("[DinnerGamePage.initialize] table: " +  i + " END");
+			Debug.log(this, 'initialize', 'table: ' +  i + ' END');
 		}
         
 		// Waiter
@@ -106,6 +108,12 @@ var DinnerGamePageClass = {
             if (!groupGraphList[i].model.inState('IsGone')) {
                 groupGraphList[i].update();
             }
+        }
+		
+        // Refresh the menu graph list
+        var menuGraphList = DinnerGamePage.getInstance().menuList;
+        for(i=0; i<menuGraphList.length; i++) {
+               menuGraphList[i].update();
         }
 	},
 	createConsoleLog: function() {
@@ -136,7 +144,7 @@ var DinnerGamePageClass = {
 	 * @since 31/08/2011
 	 */
 	launch: function() {
-		console.debug("DinnerGamePage.launch()");
+		Debug.log(this, 'launch', 'Timer for createGroup launched');
         TimeManager.setDinnerTimer('createGroup', this.createGroup, this);
 	},
 	/**
@@ -179,7 +187,7 @@ var DinnerGamePageClass = {
 	 */
 	createGroup: function() {
 		if (this.getNumOfGroupInRecep() < this.reception.model.maxGroupList) {
-            console.debug('Create Group');
+			Debug.log(this, 'createGroup', 'Groupe created');
 			var g = Group.Factory.newInstance();
 			this.addGroup(g);
             this.reception.model.waitingGroups.push(g);

@@ -5,6 +5,9 @@
  * @module Yadobe
  **/
 var TimeManager = {
+	// Debug information
+	debug: true,
+	debugClassName: 'TimeManager',
 	
 	timerList: {},
 	/**
@@ -29,7 +32,7 @@ var TimeManager = {
 	 * @param menu
 	 */
 	setCookTimer: function(time, context, menu) {
-		console.debug('Luigi : Il va me falloir ' + time/1000 + ' secondes pour préparer ça.');
+		Debug.log(this, 'setCookTimer', 'Luigi : Il va me falloir ' + time/1000 + ' secondes pour préparer ça.');
 		window.setTimeout(function(){
 			context.setReady(menu);
 		}, time);

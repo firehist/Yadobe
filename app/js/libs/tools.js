@@ -12,6 +12,10 @@
  *            String HSV Value : x, x, x (x entre 0 et 100)
  */
 var Tools = {
+	// Debug information
+	debug: true,
+	debugClassName: 'Tools',
+	
 	Color : function(RGB, HEX, HSV) {
 		this.RGB = RGB;
 		this.HEX = HEX;
@@ -27,7 +31,7 @@ var Tools = {
         for (var i in obj) {
             out += i + ": " + obj[i] + "\n";
         }
-        console.debug(out);
+        Debug.log(this, 'dump', out);
     },
 	ObjSize : function(obj) {
 		var len = obj.length ? obj.length : 0;

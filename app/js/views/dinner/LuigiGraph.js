@@ -4,7 +4,9 @@
  * @author Benjamin Longearet <firehist@gmail.com>
  **/
 var LuigiGraphClass = {
-		
+	// Debug information
+	debug: true,
+	debugClassName: 'LuigiGraph',
 	// Includes
 	include: JS.State,
 	
@@ -117,7 +119,7 @@ LuigiGraph.states({
 	Nothing: {
 		update: function() {
 			this._graph.gotoAndPlay('walking_left_full');
-			console.debug('Luigi : Chaud devant, chaud !');
+			Debug.log(this, 'State[Nothing].update', 'Luigi : Chaud devant, chaud !');
 			this.setState('WalkingLeftFull');
 		}
 	},
@@ -131,7 +133,7 @@ LuigiGraph.states({
 			// @TODO not test with length but with position empty
 			var xMin = Yadobe.getInstance().canvas.width - 290 + (Tools.ObjSize(this.kitchen.model.readyMenuList) * 30);
 			if(this._graph.x <= xMin) {
-				console.debug('Luigi : Une assiette de prête !');
+				Debug.log(this, 'State[WalkingLeftFull].update', 'Luigi : Une assiette de prête !');
 				this._graph.gotoAndPlay('stop_front_full2empty');
 				this.setState('StopFrontEmpty2Full');
 			} else {

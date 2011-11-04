@@ -5,7 +5,9 @@
  * @module dinner
  */
 var GroupGraphClass = {
-	
+	// Debug information
+	debug: true,
+	debugClassName: 'GroupGraph',
     // Includes
 	//include: JS.State,
 	
@@ -46,7 +48,7 @@ var GroupGraphClass = {
 	 * @param {GroupGrah} model
 	 */
 	initialize: function(model) {
-		console.log('GroupGraph.initialize(model)');
+		Debug.log(this, 'initialize', 'Initialisation graphe du groupe ' + model.name);
 		this.model = model;
 		this._graph = new Container();
         this.createGroup();
@@ -160,7 +162,7 @@ var GroupGraphClass = {
 		}
 	},
     drawSittingDown: function() {
-        console.debug("Group is going to sit down");
+		Debug.log(this, 'drawSittingDown', 'Group is going to sit down');
         // Place each person of the group at the sits of the table
         this._graph.x = DINNERCONST.POSITION.tables[this.model.position.number - 1].coord.x;
         this._graph.y = DINNERCONST.POSITION.tables[this.model.position.number - 1].coord.y;

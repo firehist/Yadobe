@@ -39,7 +39,7 @@ var YadobeClass = {
 	 * @param canvasId String ID of the canvas HTML Object
 	 */
 	initialize: function(canvasId) {
-		console.log('Yadobe init');
+		
 		Yadobe.instance = this;
 		// Get canvas
 		this.canvas = window.document.getElementById(canvasId);
@@ -73,7 +73,11 @@ var YadobeClass = {
 	 * @private
 	 */
 	initWaitingPage: function() {
+		console.time('WaitingPage');
+		console.groupCollapsed('Loading WaitingPage');
 		JS.require('WaitingPage', function() {
+			console.timeEnd('WaitingPage');
+			console.groupEnd();
 			var wp = WaitingPage.getInstance();
 			Yadobe.getInstance().setCurrentPage(wp);
 			wp.launchLoading();

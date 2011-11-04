@@ -129,16 +129,14 @@ var KitchenPlaceGraphClass = {
 	displayPlate: function() {
 		var menu = this.model.animateMenuList[0];
 		var menuGraph = new MenuGraph(menu);
-		
 		// Add to menuGraph manager
 		DinnerGamePage.getInstance().menuList.push(menuGraph);
-		
 		// Compute position
 		var platesLength = this.addPlate(menuGraph);
 		var x = Yadobe.getInstance().canvas.width - 230 + (platesLength * 30);
 		var y = DINNERCONST.POSITION.kitchen.y + 20;
 		menuGraph.setPosition(x, y);
-		menuGraph.changeState("Ready");
+		menuGraph.model.setState("WaitingToBeServed");
 		this._graph.addChild(menuGraph._graph);
 	},
 	/**
@@ -152,7 +150,7 @@ var KitchenPlaceGraphClass = {
 		for(var i=0; i<list; i++) {
 			if(this.plates[i] != null && this.plates[i].toString() == menuGraph.toString()) {
 				this.plates[i] = null;
-				menuGraph.setState('Nothing');
+				menuGraph.model.setState('Terminated');
 				menuGraph.update();
 				this.model.removeMenu(menuGraph.model);
 			}

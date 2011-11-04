@@ -41,7 +41,7 @@ var MenuClass = {
 		this.dish = dish;
 		this.dessert = dessert;
 		this.drink = drink;
-		this.setState('Wait');
+		this.setState('Ordered');
 	},
 	
 	// Methods
@@ -104,9 +104,9 @@ var Menu = new JS.Class(MenuClass);
  * @module Group
  */
 Menu.states({
-	Wait: {},
-    Cooking: {},
-	Ready: {},
-	Use: {},
-	Finish: {}
+	Ordered: {},
+    Preparing: {},
+	WaitingToBeServed: {},
+	BeingEating: {},
+	Terminated: {}
 });
