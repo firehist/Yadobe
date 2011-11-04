@@ -31,7 +31,9 @@ var TABLEGROUPMOUSELISTENER = {
 						if (target.model.areAllMenusServed()) {
 							console.debug("The group of the table " + target.model.number + " has started to eat.");
 							target.model.group.setState('Eating');
-						}
+						} else {
+                            console.debug("The group of the table " + target.model.number + " have not all plates.");
+                        }
 					}
 				}
 			}

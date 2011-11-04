@@ -61,9 +61,11 @@ var TablePlaceClass = {
 		return price;
 	},
     areAllMenusServed: function() {
+        var menuListToString = this.menuList.join();
+        console.debug("[TablePlace.areAllMenusServed] menuListToString: " + menuListToString);
         for (var menuG in this.group.menuList) {
             // if menu from group is not found int the list of menu from the table
-            if (this.menuList.join.indexOf(menuG) == -1) {
+            if (menuListToString.indexOf(menuG) == -1) {
                 return false;
             }
         }

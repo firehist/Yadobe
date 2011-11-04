@@ -229,6 +229,16 @@ Group.states({
 	    runAction: function() {
 	        //console.debug('WaitingForPaymentState : runAction()');
 	    }
+	},
+    /**
+	 * IsGone state
+	 * @author Dominique Jeannin <jeannin.dominique@gmail.com>
+	 * @since 03/11/2011
+	 */
+	IsGone: {
+	    runAction: function() {
+	        //console.debug('IsGoneState : runAction()');
+	    }
 	}
 });
 

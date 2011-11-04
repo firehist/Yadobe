@@ -99,6 +99,7 @@ var TablePlaceGraphClass = {
                                     item.position = target.model;
                                     // Remove the group from the waiter inventory
                                     waiterModel.delFromInventory(index);
+                                    waiterModel.displayInventory();
 
                                     // change the state of group and table
                                     target.model.group.setState('SittingDown');

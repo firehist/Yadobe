@@ -103,7 +103,7 @@ var DinnerGamePageClass = {
         // Refresh the group
         var groupGraphList = DinnerGamePage.getInstance().groupList;
         for(var i=0; i<groupGraphList.length; i++) {
-            if (!groupGraphList[i].model.isGone) {
+            if (!groupGraphList[i].model.inState('IsGone')) {
                 groupGraphList[i].update();
             }
         }
