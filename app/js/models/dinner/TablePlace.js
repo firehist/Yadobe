@@ -65,10 +65,10 @@ var TablePlaceClass = {
 	},
     areAllMenusServed: function() {
         var menuListToString = this.menuList.join();
-        console.debug("[TablePlace.areAllMenusServed] menuListToString: " + menuListToString);
-        for (var menuG in this.group.menuList) {
+        Debug.log(this, 'areAllMenusServed', "menuListToString: " + menuListToString);
+        for (var aMenuOfGroup in this.group.menuList) {
             // if menu from group is not found int the list of menu from the table
-            if (menuListToString.indexOf(menuG) == -1) {
+            if (menuListToString.indexOf(aMenuOfGroup) == -1) {
                 return false;
             }
         }

@@ -29,13 +29,12 @@ var TABLEGROUPMOUSELISTENER = {
 						// we delete the item from the inventory
 						waiterModel.delFromInventory(index);
 
-						//@TODO replace "true" on the Table order : if (target.model.AreAllMenusServed()) {...}
 						// And move after the "for" loop
 						if (target.model.areAllMenusServed()) {
 							Debug.log(this, 'onPressWaitingMeal', "The group of the table " + target.model.number + " has started to eat.");
 							target.model.group.setState('Eating');
 						} else {
-                            console.debug("The group of the table " + target.model.number + " have not all plates.");
+                            Debug.log(this, 'onPressWaitingMeal', "The group of the table " + target.model.number + " have not all plates.");
                         }
 					}
 				}

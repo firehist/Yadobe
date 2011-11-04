@@ -117,22 +117,18 @@ var WaiterClass = {
 			var item;
 			
 			if (index) {
-                console.debug("[Waiter.delFromInventory] index is defined: " + index);
 				item = this.inventory[index];
 				this.inventory.splice(index, 1);
 			}
 			else {
-                console.debug("[Waiter.delFromInventory] index is undefined: delete first element");
 				// If no index is specified return the first item of the list and delete it
 				item = this.inventory.shift();
 			}
 
 			if (item instanceof Menu) {
-                console.debug("[Waiter.delFromInventory] element to delete is a: Menu");
 				this.inventoryCurrent -= item.size();
 			}
 			else if (item instanceof Group) {
-                console.debug("[Waiter.delFromInventory] element to delete is a: Group");
 				this.inventoryCurrent = 0;
 			}
 			return item;
