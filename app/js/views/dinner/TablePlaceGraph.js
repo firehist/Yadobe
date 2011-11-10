@@ -67,6 +67,7 @@ var TablePlaceGraphClass = {
 				if (!target._graph.clicked) {
 					Debug.log(this, 'addMouseListener.onPress', "Table clicked");
                     var groupModel = target.model.group;
+
                     // A group is sitting at the table
                     if (target.model.inState('Busy')) {
 	                    // If the persons of the table are waiting to order

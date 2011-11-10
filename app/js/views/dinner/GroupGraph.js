@@ -92,6 +92,7 @@ var GroupGraphClass = {
      */
     createBubbles: function() {
 		this._bubbles = {
+            "ReadingMenu": new Bitmap(DINNERCONST.IMAGE.group_ReadingMenu),
 			"WaitingToOrder": new Bitmap(DINNERCONST.IMAGE.group_WaitingToOrder),
 			"WaitingMeal": new Bitmap(DINNERCONST.IMAGE.group_WaitingMeal),
 			"WaitingForPayment": new Bitmap(DINNERCONST.IMAGE.group_WaitingForPayment)			
@@ -221,7 +222,7 @@ var GroupGraphClass = {
             this.model.setState("ReadingMenu");
         }
         if (this.model.inState("ReadingMenu")) {
-            this.drawBubble("WaitingToOrder");
+            this.drawBubble("ReadingMenu");
         }
         if (this.model.inState("WaitingToOrder")) {
 			this.drawBubble("WaitingToOrder");
@@ -233,7 +234,7 @@ var GroupGraphClass = {
            
         }
         if (this.model.inState("WaitingForPayment")) {
-            
+            this.drawBubble("WaitingForPayment");
         }
     }
 };

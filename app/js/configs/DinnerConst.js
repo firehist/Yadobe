@@ -132,10 +132,10 @@ DINNERCONST.ACCESS = {
 	kitchen: new Point(550,100),
 	reception: new Point(140,210),
 	tables: [
-		new Point(290,190),
-		new Point(520,190),
-		new Point(290,390),
-		new Point(520,390)
+		new Point(290,190), // red
+		new Point(520,190), // blue
+		new Point(290,390), // green
+		new Point(520,390) // yellow
 	]
 };
 

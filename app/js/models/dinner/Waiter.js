@@ -153,7 +153,7 @@ var WaiterClass = {
 				intentoryAsString += index + ' : Menu : ' + item + '\n';
 			}
 		}
-		Debug.log(this, 'clearInventory', "Inventory:\n" + intentoryAsString);
+		Debug.log(this, 'displayInventory', "Inventory:\n" + intentoryAsString);
 	},
 	arrivedToDestination : function() {
 		// Execute the method on arrival to the destination

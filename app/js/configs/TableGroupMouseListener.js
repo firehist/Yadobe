@@ -52,6 +52,7 @@ var TABLEGROUPMOUSELISTENER = {
             for (var i=0; i<groupModel.menuList.length; i++) {
                 if (groupModel.menuList[i].inState('Ordered')) {
                     // we need to set the table num of the menuList[i]
+                    Debug.log(this, 'onPressWaitingToOrder', "Set menu #"+i+" to "+target.model.number);
                     groupModel.menuList[i].setTable(target.model.number);
                     kitchenModel.addMenu(groupModel.menuList[i]);
                     groupModel.menuList[i].setState('Preparing');

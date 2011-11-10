@@ -4,9 +4,12 @@
  * @since 06/09/2011
  **/
 var MenuGraphClass = {
-	// Includes
+
+    // Debug information
+	debug: true,
+	debugClassName: 'MenuGraph',
 	// Attributes
-	/**
+    /**
 	 * Menu model related to this Graph
 	 * @type Menu
 	 */
@@ -79,6 +82,7 @@ var MenuGraphClass = {
 			};
 			menuGraph._graph.onMouseOver = function() {
 				if(!menuGraph._graph.clicked) {
+                    Debug.log(this, 'addMouseListener[onMouseOver]', "State: " + this.model.getState());
 					menuGraph._graph.gotoAndStop(menuGraph._graph.currentFrame + 4);
 					$('body').css('cursor', 'pointer');
 				}
@@ -103,7 +107,8 @@ var MenuGraphClass = {
 		} else if(this.model.inState("WaitingToBeServed")) {
 			// Menu is displayed with related table number
 			this._graph.gotoAndStop("fullTable");
-			this._graph.gotoAndStop( this._graph.currentFrame + (this.model.table - 1) );
+            Debug.log(this, 'update', "this._graph.currentFrame: " + ((this._graph.currentStartFrame-1)  + (this.model.table - 1)) );
+			this._graph.gotoAndStop( (this._graph.currentStartFrame-1)  + (this.model.table - 1) );
 			this._graph.visible = true;
 		} else if(this.model.inState("BeingEating")) {
 			this._graph.gotoAndStop("full");
