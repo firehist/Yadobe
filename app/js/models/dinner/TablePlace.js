@@ -65,11 +65,15 @@ var TablePlaceClass = {
 	},
     areAllMenusServed: function() {
         var menuListToString = this.menuList.join();
-        Debug.log(this, 'areAllMenusServed', "menuListToString: " + menuListToString);
+        Debug.log(this, 'areAllMenusServed', "Liste des menus attendus concaténés dans menuListToString: " + menuListToString);
         for (var aMenuOfGroup in this.group.menuList) {
             // if menu from group is not found int the list of menu from the table
-            if (menuListToString.indexOf(aMenuOfGroup) == -1) {
+            Debug.log(this, 'areAllMenusServed', "menuListToString.indexOf(this.group.menuList[aMenuOfGroup]): " + menuListToString.indexOf(this.group.menuList[aMenuOfGroup]));
+            if (menuListToString.indexOf(this.group.menuList[aMenuOfGroup]) == -1) {
+                Debug.log(this, 'areAllMenusServed', aMenuOfGroup + " n'est pas un menu déjà servi");
                 return false;
+            } else {
+                Debug.log(this, 'areAllMenusServed', aMenuOfGroup + " est un menu déjà servi");
             }
         }
         return true;

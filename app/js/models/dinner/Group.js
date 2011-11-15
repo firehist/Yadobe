@@ -261,6 +261,6 @@ Group.Factory.newInstance = function() {
     
     // Choose randomly the number of persons contained in the group (between 1 and 4)
 	var numberOfPerson = Tools.randomXToY(1, 4);
-	
-	return new Group('Group', colorName, numberOfPerson, DinnerGamePage.getInstance().reception.model);
+    var groupId = DinnerGamePage.getInstance().groupList.length;
+	return new Group('group_' + groupId, colorName, numberOfPerson, DinnerGamePage.getInstance().reception.model);
 };

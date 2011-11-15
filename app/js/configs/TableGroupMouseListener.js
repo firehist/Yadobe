@@ -21,7 +21,7 @@ var TABLEGROUPMOUSELISTENER = {
 					var item = waiterModel.inventory[index];
 					// The item is a menu and it is destined to this table
 					if ((item instanceof Menu) && (item.table == target.model.number)) {
-						Debug.log(this, 'onPressWaitingMeal', "The menu arrived to the good table :D");						
+						Debug.log(target, 'onPressWaitingMeal', "The menu arrived to the good table :D");
 						// Add the menu to the table and change its state
 						item.setState("Use");
 						target.model.menuList.push(item);
@@ -31,10 +31,10 @@ var TABLEGROUPMOUSELISTENER = {
 
 						// And move after the "for" loop
 						if (target.model.areAllMenusServed()) {
-							Debug.log(this, 'onPressWaitingMeal', "The group of the table " + target.model.number + " has started to eat.");
+							Debug.log(target, 'onPressWaitingMeal', "The group of the table " + target.model.number + " has started to eat.");
 							target.model.group.setState('Eating');
 						} else {
-                            Debug.log(this, 'onPressWaitingMeal', "The group of the table " + target.model.number + " have not all plates.");
+                            Debug.log(target, 'onPressWaitingMeal', "The group of the table " + target.model.number + " have not all plates.");
                         }
 					}
 				}
@@ -45,14 +45,14 @@ var TABLEGROUPMOUSELISTENER = {
     onPressWaitingToOrder: function(target) {
         var groupModel = target.model.group;
         var destination = new Destination(target.model, function() {
-			Debug.log(this, 'onPressWaitingToOrder', "Waiter arrived to table " + target.model.number + ".");
-			Debug.log(this, 'onPressWaitingToOrder', "The table " + target.model.number + " passed an order and is waiting their meal.");
+			Debug.log(target, 'onPressWaitingToOrder', "Waiter arrived to table " + target.model.number + ".");
+			Debug.log(target, 'onPressWaitingToOrder', "The table " + target.model.number + " passed an order and is waiting their meal.");
             // Launch cooking for all menu in Wait state
             var kitchenModel = DinnerGamePage.getInstance().kitchen.model;
             for (var i=0; i<groupModel.menuList.length; i++) {
                 if (groupModel.menuList[i].inState('Ordered')) {
                     // we need to set the table num of the menuList[i]
-                    Debug.log(this, 'onPressWaitingToOrder', "Set menu #"+i+" to "+target.model.number);
+                    Debug.log(target, 'onPressWaitingToOrder', "Set menu #"+i+" to "+target.model.number);
                     groupModel.menuList[i].setTable(target.model.number);
                     kitchenModel.addMenu(groupModel.menuList[i]);
                     groupModel.menuList[i].setState('Preparing');
@@ -66,7 +66,7 @@ var TABLEGROUPMOUSELISTENER = {
 		return function() {
 			if (((target instanceof GroupGraph) && !target.model.inState('QueuingUpBusy')) || !(target instanceof GroupGraph)) {
 				if (target instanceof GroupGraph) {
-					Debug.log(this, 'onMouseOver', "State of Group: " + target.model.getState());
+					Debug.log(target, 'onMouseOver', "State of Group(" +  target.model.name + "): " + target.model.getState());
                 }
                 if (!target._graph.clicked) {
 					target._graph.alpha = 0.8;

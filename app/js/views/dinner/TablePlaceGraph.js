@@ -65,7 +65,7 @@ var TablePlaceGraphClass = {
 		(function(target) {
 			target._graph.onPress = function() {
 				if (!target._graph.clicked) {
-					Debug.log(this, 'addMouseListener.onPress', "Table clicked");
+					Debug.log(target, 'addMouseListener.onPress', "Table clicked");
                     var groupModel = target.model.group;
 
                     // A group is sitting at the table
@@ -92,7 +92,7 @@ var TablePlaceGraphClass = {
                     		// Look for the item(s) of the waiter inventory
                     		for (var index in waiterModel.inventory) {
                     			var item = waiterModel.inventory[index];
-								Debug.log(this, 'addMouseListener.onPress', "Inventory.item: " + item.name);
+								Debug.log(target, 'addMouseListener.onPress', "Inventory.item: " + item.name);
                                 // The item is a group
                     			if (item instanceof Group) {
                                     // free the position of the group in the reception
@@ -109,7 +109,7 @@ var TablePlaceGraphClass = {
                                     target.model.group.setState('SittingDown');
                                     target.model.setState('Busy');
                     			} else {
-									Debug.log(this, 'addMouseListener.onPress', "Object type of item is not recognized.");
+									Debug.log(target, 'addMouseListener.onPress', "Object type of item is not recognized.");
                                 }
                     		}
                     	}
