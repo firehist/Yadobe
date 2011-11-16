@@ -187,8 +187,8 @@ var DinnerGamePageClass = {
 	 */
 	createGroup: function() {
 		if (this.getNumOfGroupInRecep() < this.reception.model.maxGroupList) {
-			Debug.log(this, 'createGroup', 'Groupe created');
 			var g = Group.Factory.newInstance();
+            Debug.log(this, 'createGroup', 'Groupe created ('+g+'): ' + g.name);
 			this.addGroup(g);
             this.reception.model.waitingGroups.push(g);
 		}
@@ -207,11 +207,11 @@ var DinnerGamePageClass = {
      * @author Dominique Jeannin <jeannin.dominique@gmail.com>
      * @since 13/09/2011
      */
-    getIndexOfFirstEmpty: function(askingGroup) {
+    getIndexOfFirstEmpty: function(expectedGroup) {
         var waitingGroups = this.reception.model.waitingGroups;
-        counter = 1;
+        counter = 0;
         for (var i=0; i<waitingGroups.length; i++) {
-            if (waitingGroups[i] == askingGroup) {
+            if (waitingGroups[i] === expectedGroup) {
                 counter = i;
                 break;
             }

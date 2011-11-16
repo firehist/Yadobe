@@ -163,7 +163,7 @@ var GroupGraphClass = {
 		}
 	},
     drawSittingDown: function() {
-		Debug.log(this, 'drawSittingDown', 'Group is going to sit down');
+		Debug.log(this, 'drawSittingDown', 'Group #'+this.model.name+' is going to sit down');
         // Place each person of the group at the sits of the table
         this._graph.x = DINNERCONST.POSITION.tables[this.model.position.number - 1].coord.x;
         this._graph.y = DINNERCONST.POSITION.tables[this.model.position.number - 1].coord.y;
@@ -231,7 +231,7 @@ var GroupGraphClass = {
             this.drawBubble("WaitingMeal");
         }
         if (this.model.inState("Eating")) {
-           
+           this.updateBubble();
         }
         if (this.model.inState("WaitingForPayment")) {
             this.drawBubble("WaitingForPayment");

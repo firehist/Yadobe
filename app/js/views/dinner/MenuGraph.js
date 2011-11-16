@@ -69,7 +69,7 @@ var MenuGraphClass = {
 	 */
 	addMouseListener: function() {
 		(function(menuGraph) {
-			menuGraph._graph.onPress = function(e) {
+			menuGraph._graph.onPress = function() {
 				if(!menuGraph._graph.clicked) {
 					// Remove the plate from the kitchen and add it to the waiter
 					var kitchen = DinnerGamePage.getInstance().kitchen;
@@ -82,7 +82,7 @@ var MenuGraphClass = {
 			};
 			menuGraph._graph.onMouseOver = function() {
 				if(!menuGraph._graph.clicked) {
-                    Debug.log(target, 'addMouseListener[onMouseOver]', "State: " + this.model.getState());
+                    Debug.log(menuGraph, 'addMouseListener[onMouseOver]', "State: " + menuGraph.model.getState());
 					menuGraph._graph.gotoAndStop(menuGraph._graph.currentFrame + 4);
 					$('body').css('cursor', 'pointer');
 				}

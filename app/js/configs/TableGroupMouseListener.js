@@ -44,15 +44,17 @@ var TABLEGROUPMOUSELISTENER = {
 	},
     onPressWaitingToOrder: function(target) {
         var groupModel = target.model.group;
+        Debug.log(target, 'onPressWaitingToOrder', target.model.name + " with " + target.model.group.name);
         var destination = new Destination(target.model, function() {
 			Debug.log(target, 'onPressWaitingToOrder', "Waiter arrived to table " + target.model.number + ".");
 			Debug.log(target, 'onPressWaitingToOrder', "The table " + target.model.number + " passed an order and is waiting their meal.");
             // Launch cooking for all menu in Wait state
             var kitchenModel = DinnerGamePage.getInstance().kitchen.model;
             for (var i=0; i<groupModel.menuList.length; i++) {
+                Debug.log(target, 'onPressWaitingToOrder', "menu #"+i+"("+groupModel.menuList[i]+") is in state: "+groupModel.menuList[i].getState());
                 if (groupModel.menuList[i].inState('Ordered')) {
                     // we need to set the table num of the menuList[i]
-                    Debug.log(target, 'onPressWaitingToOrder', "Set menu #"+i+" to "+target.model.number);
+                    Debug.log(target, 'onPressWaitingToOrder', "Set menu #"+i+" to table #"+target.model.number);
                     groupModel.menuList[i].setTable(target.model.number);
                     kitchenModel.addMenu(groupModel.menuList[i]);
                     groupModel.menuList[i].setState('Preparing');
@@ -66,7 +68,7 @@ var TABLEGROUPMOUSELISTENER = {
 		return function() {
 			if (((target instanceof GroupGraph) && !target.model.inState('QueuingUpBusy')) || !(target instanceof GroupGraph)) {
 				if (target instanceof GroupGraph) {
-					Debug.log(target, 'onMouseOver', "State of Group(" +  target.model.name + "): " + target.model.getState());
+					Debug.log(target, 'onMouseOver', "State of Group "+target.model.name+" (" +  target.model + "): " + target.model.getState());
                 }
                 if (!target._graph.clicked) {
 					target._graph.alpha = 0.8;

@@ -131,12 +131,16 @@ var GroupClass ={
 	 * @since 31/08/2011
 	 */
 	generateMenu: function() {
-		Debug.log(this, 'generateMenu', 'Start');
         var recipeManager = RecipeManager.getInstance();
-		for (var i=0; i<this.personNumber; i++) {
-            this.menuList.push(recipeManager.createRandomMenu());
+        var aMenuList = new Array();
+        for (var i=0; i<this.personNumber; i++) {
+            var aMenu = recipeManager.createRandomMenu();
+            Debug.log(this, 'generateMenu', "Menu #"+i+ ": "+aMenu);
+            aMenuList.push(aMenu);
         }
-		Debug.log(this, 'generateMenu', 'Nombre de menu généré: ' + this.menuList.length);
+        Debug.log(this, 'generateMenu', 'Nombre de menu généré pour le group ('+this.name+':'+this+')' + aMenuList.length);
+        this.setState("WaitingToOrder");
+        return aMenuList;
 	}
 };
 var Group = new JS.Class(GroupClass);
@@ -186,7 +190,6 @@ Group.states({
                 this,
                 //'generateMenu');
                 'WaitingToOrder');
-            //this.setState("WaitingToOrder");
 		}
 	},
 	/**
@@ -197,9 +200,9 @@ Group.states({
 	WaitingToOrder: {
 		runAction: function() {
 			//console.debug('WaitingToOrder State : runAction()');
-            if (this.menuList.length == 0) {
-				Debug.log(this, 'State[WaitingToOrder] runAction', 'generation du menu');
-                this.generateMenu();
+            if (this.menuList == null || this.menuList.length == 0) {
+            	Debug.log(this, 'State[WaitingToOrder] runAction', 'Group #'+this.name+': generation du menu');
+                this.menuList = this.generateMenu();
             }
 		}
 	},
