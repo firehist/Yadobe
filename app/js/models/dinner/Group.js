@@ -47,7 +47,7 @@ var GroupClass ={
 	 * define its end of life
 	 * @var bool
 	 */
-	isGone: false,
+	//isGone: false,
 	/**
 	 * The total time of waiting state for this group
 	 * @var int totalWaitingTime in milliseconds
@@ -223,7 +223,10 @@ Group.states({
 	 */
 	Eating: {
 	    runAction: function() {
-	        //console.debug('Eating State : runAction()');
+	       TimeManager.setStateTimer(
+                Tools.randomXToY(5000, 10000),
+                this,
+                'WaitingForPayment');
 	    }
 	},
 	/**

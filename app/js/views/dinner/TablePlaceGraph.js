@@ -80,6 +80,10 @@ var TablePlaceGraphClass = {
 							// Use the common function with groupGraph
 							TABLEGROUPMOUSELISTENER.onPressWaitingMeal(target);
 	                    }
+                        // If the persons of the table are waiting for payment
+                        else if (groupModel.inState('WaitingForPayment')) {
+                            TABLEGROUPMOUSELISTENER.onPressWaitingForPayment(target);
+                        }
                     }
                     // No group is sitting at the table
                     else if (target.model.inState('Free')) {

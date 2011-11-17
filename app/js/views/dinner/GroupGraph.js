@@ -139,6 +139,8 @@ var GroupGraphClass = {
                     if (!target._graph.clicked) {
                        DinnerGamePage.getInstance().waiter.model.addToInventory(target.model);
                     }
+                } else if (target.model.inState('WaitingForPayment')) {
+                    TABLEGROUPMOUSELISTENER.onPressWaitingForPayment(target);
                 } else if (!target.model.inState('QueuingUpBusy')) {
                     TABLEGROUPMOUSELISTENER.onPressWaitingMeal(target);
                 }
@@ -235,6 +237,10 @@ var GroupGraphClass = {
         }
         if (this.model.inState("WaitingForPayment")) {
             this.drawBubble("WaitingForPayment");
+        }
+        if (this.model.inState("IsGone")) {
+            this.updateBubble();
+            this._graph.visible = false;
         }
     }
 };
