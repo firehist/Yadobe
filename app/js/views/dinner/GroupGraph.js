@@ -140,7 +140,7 @@ var GroupGraphClass = {
                        DinnerGamePage.getInstance().waiter.model.addToInventory(target.model);
                     }
                 } else if (target.model.inState('WaitingForPayment')) {
-                    TABLEGROUPMOUSELISTENER.onPressWaitingForPayment(target);
+                    TABLEGROUPMOUSELISTENER.onPressWaitingForPayment(target.model);
                 } else if (!target.model.inState('QueuingUpBusy')) {
                     TABLEGROUPMOUSELISTENER.onPressWaitingMeal(target);
                 }
@@ -210,7 +210,7 @@ var GroupGraphClass = {
         if (this.model.inState("QueuingUpBusy")) {
             if (this._graph.y <= yMin) {
 				this.model.setState('QueuingUpWaiting');
-                for (var i=0; i < this.model.personNumber; i++) {
+                for (i=0; i < this.model.personNumber; i++) {
                     this._graph.getChildAt(i).gotoAndPlay('waiting');
                 }
                 this.direction = '';
@@ -239,8 +239,16 @@ var GroupGraphClass = {
             this.drawBubble("WaitingForPayment");
         }
         if (this.model.inState("IsGone")) {
-            this.updateBubble();
-            this._graph.visible = false;
+            if (this._graph != null) {
+                Debug.log(this, 'update', "State is 'IsGone' and we delete _graph for group : " + this.model.name);
+                this.updateBubble();
+                for (i=0; i < this.model.personNumber; i++) {
+                    //var person = this._graph.getChildAt(i);
+                    //person.visible = false;
+                    this._graph.removeChildAt(i);
+                }
+                this._graph = null;
+            }
         }
     }
 };

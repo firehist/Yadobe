@@ -82,7 +82,8 @@ var TablePlaceGraphClass = {
 	                    }
                         // If the persons of the table are waiting for payment
                         else if (groupModel.inState('WaitingForPayment')) {
-                            TABLEGROUPMOUSELISTENER.onPressWaitingForPayment(target);
+                            Debug.log(target, 'addMouseListener[OnPress]', "WaitingForPayment: groupModel is " + groupModel.name);
+                            TABLEGROUPMOUSELISTENER.onPressWaitingForPayment(groupModel);
                         }
                     }
                     // No group is sitting at the table

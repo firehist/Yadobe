@@ -64,16 +64,9 @@ var TABLEGROUPMOUSELISTENER = {
         });
         DinnerGamePage.getInstance().waiter.model.moveTo(destination);
     },
-    onPressWaitingForPayment: function(target) {
-        var groupModel = target.model.group;
-        if (target.model instanceof Group) {
-            Debug.log(target, 'onPressWaitingForPayment', 'target.model is a group: ' + target.model.name);
-            target.model.setState('IsGone');
-        } else if (target.model instanceof TablePlace) {
-            Debug.log(target, 'onPressWaitingForPayment', 'target.model is a table with the group: '+target.model.group.name);
-            target.model.group.setState('IsGone');
-            Debug.log(target, 'onPressWaitingForPayment', 'Now state of group is : '+target.model.group.getState());
-        }
+    onPressWaitingForPayment: function(groupModel) {
+        groupModel.setState('IsGone');
+        Debug.log(groupModel, 'onPressWaitingForPayment', 'Now state of group is : '+groupModel.getState());
     },
 	onMouseOver: function(target) {
 		return function() {
