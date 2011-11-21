@@ -84,6 +84,17 @@ var GroupClass ={
 		this.position = position;
 		this.setState('QueuingUpBusy');
 	},
+	// Destructor
+	/**
+	 * Destroy this object
+	 * @author Benjamin Longearet <firehist@gmail.com>
+	 * @since 21/11/2011
+	 */
+	destroy: function() {
+		Debug.log(this, 'update', "Destroy group : " + this.name);
+		// Remove group from Table
+		this.position.removeGroup();
+	},
 	// Methods
 	/**
 	 * Decrease the group mood of value

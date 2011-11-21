@@ -64,19 +64,17 @@ var TABLEGROUPMOUSELISTENER = {
         });
         DinnerGamePage.getInstance().waiter.model.moveTo(destination);
     },
-    onPressWaitingForPayment: function(groupModel) {
-        groupModel.setState('IsGone');
-        Debug.log(groupModel, 'onPressWaitingForPayment', 'Now state of group is : '+groupModel.getState());
-    },
 	onMouseOver: function(target) {
 		return function() {
 			if (((target instanceof GroupGraph) && !target.model.inState('QueuingUpBusy')) || !(target instanceof GroupGraph)) {
 				if (target instanceof GroupGraph) {
 					Debug.log(target, 'onMouseOver', "State of Group "+target.model.name+" (" +  target.model + "): " + target.model.getState());
                 }
-                if (!target._graph.clicked) {
-					target._graph.alpha = 0.8;
-					$('body').css('cursor', 'pointer');
+				if(target._graph != null) {
+					if (!target._graph.clicked) {
+						target._graph.alpha = 0.8;
+						$('body').css('cursor', 'pointer');
+					}
 				}
 			}
 		}
@@ -84,9 +82,11 @@ var TABLEGROUPMOUSELISTENER = {
 	onMouseOut: function(target) {
 		return function() {
 			if (((target instanceof GroupGraph) && !target.model.inState('QueuingUpBusy')) || !(target instanceof GroupGraph)) {
-				if (!target._graph.clicked) {
-					target._graph.alpha = 1;
-					$('body').css('cursor', 'default');
+				if(target._graph != null) {
+					if (!target._graph.clicked) {
+						target._graph.alpha = 1;
+						$('body').css('cursor', 'default');
+					}
 				}
 			}
 		}

@@ -46,6 +46,10 @@ var TablePlaceClass = {
 	},
     
 	// Methods
+	removeGroup: function() {
+		this.group = null;
+		this.setState("Free");
+	},
 	/**
 	 * Compute the table bill by adding all menu price
 	 * @author Benjamin Longearet <firehist@gmail.com>

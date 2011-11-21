@@ -82,8 +82,8 @@ var TablePlaceGraphClass = {
 	                    }
                         // If the persons of the table are waiting for payment
                         else if (groupModel.inState('WaitingForPayment')) {
+                            groupModel.setState("IsGone");
                             Debug.log(target, 'addMouseListener[OnPress]', "WaitingForPayment: groupModel is " + groupModel.name);
-                            TABLEGROUPMOUSELISTENER.onPressWaitingForPayment(groupModel);
                         }
                     }
                     // No group is sitting at the table
@@ -108,7 +108,6 @@ var TablePlaceGraphClass = {
                                     item.position = target.model;
                                     // Remove the group from the waiter inventory
                                     waiterModel.delFromInventory(index);
-
                                     // change the state of group and table
                                     target.model.setState('Busy');
                                     target.model.group.setState('SittingDown');

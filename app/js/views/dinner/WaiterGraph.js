@@ -160,7 +160,8 @@ var WaiterGraphClass = {
 				point = DINNERCONST.PATH[hashKey][DINNERCONST.PATH[hashKey].length - this.crossingPoint - 1];
 			}
 			else {
-				throw 'No path of points found for ' + hashKey + '.';
+				//throw 'No path of points found for ' + hashKey + '.';
+				Debug.log(this, 'nextPoint', 'No path of points found for ' + hashKey + '.');
 			}
 		}
         

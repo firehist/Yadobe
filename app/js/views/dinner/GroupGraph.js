@@ -10,7 +10,7 @@ var GroupGraphClass = {
 	debugClassName: 'GroupGraph',
     // Includes
 	//include: JS.State,
-	
+	i:0,
     // Attributes
 	/**
 	 * Model of GroupGraph
@@ -87,6 +87,16 @@ var GroupGraphClass = {
 			this._graph.addChildAt(person, i);
 		}
 	},
+	/**
+	 * Destroy this object
+	 * @author Benjamin Longearet <firehist@gmail.com>
+	 * @since 21/11/2011
+	 */
+	destroy: function() {
+		Debug.log(this, 'update', "Destroy groupGraph : " + this.model.name);
+		this._graph.visible = false;
+		this.model.destroy();
+	},
     /**
      * @method createGroup
      */
@@ -140,7 +150,8 @@ var GroupGraphClass = {
                        DinnerGamePage.getInstance().waiter.model.addToInventory(target.model);
                     }
                 } else if (target.model.inState('WaitingForPayment')) {
-                    TABLEGROUPMOUSELISTENER.onPressWaitingForPayment(target.model);
+					target.model.setState("IsGone");
+					target.update();
                 } else if (!target.model.inState('QueuingUpBusy')) {
                     TABLEGROUPMOUSELISTENER.onPressWaitingMeal(target);
                 }
@@ -194,6 +205,10 @@ var GroupGraphClass = {
         this.drawBubble(null);
 	},
     update: function() {
+		this.i = this.i + 1;
+		if(this.i % 100 == 0) {
+			Debug.log(this, 'update', 'Etat => ' + this.model.getState());
+		}
         this.model.runAction();
         var dy = GroupGraph.stepInPixels;
         var yMin = DINNERCONST.POSITION.reception.y + dy + DinnerGamePage.getInstance().getIndexOfFirstEmpty(this.model)*30;
@@ -206,8 +221,7 @@ var GroupGraphClass = {
                 }
                 this.direction = 'north';
             }
-        }
-        if (this.model.inState("QueuingUpBusy")) {
+        } else if (this.model.inState("QueuingUpBusy")) {
             if (this._graph.y <= yMin) {
 				this.model.setState('QueuingUpWaiting');
                 for (i=0; i < this.model.personNumber; i++) {
@@ -218,38 +232,25 @@ var GroupGraphClass = {
 				// Move the group and it persons forward
 				this._graph.y -= dy;
 			}
-        }
-        if (this.model.inState("SittingDown")) {
+        } else if (this.model.inState("SittingDown")) {
             this.drawSittingDown();
             this.model.setState("ReadingMenu");
-        }
-        if (this.model.inState("ReadingMenu")) {
+        } else if (this.model.inState("ReadingMenu")) {
             this.drawBubble("ReadingMenu");
-        }
-        if (this.model.inState("WaitingToOrder")) {
+        } else if (this.model.inState("WaitingToOrder")) {
 			this.drawBubble("WaitingToOrder");
-        }
-        if (this.model.inState("WaitingMeal")) {
+        } else if (this.model.inState("WaitingMeal")) {
             this.drawBubble("WaitingMeal");
-        }
-        if (this.model.inState("Eating")) {
+        } else if (this.model.inState("Eating")) {
            this.updateBubble();
-        }
-        if (this.model.inState("WaitingForPayment")) {
+        } else if (this.model.inState("WaitingForPayment")) {
             this.drawBubble("WaitingForPayment");
-        }
-        if (this.model.inState("IsGone")) {
-            if (this._graph != null) {
-                Debug.log(this, 'update', "State is 'IsGone' and we delete _graph for group : " + this.model.name);
-                this.updateBubble();
-                for (i=0; i < this.model.personNumber; i++) {
-                    //var person = this._graph.getChildAt(i);
-                    //person.visible = false;
-                    this._graph.removeChildAt(i);
-                }
-                this._graph = null;
-            }
-        }
+        } else if (this.model.inState("IsGone")) {
+			Debug.log(this, 'udapte', 'State : IsGone');
+			this.destroy();
+        } else {
+			Debug.log(this, 'update', "State unknow!!! => " + this.model.getState());
+		}
     }
 };
 var GroupGraph = new JS.Class(GroupGraphClass);
