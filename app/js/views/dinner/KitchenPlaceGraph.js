@@ -150,9 +150,11 @@ var KitchenPlaceGraphClass = {
 		for(var i=0; i<list; i++) {
 			if(this.plates[i] != null && this.plates[i].toString() == menuGraph.toString()) {
 				this.plates[i] = null;
-				menuGraph.model.setState('BeingEating');
+				//menuGraph.model.setState('BeingEating');
+                menuGraph.model.setState('BeingServed');
 				menuGraph.update();
 				this.model.removeMenu(menuGraph.model);
+                break;
 			}
 		}
 	},

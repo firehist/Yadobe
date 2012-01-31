@@ -92,28 +92,35 @@ var DinnerGamePageClass = {
 	 * Refresh the elements of the game
 	 */
 	tick: function() {
-		// Refresh the kitchen
-		if ((this.kitchen) && (this.kitchen instanceof KitchenPlaceGraph)) {
-			this.kitchen.update();
-		}
-		
-		// Refresh the waiter
-		if ((this.waiter) && (this.waiter instanceof WaiterGraph)) {
-			this.waiter.update();
-        }
+        // Pour ralentir l'animation du sprite, il suffit de ne pas le redessiner à chaque fois
+        // Avec un modulo 4, on divise la vitesse par 4 puisque l’on ne dessine plus qu’1 fois sur 4
+        var speedControl = Ticker.getTicks() % 1;
 
-        // Refresh the group
-        var groupGraphList = DinnerGamePage.getInstance().groupList;
-        for(var i=0; i<groupGraphList.length; i++) {
-            if (!groupGraphList[i].model.inState('IsGone')) {
-                groupGraphList[i].update();
+        if (speedControl == 0) {
+
+            // Refresh the kitchen
+            if ((this.kitchen) && (this.kitchen instanceof KitchenPlaceGraph)) {
+                this.kitchen.update();
             }
-        }
-		
-        // Refresh the menu graph list
-        var menuGraphList = DinnerGamePage.getInstance().menuList;
-        for(i=0; i<menuGraphList.length; i++) {
-               menuGraphList[i].update();
+
+            // Refresh the waiter
+            if ((this.waiter) && (this.waiter instanceof WaiterGraph)) {
+                this.waiter.update();
+            }
+
+            // Refresh the group
+            var groupGraphList = DinnerGamePage.getInstance().groupList;
+            for(var i=0; i<groupGraphList.length; i++) {
+                if (!groupGraphList[i].model.inState('IsGone')) {
+                    groupGraphList[i].update();
+                }
+            }
+
+            // Refresh the menu graph list
+            var menuGraphList = DinnerGamePage.getInstance().menuList;
+            for(i=0; i<menuGraphList.length; i++) {
+                menuGraphList[i].update();
+            }
         }
 	},
 	createConsoleLog: function() {

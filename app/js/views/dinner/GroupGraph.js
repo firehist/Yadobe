@@ -52,13 +52,10 @@ var GroupGraphClass = {
 		this.model = model;
 		this._graph = new Container();
         this.createGroup();
-		//this.setState('Walking2Reception');
-        //this.model.setState('QueuingUpBusy');
 		for (var i=0; i < this.model.personNumber; i++) {
 			this._graph.getChildAt(i).gotoAndPlay('walking_north');
 		}
 		this.direction = 'north';
-        this.isWalking = true;
 		this.createBubbles();
 		this.addMouseListener();
 	},
@@ -133,8 +130,9 @@ var GroupGraphClass = {
 		);
 		
 		var bitmapSequence = new BitmapSequence(sprite);
-		bitmapSequence.shadow = new Shadow("#454", 0, 5, 4);
-		
+		//bitmapSequence.shadow = new Shadow("#454", 0, 5, 4);
+		//bitmapSequence.shadow = null;
+
 		return bitmapSequence;
     },	
     /**
@@ -205,10 +203,13 @@ var GroupGraphClass = {
         this.drawBubble(null);
 	},
     update: function() {
-		this.i = this.i + 1;
-		if(this.i % 100 == 0) {
-			Debug.log(this, 'update', 'Etat => ' + this.model.getState());
-		}
+        if (!(this._graph) || this._graph == null) {
+            return;
+        }
+		//this.i = this.i + 1;
+		//if(this.i % 100 == 0) {
+		//	Debug.log(this, 'update', 'Etat de '+this.model.name+' => ' + this.model.getState());
+		//}
         this.model.runAction();
         var dy = GroupGraph.stepInPixels;
         var yMin = DINNERCONST.POSITION.reception.y + dy + DinnerGamePage.getInstance().getIndexOfFirstEmpty(this.model)*30;

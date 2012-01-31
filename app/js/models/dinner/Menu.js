@@ -107,6 +107,7 @@ Menu.states({
 	Ordered: {},
     Preparing: {},
 	WaitingToBeServed: {},
+    BeingServed: {},
 	BeingEating: {},
 	Terminated: {}
 });

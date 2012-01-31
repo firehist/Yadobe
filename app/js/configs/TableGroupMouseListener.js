@@ -23,7 +23,7 @@ var TABLEGROUPMOUSELISTENER = {
 					if ((item instanceof Menu) && (item.table == target.model.number)) {
 						Debug.log(target, 'onPressWaitingMeal', "The menu arrived to the good table :D");
 						// Add the menu to the table and change its state
-						item.setState("Use");
+						item.setState("BeingEating");
 						target.model.menuList.push(item);
 						
 						// we delete the item from the inventory
@@ -46,7 +46,12 @@ var TABLEGROUPMOUSELISTENER = {
         var groupModel = target.model.group;
         Debug.log(target, 'onPressWaitingToOrder', target.model.name + " with " + target.model.group.name);
         var destination = new Destination(target.model, function() {
-			Debug.log(target, 'onPressWaitingToOrder', "Waiter arrived to table " + target.model.number + ".");
+			// forbid to go to group
+            if (target.model instanceof Group) {
+                return;
+            }
+            
+            Debug.log(target, 'onPressWaitingToOrder', "Waiter arrived to table " + target.model.number + ".");
 			Debug.log(target, 'onPressWaitingToOrder', "The table " + target.model.number + " passed an order and is waiting their meal.");
             // Launch cooking for all menu in Wait state
             var kitchenModel = DinnerGamePage.getInstance().kitchen.model;
