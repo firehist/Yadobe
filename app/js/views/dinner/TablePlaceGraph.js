@@ -82,7 +82,9 @@ var TablePlaceGraphClass = {
 	                    }
                         // If the persons of the table are waiting for payment
                         else if (groupModel.inState('WaitingForPayment')) {
+                            //groupModel.destroy();
                             groupModel.setState("IsGone");
+                            target.groupGraph.update();
                             Debug.log(target, 'addMouseListener[OnPress]', "WaitingForPayment: groupModel is " + groupModel.name);
                         }
                     }
@@ -106,6 +108,16 @@ var TablePlaceGraphClass = {
                                     target.model.group = item;
                                     // Set the table on the group
                                     item.position = target.model;
+                                    // Set the group to the table: we need to retrieve the corresponding GroupGraph
+                                    // from a given groupModel (here item)
+                                    var groupList = DinnerGamePage.getInstance().groupList;
+                                    for (var groupGraphIt in groupList) {
+                                        Debug.log(target, 'addMouseListener.onPress', "GRoupGraph iterator : " + groupList[groupGraphIt].model.name);
+                                        if (groupList[groupGraphIt].model === item) {
+                                            target.groupGraph = groupList[groupGraphIt];
+                                            Debug.log(target, 'addMouseListener.onPress', "Table linked to group Graph" + groupList[groupGraphIt]);
+                                        }
+                                    }
                                     // Remove the group from the waiter inventory
                                     waiterModel.delFromInventory(index);
                                     // change the state of group and table

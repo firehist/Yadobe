@@ -70,30 +70,32 @@ var TABLEGROUPMOUSELISTENER = {
         DinnerGamePage.getInstance().waiter.model.moveTo(destination);
     },
 	onMouseOver: function(target) {
-		return function() {
-			if (((target instanceof GroupGraph) && !target.model.inState('QueuingUpBusy')) || !(target instanceof GroupGraph)) {
-				if (target instanceof GroupGraph) {
-					Debug.log(target, 'onMouseOver', "State of Group "+target.model.name+" (" +  target.model + "): " + target.model.getState());
+        return function() {
+            if (((target instanceof GroupGraph) && !target.model.inState('QueuingUpBusy') && !target.model.inState('QueuingUpWaiting')) || !(target instanceof GroupGraph)) {
+                if (target instanceof GroupGraph) {
+                    Debug.log(target, 'onMouseOver', "State of Group "+target.model.name+" (" +  target.model + "): " + target.model.getState());
+                    Debug.log(target, 'onMouseOver', "Group's _graph is : "+target._graph);
                 }
-				if(target._graph != null) {
-					if (!target._graph.clicked) {
-						target._graph.alpha = 0.8;
-						$('body').css('cursor', 'pointer');
-					}
-				}
-			}
-		}
+
+                if(target._graph != null) {
+                    if (!target._graph.clicked) {
+                        target._graph.alpha = 0.8;
+                        $('body').css('cursor', 'pointer');
+                    }
+                }
+            }
+        }
 	},
 	onMouseOut: function(target) {
-		return function() {
-			if (((target instanceof GroupGraph) && !target.model.inState('QueuingUpBusy')) || !(target instanceof GroupGraph)) {
-				if(target._graph != null) {
-					if (!target._graph.clicked) {
-						target._graph.alpha = 1;
-						$('body').css('cursor', 'default');
-					}
-				}
-			}
-		}
+        return function() {
+            if (((target instanceof GroupGraph) && !target.model.inState('QueuingUpBusy')) || !(target instanceof GroupGraph)) {
+                if(target._graph != null) {
+                    if (!target._graph.clicked) {
+                        target._graph.alpha = 1;
+                        $('body').css('cursor', 'default');
+                    }
+                }
+            }
+        }
 	}
 };

@@ -247,7 +247,7 @@ var GroupGraphClass = {
         } else if (this.model.inState("WaitingForPayment")) {
             this.drawBubble("WaitingForPayment");
         } else if (this.model.inState("IsGone")) {
-			Debug.log(this, 'udapte', 'State : IsGone');
+			Debug.log(this, 'update', 'State : IsGone');
 			this.destroy();
         } else {
 			Debug.log(this, 'update', "State unknow!!! => " + this.model.getState());
